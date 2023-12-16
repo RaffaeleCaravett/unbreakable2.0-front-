@@ -22,7 +22,8 @@
     "lib": [
       "ES2022",
       "dom"
-    ]
+    ],
+    "types": ["echarts"]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
