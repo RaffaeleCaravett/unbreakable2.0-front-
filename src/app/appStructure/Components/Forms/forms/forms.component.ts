@@ -66,6 +66,7 @@ rotateY:number = 0;
     private visitService:VisitService,private formsService:FormsService){
 }
   ngOnInit(): void {
+    localStorage.setItem('location','forms')
     this.visitService.saveVisit().subscribe((data)=>{
       this.visitService.getVisits().subscribe((visits:any)=>{
         if(visits){

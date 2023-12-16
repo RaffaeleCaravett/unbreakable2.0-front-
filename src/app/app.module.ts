@@ -25,7 +25,7 @@ import { HomePageComponent } from './appStructure/Components/MainPages/home-page
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatOptionModule } from '@angular/material/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ChemistryComponent } from './appStructure/Components/MainPages/Chemistry/chemistry.component';
 import { ExerciseComponent } from './appStructure/Components/MainPages/Exercise/exercise/exercise.component';
 import { MakeContactComponent } from './appStructure/Components/MainPages/make-contact/make-contact.component';
@@ -44,6 +44,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { AuthTokenInterceptor } from './appStructure/Core/Interceptors/auth-token.interceptor';
+
 
 @NgModule({
   declarations: [
@@ -84,7 +87,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatBadgeModule,
     MatDialogModule,
     MatFormFieldModule,
-
+    NgxSpinnerModule,
     MatStepperModule,
     MatOptionModule,
     HttpClientModule,
@@ -126,7 +129,13 @@ MatSelectModule
     VisitProfileComponent
 
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthTokenInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

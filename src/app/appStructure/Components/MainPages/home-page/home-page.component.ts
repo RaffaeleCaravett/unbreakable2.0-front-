@@ -8,6 +8,8 @@ import { ArgumentsServiceService } from 'src/app/appStructure/Shared/Services/Ar
 import { ChatService } from 'src/app/appStructure/Shared/Services/ChatService/chat.service';
 import { FormsService } from 'src/app/appStructure/Shared/Services/FormsService/forms.service';
 import { FriendshipService } from 'src/app/appStructure/Shared/Services/Friendship/friendship.service';
+import { AuthService } from 'src/app/appStructure/Shared/Services/AuthService/Auth.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 @Component({
@@ -55,10 +57,12 @@ export class HomePageComponent implements AfterViewInit, OnChanges{
   messagesArray:any[]=[]
   currentChat:any
  constructor(private argumentsService:ArgumentsServiceService, private router :Router, private formsService:FormsService,private friendship:FriendshipService,
-  private chatService:ChatService){}
+  private chatService:ChatService,private authService:AuthService,private spinnerService: NgxSpinnerService){}
 
 route:Router=this.router
     ngOnInit(){
+      localStorage.setItem('location','home')
+this.checkTokens();
       localStorage.getItem('welcomeAudioHasStarted')&& localStorage.getItem('welcomeAudioHasStarted')=='true'?
       this.welcomeAudioHasStarted=true:this.welcomeAudioHasStarted=false
 this.negativePositionValue=-18;
@@ -110,7 +114,6 @@ playWelcomeAudio(){
       this.mixer.clipAction(animations[0]).play();
       const ambientLight = new THREE.AmbientLight(0xffa500, 2);
        this.scene.add(ambientLight);
-      //  this.rotate(this.model)
     });
     loader.load('assets/models/moon.glb', (gltf:any) => {
       this.model1 = gltf.scene;
@@ -135,7 +138,6 @@ playWelcomeAudio(){
         this.raindrops.push(this.raindrop);
         this.scene1.add(this.raindrop);
       }
-      //  this.rotate(this.model1)
 
     });
     loader.load('assets/models/cloud.glb', (gltf:any) => {
@@ -166,16 +168,9 @@ playWelcomeAudio(){
       }
       this.animate();
     });
-    // const controls = new OrbitControls(this.camera, this.renderer.domElement)
-    // controls.enableDamping = true
-    // controls.dampingFactor = 0.25
-    // controls.enableZoom = false
-    // const controls1 = new OrbitControls(this.camera1, this.renderer1.domElement)
-    // controls1.enableDamping = true
-    // controls1.dampingFactor = 0.25
-    // controls1.enableZoom = false
+
 setTimeout(()=>{
- if(this.user.img_profilo==null){
+ if(this.user &&this.user.img_profilo==null){
       this.formsService.updateUser(this.user.id,
         {
           età:this.user.età,
@@ -203,7 +198,7 @@ user_id2:friendship.receiver.id
         })
       }
     })
-},1000)
+},1500)
 this.chatForm= new FormGroup({
   message: new FormControl('',Validators.required)
 })
@@ -228,31 +223,7 @@ this.chatForm= new FormGroup({
     }
     this.location=localStorage.getItem('location')!;
   }
-  // rotate(firstGLB:any){
-  //   setInterval(()=>{
-  //     firstGLB.rotateX(0.002)
-  //     firstGLB.rotateY(0.002)
-  //     firstGLB.rotateZ(0.002)
-  //     for(let c of this.scene.children){
-  //       if(c.name=='cloud'){
 
-  //         if(c.position.x>-16.6&&c.position.x<-12){
-  //           c.position.x+=0.06
-  //         }
-  //         else if (c.position.x>-12&&c.position.x<8.7){
-  //         c.position.x+=0.01
-  //         }
-  //         else if(c.position.x>8.7){
-  //           c.position.x+=0.06
-  //           if(c.position.x>14.5){
-  //          c.position.x=-16.5
-  //        }
-  //         }
-  //       }
-  //     }
-  //     this.restoreModelsPositions(this.model,this.model1)
-  //   },100)
-  // }
   animate() {
     requestAnimationFrame(() => this.animate());
     this.renderer.render(this.scene, this.camera);
@@ -272,16 +243,6 @@ if(this.negativePositionValue!=0&&this.positivePositionValue!=0){
   }
 }
 }
-// animateRain() {
-//   for (let i = 0; i < this.raindrops.length; i++) {
-//     const raindrop = this.raindrops[i];
-//     const randomValue = Number('0.0' + Math.floor(Math.random() * 3));
-// raindrop.position.x -= randomValue;
-//     if (raindrop.position.x < -5) {
-//       raindrop.position.x = 5;
-//     }
-//   }
-// }
 
 @ViewChild('avatarText',{static:false})private textElement!:ElementRef;
 text =
@@ -392,6 +353,7 @@ this.checkMessages(us)
 checkMessages(user:any){
   this.chatService.findChatByPartecipantId(user.id).subscribe((data:any)=>{
     if(data){
+      console.log(data)
         data.forEach((d:any)=>{
   if(d.starter.id==this.user.id){
     this.currentChat=[]
@@ -399,12 +361,14 @@ checkMessages(user:any){
   this.currentChat=data
   }
   })
-this.messagesArray=this.currentChat[0]||null
+// this.messagesArray=this.currentChat[0]||null
 console.log(this.messagesArray)
       }
     })
     this.chatService.findChatByStarterId(user.id).subscribe((data:any)=>{
         if(data){
+  console.log(data)
+
             data.forEach((d:any)=>{
       if(d.partecipant.id==this.user.id){
         this.currentChat=[]
@@ -412,10 +376,40 @@ console.log(this.messagesArray)
         this.currentChat=data
       }
       })
-    this.messagesArray=this.currentChat[0]||null
-    console.log(this.messagesArray)
+    // this.messagesArray=this.currentChat[0]||null
           }
         })
 }
+checkTokens(){
+  if(localStorage.getItem('accessToken')){
+    this.formsService.verifyToken(localStorage.getItem('accessToken')!).subscribe((data:any)=>{
+    if(data&&data.id){
+      this.authService.setToken(localStorage.getItem('accessToken')!)
+      this.user= data
+    }
+    },(err:any)=>{
+    this.formsService.verifyRefreshToken(localStorage.getItem('refreshToken')!).subscribe((data:any)=>{
+      if(data){
+        localStorage.setItem('accessToken',data.accessToken)
+        this.authService.setToken(localStorage.getItem('accessToken')!);
+        this.formsService.verifyToken(localStorage.getItem('accessToken')!).subscribe((data:any)=>{
+          if(data&&data.id){
+            this.user= data
+          }
+        })
+      }
+    },err=>{
+      this.location='forms'
+    })
+    })
+    }
+    this.showSpinner()
+}
+showSpinner() {
+  this.spinnerService.show();
 
+  setTimeout(() => {
+    this.spinnerService.hide();
+  }, 1000);
+}
 }
