@@ -45,6 +45,7 @@ if(notification.receiver.id==this.user.id && notification.statoNotifica=="NOT_SA
    }
     }
   ngOnInit(): void {
+    this.navbarToShow=''
     this.argumentsService.getAllArguments().subscribe((data:any)=>{
       if(data){
         this.argumentsArray=data.content

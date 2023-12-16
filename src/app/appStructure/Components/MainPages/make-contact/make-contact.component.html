@@ -1,0 +1,85 @@
+<div class="row text-center">
+  <div class="col-md-12 py-5">
+    <div class="d-flex justify-content-center">
+      <h1>Let's make contact</h1>
+       <button class="btn " (click)="view='table'">Table</button>
+       <button class="btn" (click)="view='cards'">Cards</button>
+    </div>
+    <p class="fs-4">In this section you can find users, and ask them to connect!</p>
+    <p class="fs-4">Start type!</p>
+  </div>
+  <div class="col-md-12 py-4">
+    <div class="row">
+        <div class="bg-primary py-4 col-md-2"><p> Name</p>
+          <form [formGroup]="userForm" class="search-form">
+            <input type="text" class="form-control firstName" formControlName="firstName" (keyup)="getUsers()">
+          </form></div>
+        <div class="bg-primary py-4 col-md-2"><p>Last Name</p>
+          <form [formGroup]="userForm" class="search-form">
+            <input type="text" class="form-control lastName" formControlName="lastName" (keyup)="getUsers()">
+          </form></div>
+        <div class="bg-primary py-4 col-md-2"><p>Email</p>
+          <form [formGroup]="userForm" class="search-form">
+            <input type="text" class="form-control email" formControlName="email" (keyup)="getUsers()">
+          </form></div>
+        <div class="bg-primary py-4 col-md-2"><p>Continent</p>
+          <form [formGroup]="userForm" class="search-form">
+            <input type="text" class="form-control continent" formControlName="continent" (keyup)="getUsers()">
+          </form></div>
+        <div class="bg-primary py-4 col-md-2"><p>Nation</p>
+          <form [formGroup]="userForm" class="search-form">
+            <input type="text" class="form-control nation" formControlName="nation" (keyup)="getUsers()">
+          </form></div>
+        <div class="bg-primary py-4 col-md-2"><p>Age</p>
+          <form [formGroup]="userForm" class="search-form">
+            <input type="number" class="form-control age" formControlName="age" (keyup)="getUsers()">
+          </form></div>
+    </div>
+    <div class="row" *ngIf="allUsers&&view=='table'">
+
+        <div class="col-md-12 border-bottom" *ngFor="let u of allUsers.content">
+          <div class="row">
+          <div class="col-md-2 p-3"> <button class="btn" (click)="sendInfos(u)"><mat-icon>person</mat-icon></button>{{u.nome}}</div>
+<div class="col-md-2 p-3">{{u.cognome}}</div>
+<div class="col-md-2 p-3">{{u.email}}</div>
+<div class="col-md-2 p-3">{{u.continent.name}}</div>
+<div class="col-md-2 p-3">{{u.nazione.name}}</div>
+<div class="col-md-2 p-3">{{u['età']}} </div>
+          </div>
+        </div>
+
+    </div>
+    <div class="row" *ngIf="allUsers&&view=='cards'">
+      <div class="col-md-3 p-3" *ngFor="let u of allUsers.content">
+        <div class="card" style="width: 18rem;">
+          <img src="{{u.img_profilo}}" class="card-img-top" alt="profile_image" style="height: 283.83px;">
+          <div class="card-body">
+            <h5 class="card-title">{{u.nome}}  {{u.cognome}}</h5>
+            <p class="card-text">{{u.continent.name}}</p>
+            <p class="card-text">{{u.nazione.name}}</p>
+            <p class="card-text"> {{u['età']}} anni</p>
+
+            <a href="#" class="btn btn-primary" (click)="sendInfos(u)">View profile</a>
+          </div>
+        </div>
+    </div>
+    </div>
+    <div class="row" *ngIf="allUsers">
+      <div class="col-md-2"></div>
+      <div class="col-md-2">
+        <select class="form-select m-2" [value]="size" #sizeSelect (change)="updateSize(sizeSelect.value)">
+        <option value="10">10</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+      </div>
+      <div class="col-md-4"></div>
+      <div class="col-md-2">
+        <button class="btn btn-primary m-2" (click)="previousPage()" *ngIf="page!=0">Previous</button>
+     <span>{{currentPage}} / {{totalPages}}</span>
+      <button class="btn btn-primary m-2" (click)="nextPage()" *ngIf="page!=allUsers.totalPages-1">Next</button>
+      </div>
+      <div class="col-md-2"></div>
+    </div>
+  </div>
+</div>

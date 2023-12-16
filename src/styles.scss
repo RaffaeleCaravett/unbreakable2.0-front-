@@ -2,3 +2,181 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Lunasima&family=Original+Surfer&display=swap');
+*{
+  font-family: 'Times New Roman', Times, serif;
+  // font-family: 'Lunasima', sans-serif;
+  // font-family: 'Original Surfer', cursive;
+}
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import '~leaflet/dist/leaflet.css';
+
+.shadow{
+  box-shadow: 3px 6px 13.5px red!important;
+}
+.lighting-effect {
+  animation: lighting 0.3s ease-in-out infinite alternate;
+}
+
+@keyframes lighting {
+  0% {
+    box-shadow: 3px 6px 13.5px red;
+  }
+  50% {
+    box-shadow: 0 0 15px 10px yellow;
+  }
+  100% {
+    box-shadow: 3px 6px 13.5px red;
+  }
+}
+h1{
+  font-size: 60px;
+}
+.shake-on-hover:hover {
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-5px); }
+  40% { transform: translateX(5px); }
+  60% { transform: translateX(-5px); }
+  80% { transform: translateX(5px); }
+  100% { transform: translateX(0); }
+}
+.grow-and-shrink-on-hover {
+  transition: transform 0.3s;
+}
+
+.grow-and-shrink-on-hover:hover {
+  animation: growAndShrink 2s ease-in-out;
+}
+
+@keyframes growAndShrink {
+  0%, 100% {
+    transform: scale(1);
+  }
+  10% {
+    transform: scale(1.2);
+  }
+  30% {
+    transform: scale(0.8);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  90% {
+    transform: scale(1.05);
+  }
+
+}
+.gold-on-hover:hover{
+    color:gold
+  }
+  .translate:hover{
+transform: scale(1.2);
+  }
+  .shaker-on-hover:hover {
+    animation: shaker 0.5s;
+  }
+
+  @keyframes shaker {
+    0% { transform: translateX(0); }
+    20% { transform:translateY(-5px) }
+    30% { transform:translateX(-5px) }
+    40% {transform:translateY(5px) }
+    50% { transform:translateX(-5px) }
+    60% { transform:translateY(-5px) }
+    70% {transform:translateX(5px) }
+    80% { transform:translateY(-5px) }
+    100% { transform: translateX(0); }
+  }
+  .aos-animate {
+    opacity: 1;
+    transition: opacity 0.5s ease;
+  }
+
+  .animated-image {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+  }
+
+  [data-aos="fade-right"].aos-animate {
+    transform: translateX(0);
+  }
+
+  [data-aos="fade-left"].aos-animate {
+    transform: translateX(0);
+  }
+
+  .animated-image.visible {
+    opacity: 1;
+  }
+
+  .full-shake:hover {
+    display: inline-block;
+    animation: shake 2s infinite;
+  }
+  @keyframes shake {
+    0% {
+      transform: translate(0, 0) rotate(25deg);
+    }
+    5% {
+      transform: translate(0, 0) rotate(15deg);
+    }
+    10% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+    15% {
+      transform: translate(0, 0) rotate(-15deg);
+    }
+    20% {
+      transform: translate(0, 0) rotate(-25deg);
+    }
+    30% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+    35% {
+      transform: translate(0, 0) rotate(15deg);
+    }
+    40% {
+      transform: translate(0, 0) rotate(25deg);
+    }
+    45% {
+      transform: translate(0, 0) rotate(15deg);
+    }
+    50% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+    60% {
+      transform: translate(0, 0) rotate(-25deg);
+    }
+    65% {
+      transform: translate(0, 0) rotate(-15deg);
+    }
+    70% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+    75% {
+      transform: translate(0, 0) rotate(15deg);
+    }
+    80% {
+      transform: translate(0, 0) rotate(25deg);
+    }
+    85% {
+      transform: translate(0, 0) rotate(15deg);
+    }
+    90% {
+      transform: translate(0, 0) rotate(-5deg);
+    }
+    95% {
+      transform: translate(0, 0) rotate(-15deg);
+    }
+    100% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+  }

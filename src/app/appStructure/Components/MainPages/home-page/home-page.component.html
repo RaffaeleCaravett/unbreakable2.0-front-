@@ -1,0 +1,223 @@
+<div class="position-absolute text-center w-100"  [ngStyle]="{ 'width.px': windowWidth}">
+  <div class=" fixed-background" [ngClass]="{'bg-yellow': bg, 'bg-blackk': !bg}" [ngStyle]="{ 'width.px': windowWidth }" > </div>
+    <div class="row bg-transparent" [ngClass]="{'text-dark': bg, 'text-black': !bg}" [ngStyle]="{ 'width.px': windowWidth }">
+  <!-- <div class="col-md-12 p-5"></div> -->
+  <audio controls #welcomeSong class="d-none">
+    <source src="assets/audios/jonnyBGoode.mp3" type="audio/mp3">
+    Your browser does not support the audio tag.
+  </audio>
+  <div class="col-md-4 d-flex flex-row p-3">
+             <div class="p-0" style="max-width: 150px;"><canvas #canvas1 class="w-100" (click)="bg=true"> </canvas></div>
+             <div class="p-0" style="max-width: 150px;"> <canvas #canvas2 class="w-100" (click)="bg=false"> </canvas></div>
+  </div>
+  <div class="col-md-4 p-3 text-center" *ngIf="location==''||location=='home'">
+    <h1 class="p-0 m-0 fw-bolder ">Welcome here!</h1>
+    <p class="text-secondary p-0 m-0">As already said earlier it's a <span>pleasure</span> to have you here!</p>
+  </div>
+  <div class="col-md-12 px-5">
+               <!-- <p><button mat-mini-fab *ngIf="location!=''" (click)="location=''"><mat-icon>home</mat-icon></button></p> -->
+  </div>
+  <!-- <mat-sidenav-container >
+    <mat-sidenav #sidenav mode="side" [(opened)]="opened" (opened)="events.push('open!')"
+                (closed)="events.push('close!')" class="p-3 fs-5" style="overflow:unset;">
+            <p *ngFor="let a of argumentsArray" class="d-flex p-2">
+              <img [src]="a.img_argument" alt="img_{{ a.argument_title }}" class="rounded" style="width: 50px; height: 35px;">
+              <a href="#" style="text-decoration: none;" class="px-1" [ngClass]="{'text-dark': bg, 'text-light': !bg}" (click)="location=a.id">
+                {{a.title}}
+              </a>
+                <br>
+            </p>
+            <p class="d-flex p-2">
+              <img src="../../../../../assets/background-image/components/network.png" alt="img_profilo" class="rounded" style="width: 50px; height: 35px;">
+              <a href="#" style="text-decoration: none;" class="px-1" [ngClass]="{'text-dark': bg, 'text-light': !bg}" (click)="location='10'">
+              Connect
+              </a>
+            </p>
+            <p class="d-flex p-2">
+              <img [src]="user.img_profilo" alt="img_profilo" class="rounded" style="width: 50px; height: 35px;">
+              <a href="#" style="text-decoration: none;" class="px-1" [ngClass]="{'text-dark': bg, 'text-light': !bg}" (click)="location='profile'">
+               Profile
+              </a>
+            </p>
+    </mat-sidenav>
+    <mat-sidenav-content  class="p-4 row" > -->
+
+      <div class="row">
+        <div class="col-md-12 d-flex  justify-content-end" *ngIf="location==''&&chat==false">
+          <button class="btn btn-light px-3">
+            <h2 ><a class="text-dark" (click)="chat=true"><mat-icon class="text-primary">chat</mat-icon> Chat</a>
+          </h2>
+          </button>
+        </div>
+        <div *ngIf="location==''"  class="col-xxl-10" >
+
+         <!-- <p><button mat-mini-fab (click)="sidenav.toggle()"><mat-icon>menu</mat-icon></button></p> -->
+         <div class="d-flex">
+         <p><button mat-mini-fab *ngIf="location!=''" (click)="location=''"><mat-icon>home</mat-icon></button></p>
+         </div>
+      <div class="row text-center p-5" >
+<div class="col-md-12 p-1">
+<div class="row p-1 d-flex align-items-end">
+  <div class="col-md-5 p-2">
+    <div class="row">
+      <div class="col-12">
+       <h1 class="p-0 m-0">He is X401, our avatar.</h1>
+<p class="text-secondary p-0 m-0">And he'll explain us the pillars of the <span>unbreackable</span> concept!</p>
+      </div>
+      <div class="col-12 p-2">
+        <h4>Make X401 talk <i class="fas fa-arrow-down text-danger"></i>
+        </h4>
+        <div>
+          <i class="fas fa-play fs-1 py-5" (click)="playSpeech()" *ngIf="x401Speech.paused"></i>
+          <i class="fas fa-stop fs-1 py-5" (click)="stopSpeech()" *ngIf="!x401Speech.paused"></i>
+          <audio controls #x401Speech class="d-none">
+            <source src="assets/audios/welcomeSpeech.wav" type="audio/mp3">
+            Your browser does not support the audio tag.
+          </audio>
+        </div>
+         <div #avatarText class="fs-5 p-3"></div>
+      </div>
+    </div>
+
+  </div>
+  <div class="col-md-5 p-2">
+                <img src="assets/robot/A (((robot))) ( 1.png" alt="" class="w-100 border rounded" [ngClass]="{'lighting-effect': !x401Speech.paused, 'shadow': x401Speech.paused}">
+  </div>
+  <div class="col-md-2 " *ngIf="chat">
+    <div class="row  " *ngFor="let c of chatArray" [style.min-height.px]="heightChat">
+      <div class="col-md-12" >
+        <div class="row d-flex align-items-end">
+          <div class=" bg-white col-md-12 rounded border"  style="min-width: fit-content;" >
+            <div class="row p-1">
+      <div class="col-2">
+        <img src="{{c.img_profilo}}" alt="" class="rounded-circle " style="width:25px;height: 25px;">
+      </div>
+      <div class="col-7" (click)="heightChat=350">
+       <button class="btn">{{c.nome}} {{c.cognome}}</button>
+      </div>
+      <div class="col-2">
+        <div class="row">
+          <div class="col-12"><button class="btn" (click)="removeFromChatArray(c)"> <mat-icon class="text-danger" >clear</mat-icon></button></div>
+          <div class="col-12"><button class="btn" (click)="heightChat=30"  *ngIf="heightChat==350"><mat-icon>-</mat-icon></button>
+          </div>
+
+        </div>
+      </div>
+            </div>
+            <div class="row p-1" *ngIf="heightChat==350">
+              <div class="border rounded overflow-scroll" [style.height.px]="300">
+                <div class="row p-1" *ngFor="let message of messagesArray">
+<div class="d-flex justify-content-end" *ngIf="message.sender.id==user.id" >
+<p>
+<span style="font-size: 10px;">{{message.sender.nome}} {{message.sender.cognome}}</span><br>
+<span style="font-size: 8px;position:relative; top:-12px">{{message.createdAt}}</span>
+<br>
+  {{message.text}}
+</p>
+<img src="{{message.sender.img_profilo}}" alt="" class="rounded-circle border mx-1" style="max-width: 25px;max-height: 25px;">
+</div>
+<div class="d-flex justify-content-start" *ngIf="message.sender.id!=user.id" >
+<img src="{{message.sender.img_profilo}}" alt="" class="rounded-circle border " style="max-width: 25px;max-height: 25px;">
+<p class="mx-1">
+<span style="font-size: 10px;">{{message.sender.nome}} {{message.sender.cognome}}</span><br>
+<span style="font-size: 8px;position:relative; top:-12px">{{message.createdAt}}</span>
+<br>
+  {{message.text}}
+</p>
+</div>
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngIf="heightChat==350">
+              <form [formGroup]="chatForm" class="d-flex">
+              <input type="text" class="form-control" formControlName="message" class="w-75">
+              <button class="btn" (click)="sendMessage(c)"><mat-icon>send</mat-icon></button>
+              </form>
+            </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+      </div>
+      </div>
+      <div class=" m-auto rounded col-xxl-10" *ngIf="location!=''">
+        <!-- <p><button mat-mini-fab (click)="sidenav.toggle()"><mat-icon>menu</mat-icon></button></p> -->
+        <div class="d-flex">
+                  <p class="m-1"><button mat-mini-fab *ngIf="location!=''" (click)="location=''"><mat-icon>home</mat-icon></button></p>
+                  </div>
+<div class="p-5 row">
+  <div class="col-md-12">
+    <!-- <app-path *ngIf="location=='1'" [user]="user"></app-path>
+      <app-exercise *ngIf="location=='4'" [user]="user"></app-exercise>
+      <app-nutrition *ngIf="location=='2'" [user]="user"></app-nutrition>
+      <app-neurogenesis *ngIf="location=='3'" [user]="user"></app-neurogenesis>
+      <app-music *ngIf="location=='5'" [user]="user"></app-music>
+      <app-tips *ngIf="location=='6'" [user]="user"></app-tips>
+      <app-sleep *ngIf="location=='8'" [user]="user"></app-sleep>
+      <app-light *ngIf="location=='9'" [user]="user"></app-light>
+      <app-chemistry *ngIf="location=='7'" [user]="user"></app-chemistry>
+      <app-make-contact *ngIf="location=='10'" [user]="user" (userToSend)="onReceiveUserToVisit($event)"
+       (location)="receiveLocation($event)"></app-make-contact>
+       <app-profile *ngIf="location=='profile'" [user]="user" (location)="receiveLocation($event)"></app-profile>
+<app-visit-profile *ngIf="location=='visitProfile'"  [user]="userToVisit" [userThatVisit]="user"></app-visit-profile> -->
+  </div>
+      <div class="col-md-12">
+        <app-comments-and-reviews *ngIf="location!=''&&location!='home'&&location!='profile'&&location!='visitProfile'&&location!='10'"
+      (userToSend)="onReceiveUserToVisit($event)"
+      (location)="receiveLocation($event)"
+      [argument_id]="location" [user]="user"
+      ></app-comments-and-reviews>  <p class="p-5"  style="position: fixed; bottom: 20px; right: 20px;z-index: 1000;">
+    <button mat-mini-fab (click)="scrollToTop()" [ngClass]="shouldShowButton?'':'d-none'"><mat-icon>keyboard_arrow_up</mat-icon></button></p>
+      </div>
+</div>
+    </div>
+    <!-- <div class="col-md-2 text-center" *ngIf="user &&user.img_profilo&&location!='profile'">
+      <div class="shadow-lg w-100 border rounded shaker-on-hover" style="min-width: fit-content;" (click)="location='profile'">
+             <div class="bg-light rounded-top p-1">
+<div>
+  <button class=" bg-transparent" style="border: none;">
+    <img src="{{user.img_profilo}}" alt="img_profile"  class="rounded border shadow-lg w-100">
+  </button>
+</div>
+<p class="fw-bold fs-5">
+  <a href="#" [ngClass]="{'text-dark': bg, 'text-light': !bg}">
+  {{user.nome}}  {{user.cognome}}
+ </a>
+</p>
+      </div>
+      <div class=" rounded-bottom border-success">
+        <p><a href="#" [ngClass]="{'text-dark': bg, 'text-light': !bg}" class="p-2">{{user.email}}</a></p>
+        <p><a href="#" [ngClass]="{'text-dark': bg, 'text-light': !bg}" class="p-2 border-top border-success">{{user['età']}} anni</a></p>
+<p><a href="#" [ngClass]="{'text-dark': bg, 'text-light': !bg}" class="p-2 border-top border-success ">{{user.continent.name}}</a></p>
+<p><a href="#" [ngClass]="{'text-dark': bg, 'text-light': !bg}" class="p-2 border-top border-success">{{user.nazione.name}}</a></p>
+      </div>
+      </div>
+
+</div> -->
+<div class="col-xxl-2 bg-white p-4 overflow-scroll rounded-top shadow-lg m-auto" *ngIf="location==''&&chat==true" style="max-width: 700px">
+  <div class="d-flex justify-content-end">
+    <button class="btn" (click)="chat=false"><mat-icon class="text-danger" >clear</mat-icon></button>
+  </div>
+  <h2>Chat </h2>
+  <div class="row py-2" *ngFor="let f of friendShipArray" (click)="addToChatArray(f.receiver)">
+    <div class="col-3">
+      <img src="{{f.receiver.img_profilo}}" alt="" class="rounded-circle w-100">
+    </div>
+    <div class="col-7 text-start pt-2">{{f.receiver.nome}} {{f.receiver.cognome}}</div>
+    <div  class="col-2">
+      <button class="btn">
+      <mat-icon>send</mat-icon>
+    </button></div>
+  </div>
+</div>
+
+      </div>
+        <!-- </mat-sidenav-content>
+  </mat-sidenav-container> -->
+
+</div>
+<app-footer class="shadow"></app-footer>
+</div>

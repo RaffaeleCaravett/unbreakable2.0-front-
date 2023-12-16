@@ -1,0 +1,52 @@
+<div class="row p-2 ">
+<form [formGroup]="loginForm" class="p-3 bg-light rounded border" style="opacity: 0.7;">
+      <!-- <div class="p-1 m-auto">
+    <div class="col-md-12 p-2">
+             <span class="fs-3">Email</span>
+  </div>
+    <div class="col-md-12 p-2">
+           <input type="email" class="form-control  m-auto w-50" formControlName="email" >
+  </div>
+    <div class="col-md-12 p-2">
+         <span class="fs-3">Password</span>
+  </div>
+    <div class="col-md-12 p-2">
+              <input type="password" class="form-control  m-auto w-50" formControlName="password">
+  </div>
+  </div>
+<div class="col-md-12 d-flex flex-column justify-content-around w-50 m-auto" >
+  <button class="btn btn-warning shadow w-50 m-auto mt-1" >Login</button>
+  <p class="text-center pt-2">Or</p>
+  <button (click)="signInWithGoogle()" class=" w-50 m-auto btn btn-danger mt-1" *ngIf="!loggedIn"><img src="assets/SocialMediaIcons/google.png" style="max-width:25px;" alt="Google Icon"> Login</button>
+
+</div>
+<div class="col-md-12" *ngIf="loggedIn">
+<img src="{{user.photoUrl}}" alt="user_photo">
+<div>
+  <h4>{{user.name}}</h4>
+  <p>{{user.email}}</p>
+</div>
+</div> -->
+<div class="d-flex flex-column w-50 m-auto">
+  <mat-form-field>
+    <mat-label>Enter your email</mat-label>
+    <input matInput placeholder="pat@example.com" formControlName="email" required>
+      <mat-error *ngIf="loginForm.controls['email'].invalid">{{getErrorMessage()}}</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Enter your password</mat-label>
+    <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required>
+    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </button>
+  </mat-form-field>
+  <div>
+    <button mat-button (click)="login()" [disabled]="loginForm.invalid">Login</button>
+  </div>
+</div>
+</form>
+<hr class="w-75 m-auto p-2">
+<div class="col-md-12 text-center p-2">
+  <p>Or signup <span class="colors" (click)="goToForms('signup')"> <a href="#">here!</a></span></p>
+</div>
+</div>

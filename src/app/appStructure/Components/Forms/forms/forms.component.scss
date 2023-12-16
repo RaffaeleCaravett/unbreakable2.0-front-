@@ -1,0 +1,62 @@
+@media screen and (min-width : 100px) and (max-width : 1199px) {
+  .personal {
+    height: 50px;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .personal {
+    height: 200px;
+  }
+  .text-light{
+    text-shadow: 2px 2px 2px red;
+  }
+}
+.cube{
+  width: auto;
+}
+
+.overflow-auto::-webkit-scrollbar {
+  width: 12px;
+}
+
+.overflow-auto::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.overflow-auto::-webkit-scrollbar-thumb {
+  background: red;
+  border-radius: 6px;
+}
+.bg-white,.container,.row{
+  opacity: 0.99;
+}
+.scrollable::-webkit-scrollbar {
+  width: 0px!important;
+}
+.scrollable::-webkit-scrollbar-thumb {
+  background: none!important;
+}
+@media screen and (max-width:1200px) {
+  .canvas {
+   display: none;
+  }
+  .canvas1 {
+    display: none;
+
+  }
+  .canvas2 {
+    display: none;
+  }
+
+}
+@media screen and (max-height:400px) {
+  // .images{
+  //   display: none;
+  // }
+
+}
+
+.rainbow-shadow {
+  background-color: black;
+  // box-shadow: 5px 5px 5px 5px black, 5px 5px 5px 5px red, 5px 5px 5px 5px green, 5px 5px 5px 5px yellow, 5px 5px 5px 5px orange, 5px 5px 5px 5px brown, 5px 5px 5px 5px white;
+}

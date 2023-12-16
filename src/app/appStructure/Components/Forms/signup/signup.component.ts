@@ -1,0 +1,175 @@
+import { StepperSelectionEvent } from '@angular/cdk/stepper';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { ErrorsDialogComponent } from 'src/app/appStructure/Shared/Components/dialogs/errors-dialog/errors-dialog.component';
+import { AuthService } from 'src/app/appStructure/Shared/Services/AuthService/Auth.service';
+import { CitiesAndNationsService } from 'src/app/appStructure/Shared/Services/ContinentsAndNations/continents-and-nations.service';
+import { EmojisService } from 'src/app/appStructure/Shared/Services/EmojisService/emojis.service';
+import { FormsService } from 'src/app/appStructure/Shared/Services/FormsService/forms.service';
+import { NavService } from 'src/app/appStructure/Shared/Services/navService/nav.service';
+
+@Component({
+  selector: 'app-signup',
+  templateUrl: './signup.component.html',
+  styleUrls: ['./signup.component.scss'],
+})
+export class SignupComponent implements OnInit,OnDestroy {
+  signupForm!: FormGroup;
+  isLinear:boolean=true
+  formSectionCount!: number;
+  formSectionCount1!: number;
+  showErrors:boolean=false
+  isThereNationality:boolean=false;
+  nationsArray:any[]=[]
+  nationsFlagsArray:any[]=[]
+  continentsArray:any[]=[]
+  personalInfo!: FormGroup;
+  locationInfo!: FormGroup;
+  accountInfo!: FormGroup;
+  hide:boolean=true
+  hide1:boolean=true
+  profile_picture!:string
+  imageForm!:FormGroup
+  @Output() location : EventEmitter<string> = new EventEmitter<string>
+  constructor(private signUpService: FormsService,private continentsAndNations: CitiesAndNationsService,
+private emojisService:EmojisService,private sharedDataService: NavService,private _formBuilder: FormBuilder,
+private dialogRef:MatDialog, private authService:AuthService) {
+  }
+
+
+
+  ngOnDestroy(): void {
+    localStorage.clear()
+  }
+
+  ngOnInit(): void {
+    this.profile_picture='../../../../../assets/signup/default_profile_picture.jpg'
+    // this.emojisService.getAll().subscribe((data:any)=>{
+    // })
+    // this.emojisService.search('sm').subscribe((data:any)=>{
+    // })
+
+
+this.continentsAndNations.getAllContinents().subscribe((data:any)=>{
+  if(data && data.content){
+    this.continentsArray=data.content;
+  }
+})
+      this.personalInfo= this._formBuilder.group({
+        name: ['', Validators.required],
+        surname: ['', Validators.required],
+        age: ['',[Validators.required, Validators.min(12)]],
+      }),
+      this.locationInfo= this._formBuilder.group({
+        continent: ['', Validators.required],
+        nation: ['', Validators.required],
+      })
+      this.accountInfo= this._formBuilder.group({
+        email: ['', [Validators.required,Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)]],
+        password: ['', [Validators.required,Validators.minLength(6)]],
+        ripetiPassword: ['',[Validators.required,Validators.minLength(6)]],
+      })
+      this.locationInfo.controls['continent'].valueChanges.subscribe((newValue) => {
+        this.callNationsByContinentId(newValue);
+      });
+
+      this.imageForm= new FormGroup({
+        img_profile:new FormControl('',Validators.required)
+      })
+  }
+
+  signupRequest() {
+    if (this.accountInfo.controls['password'].value==this.accountInfo.controls['ripetiPassword'].value) {
+      this.signUpService
+        .signupRequest({
+          email: String(this.accountInfo.controls['email'].value),
+          continente: String(this.locationInfo.controls['continent'].value),
+          età: Number(this.personalInfo.controls['age'].value),
+          cognome: String(this.personalInfo.controls['surname'].value),
+          nazione: String(this.locationInfo.controls['nation'].value),
+          nome: String(this.personalInfo.controls['name'].value),
+          password: String(this.accountInfo.controls['password'].value),
+          role: 'USER',
+        })
+        .subscribe(
+          (data: any) => {
+              this.signUpService.uploadProfileImage(this.selectedImage,data.id).subscribe((uploaded:any)=>{
+            })
+            setTimeout(()=>{
+              this.signUpService.loginRequest(
+                {
+                  email: String(this.accountInfo.controls['email'].value),
+                  password: String(this.accountInfo.controls['password'].value),
+                }
+              ).subscribe((data:any)=>{
+                localStorage.setItem('accessToken',data.accessToken)
+                this.authService.setToken(data.accessToken);
+                this.location.emit('home')
+              })
+            },1000)
+          },
+          (error) => {
+            const dialogRef = this.dialogRef.open(ErrorsDialogComponent, {
+              width: '300px',
+              data: error.error.message
+            });
+
+            dialogRef.afterClosed().subscribe(result => {
+            });
+          }
+        );
+    }else{
+      const dialogRef = this.dialogRef.open(ErrorsDialogComponent, {
+        width: '300px',
+        data: 'Le password devono coincidere'
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+      });
+    }
+  }
+
+callNationsByContinentId(continentId:number){
+if(continentId){
+  this.continentsAndNations.getNationsByContinentId(continentId).subscribe((data:any)=>{
+   this.nationsArray=[]
+  this.nationsArray=data
+})
+}else{
+  this.nationsArray=[]
+}
+}
+
+goToForms(params:string){
+  this.sharedDataService.sendData(params);
+}
+showImageForm:boolean=false
+onStepChange(event: StepperSelectionEvent): void {
+  if (event.selectedIndex === 2) {
+    this.showImageForm=true
+  }
+}
+selectedImage:any=null;
+profile_preview:any=null;
+handleFileInput(event: any): void {
+  const file = event.target.files?.[0];
+
+  if (file && file.size > 1048576) {
+    this.selectedImage = null;
+    alert('File size exceeds the maximum allowed size (1 MB). Please choose a smaller file.');
+  } else {
+    this.selectedImage = file;
+  }
+if (this.selectedImage) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.profile_preview = reader.result;
+      };
+      reader.readAsDataURL(this.selectedImage);
+    }
+}
+
+
+
+}

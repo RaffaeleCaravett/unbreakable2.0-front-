@@ -20,6 +20,7 @@ export class FormsService {
   private verifyTkn = "/auth/"
   private uploadImage = "/auth/upload/"
   private user = "/user/"
+  private isAuthenticated = false;
 
   sendData(data: number) {
     this.dataSubject.next(data);
@@ -60,5 +61,13 @@ return this.httpModule.post(environment.API_URL+this.uploadImage+id, formData);
 
     return this.httpModule.get(environment.API_URL+`/auth/search?nome=${nome||''}&cognome=${cognome||''}&nazione=${nazione||''}&continent=${continent||''}&email=${email||''}&eta=${Number(eta)}
     &direction=${direction}&sort=${sort}&page=${page}&size=${size}`);
+  }
+
+  isUserAuthenticate(bool?:boolean){
+    if(bool){
+      return this.isAuthenticated=bool
+    }else{
+      return this.isAuthenticated
+    }
   }
 }

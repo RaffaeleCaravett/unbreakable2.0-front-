@@ -18,6 +18,31 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatDialogModule } from '@angular/material/dialog';
+import { FormsComponent } from './appStructure/Components/Forms/forms/forms.component';
+import { SignupComponent } from './appStructure/Components/Forms/signup/signup.component';
+import { LoginComponent } from './appStructure/Components/Forms/login/login.component';
+import { HomePageComponent } from './appStructure/Components/MainPages/home-page/home-page.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatOptionModule } from '@angular/material/core';
+import { HttpClientModule } from '@angular/common/http';
+import { ChemistryComponent } from './appStructure/Components/MainPages/Chemistry/chemistry.component';
+import { ExerciseComponent } from './appStructure/Components/MainPages/Exercise/exercise/exercise.component';
+import { MakeContactComponent } from './appStructure/Components/MainPages/make-contact/make-contact.component';
+import { LightComponent } from './appStructure/Components/MainPages/Light/light/light.component';
+import { MusicComponent } from './appStructure/Components/MainPages/Music/music/music.component';
+import { NeurogenesisComponent } from './appStructure/Components/MainPages/Neurogenesis/neurogenesis/neurogenesis.component';
+import { NutritionComponent } from './appStructure/Components/MainPages/Nutrition/nutrition/nutrition.component';
+import { PathComponent } from './appStructure/Components/MainPages/Path/path/path.component';
+import { ProfileComponent } from './appStructure/Components/MainPages/profile/profile.component';
+import { SleepComponent } from './appStructure/Components/MainPages/Sleep/sleep/sleep.component';
+import { TipsComponent } from './appStructure/Components/MainPages/Tips/tips/tips.component';
+import { VisitProfileComponent } from './appStructure/Components/MainPages/visit-profile/visit-profile.component';
+import { NgxEchartsModule } from 'ngx-echarts';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @NgModule({
@@ -31,7 +56,23 @@ import { MatDialogModule } from '@angular/material/dialog';
     MapComponent,
     NavbarComponent,
     UnbreackableLettersComponent,
-    X401SpeechComponent
+    X401SpeechComponent,
+    FormsComponent,
+    SignupComponent,
+    LoginComponent,
+    HomePageComponent,
+    ChemistryComponent,
+    ExerciseComponent,
+    MakeContactComponent,
+    LightComponent,
+    MusicComponent,
+    NeurogenesisComponent,
+    NutritionComponent,
+    PathComponent,
+    ProfileComponent,
+    SleepComponent,
+    TipsComponent,
+    VisitProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +82,20 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatIconModule,
     ReactiveFormsModule,
     MatBadgeModule,
-    MatDialogModule
+    MatDialogModule,
+    MatFormFieldModule,
+
+    MatStepperModule,
+    MatOptionModule,
+    HttpClientModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts'),
+    }),
+MatTableModule,
+MatPaginatorModule,
+MatInputModule,
+MatButtonModule,
+
   ],
   exports:[
     ErrorsDialogComponent,
@@ -52,7 +106,24 @@ import { MatDialogModule } from '@angular/material/dialog';
     MapComponent,
     NavbarComponent,
     UnbreackableLettersComponent,
-    X401SpeechComponent
+    X401SpeechComponent,
+    FormsComponent,
+    SignupComponent,
+    LoginComponent,
+    HomePageComponent,
+    ChemistryComponent,
+    ExerciseComponent,
+    MakeContactComponent,
+    LightComponent,
+    MusicComponent,
+    NeurogenesisComponent,
+    NutritionComponent,
+    PathComponent,
+    ProfileComponent,
+    SleepComponent,
+    TipsComponent,
+    VisitProfileComponent
+
   ],
   providers: [],
   bootstrap: [AppComponent]

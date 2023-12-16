@@ -1,0 +1,25 @@
+
+p{
+  font-size: 14px;
+}
+.colors{
+  background: linear-gradient(to right, black, red, green, yellow, orange, brown, white);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent; /* Hide the text color */
+  display: inline;
+  -webkit-text-fill-color: transparent;
+}
+.btn-warning{
+  background: linear-gradient(to top right, rgba(255, 255, 255, 0.5), rgb(255, 187, 0))
+}
+.btn-primary{
+  background: linear-gradient(to top right, rgba(255, 255, 255, 0.5), rgb(0, 47, 255))
+}
+.btn-danger{
+  background: linear-gradient(to top right, rgba(255, 255, 255, 0.5), rgb(255, 0, 0))
+}
+::ng-deep .mat-mdc-button .mat-mdc-button-touch-target, .mat-mdc-unelevated-button .mat-mdc-button-touch-target, .mat-mdc-raised-button .mat-mdc-button-touch-target, .mat-mdc-outlined-button .mat-mdc-button-touch-targetmat-mdc-button-persistent-ripple .mdc-button__ripple{
+  background: linear-gradient(to top right, rgba(255, 255, 255, 0.5), rgb(255, 187, 0))!important;
+  border-radius: 5px;
+}

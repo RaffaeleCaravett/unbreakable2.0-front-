@@ -1,0 +1,47 @@
+.text-danger{
+  font-size:10px;
+  font-weight: bold;
+}
+option{
+  img{
+    max-width: 20px;
+    max-height: 20px;
+  }
+}
+p{
+  font-size: 14px;
+}
+.colors{
+  background: linear-gradient(to right, black, red, green, yellow, orange, brown, white);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent; /* Hide the text color */
+  display: inline;
+  -webkit-text-fill-color: transparent;
+}
+.btn{
+  background: linear-gradient(to top right, rgba(255, 255, 255, 0.5), rgb(255, 187, 0))
+}
+.mat-stepper-horizontal {
+  margin-top: 18px;
+  color: black;
+}
+
+.mat-mdc-form-field {
+  input{
+    height: 36px;
+  }
+  margin-top: 32px;
+}
+::ng-deep .mat-step-icon-selected{
+  background-color: black!important;
+  color: white!important;
+}
+::ng-deep .mat-step-icon-state-edit {
+  background-color: green!important
+}
+
+::ng-deep .mat-mdc-button .mat-mdc-button-touch-target, .mat-mdc-unelevated-button .mat-mdc-button-touch-target, .mat-mdc-raised-button .mat-mdc-button-touch-target, .mat-mdc-outlined-button .mat-mdc-button-touch-targetmat-mdc-button-persistent-ripple .mdc-button__ripple{
+  background: linear-gradient(to top right, rgba(255, 255, 255, 0.5), rgb(255, 187, 0))!important;
+  border-radius: 5px;
+}

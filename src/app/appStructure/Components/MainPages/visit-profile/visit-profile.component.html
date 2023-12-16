@@ -1,0 +1,131 @@
+<div class="row">
+  <div class="col-md-12 p-2 text-center d-flex justify-content-center">
+    <h1>{{user.nome}} profile <mat-icon class="text-success">account_circle</mat-icon></h1>
+    <button class="btn mx-2" (click)="saveFriendship()" *ngIf="!friendshipSent">Follow</button>
+    <button class="btn mx-2" (click)="removeFriendship()" *ngIf="friendshipSent">Unfollow</button>
+    <button class="btn mx-2" (click)="chat=true" *ngIf="friendshipSent">Send a message</button>
+  </div>
+  <div class="col-md-6">
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-6 p-3 border rounded shadow-lg fs-5 overflow-auto">
+        <div class="row">
+          <div class="col-md-12 p-1">
+<img src="{{user.img_profilo}}" alt="" class="w-100 rounded-top shadow-sm" style="max-height: 270px;">
+    </div>
+
+<div class="col-md-12">
+  <div class="p-1 text-center row">
+      <div class="col-md-4">
+         <p>My profile </p>
+</div>
+      <div class="col-md-8">
+        <form [formGroup]="updateDescription">
+          <textarea type="text" class="bg-transparent"  formControlName="description" placeholder="{{user.nome }} has no description"  (click)="submitted=false">
+          </textarea>
+        </form>
+      </div>
+
+    </div>
+</div>
+<div class="col-md-12">
+  <form [formGroup]="userForm">
+        <div class="row">
+        <div class="col-md-6">
+          <input type="text" class="bg-transparent w-100 p-2" formControlName="nome" placeholder="{{user.nome}}" (click)="submitted=false">
+        </div>
+        <div class="col-md-6">
+          <input type="text" class="bg-transparent w-100 p-2" formControlName="cognome" placeholder="{{user.cognome}}" (click)="submitted=false">
+        </div>
+        <div class="col-md-6">
+          <select type="text" class="bg-transparent w-100 p-2" formControlName="continente" (change)="callNationsByContinentId(userForm.controls['continente'].value)" (click)="submitted=false">
+            <option value="{{c.id}}" *ngFor="let c of continents" #option>{{c.name}}</option>
+          </select>
+          </div>
+        <div class="col-md-6">
+          <select type="text" class="bg-transparent w-100 p-2" formControlName="nazione"  (click)="submitted=false">
+        <option value="{{n.id}}" *ngFor="let n of nations">{{n.name}}</option>
+          </select>
+          </div>
+        <div class="col-md-10">
+          <input type="text" class="bg-transparent w-100 p-2" formControlName="email" placeholder="{{user.email}}" (click)="submitted=false">
+        </div>
+        <div class="col-md-2">
+          <input type="text" class="bg-transparent w-100 p-2" formControlName="eta" placeholder="{{user['età']}}" (click)="submitted=false">
+        </div>
+     </div>
+     </form>
+</div>
+</div>
+
+
+
+      </div>
+      <div class="col-md-3"></div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="row">
+      <div class="col-md-12 m-4 border rounded shadow-lg fs-5">
+        <div class=" text-center border-bottom">
+          <h2>Account informations <mat-icon>person</mat-icon></h2>
+        </div>
+        <div class="px-4">
+          <p>Total comments : {{commentsArray.length}} <mat-icon class="text-secondary">comment</mat-icon>
+          </p>
+          <p>Total likes : <mat-icon class="text-danger">favorite</mat-icon>
+          </p>
+          <p>Total friends : <mat-icon class="text-primary">group</mat-icon>
+          </p>
+          <p>Total reviews : {{ratingsArray.length}} <mat-icon class="text-warning">star</mat-icon>
+          </p>
+        </div>
+      </div>
+      <div class="col-md-12 m-4 border rounded shadow-lg fs-5">
+        <div class="p-1 text-center border-bottom">
+          <div class="d-flex">
+            <h2>Arguments {{user.nome}} reviewed </h2>
+            <p *ngFor="let star of stars"   class="px-2">
+           <i class="fas fa-star ac" ></i>
+         </p>
+        </div>
+        <div class="p-4 overflow-auto">
+<table class="m-auto table table-dark table-hover">
+  <thead>
+    <tr>
+        <th class="p-2">Argument name</th>
+        <th class="p-2">Image</th>
+        <th class="p-2">Rating</th>
+        <th class="p-2">Go to</th>
+    </tr>
+</thead>
+<tbody *ngIf="orderedRatings">
+  <tr *ngFor="let o of orderedRatings">
+    <td >{{o.argument.title}}</td>
+    <td ><img src="{{o.argument.img_argument}}" alt="img" class="rounded" style="max-width: 30px;"></td>
+    <td >{{o.rating}}</td>
+    <td ><button class="btn" (click)="location.emit(o.argument.id)"><mat-icon class="text-light">arrow_right</mat-icon></button></td>
+  </tr>
+</tbody>
+<tbody *ngIf="orderedRatings&&orderedRatings.length==0">
+<tr>
+  <td>Still </td>
+  <td>no</td>
+  <td>reviews</td>
+  <td>!</td>
+</tr>
+</tbody>
+</table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-md-12 p-3">
+  <div class="chart" echarts [options]="option"></div>
+</div>
+<div class="col-md-12 p-2">
+  <app-map class="py-5" [user]="user"></app-map>
+</div>
+</div>
+
