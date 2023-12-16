@@ -1,0 +1,19 @@
+<div class="col-md-12 text-center" data-aos="fade-up" data-aos-duration="3000">
+  <h4 >Make X401 talk
+  </h4>
+  <i class="fas fa-play fs-1 p-2  text-success" (click)="playSpeech()" *ngIf="x401Speech.paused"></i>
+    <i class="fas fa-stop fs-1 p-2  text-danger" (click)="stopSpeech()" *ngIf="!x401Speech.paused"></i>
+  <div>
+    <audio controls #x401Speech class="d-none">
+      <source src="assets/audios/nutrition.wav" type="audio/mp3" *ngIf="id=='nutrition'">
+      <source src="assets/audios/heal.wav" type="audio/mp3" *ngIf="id=='heal'">
+      <source src="assets/audios/exercise.wav" type="audio/mp3" *ngIf="id=='exercise'">
+      <source src="assets/audios/chemistry.wav" type="audio/mp3" *ngIf="id=='chemistry'">
+      <source src="assets/audios/sleep.wav" type="audio/mp3" *ngIf="id=='sleep'">
+      <source src="assets/audios/music.wav" type="audio/mp3" *ngIf="id=='music'">
+      <source src="assets/audios/nutrition.wav" type="audio/mp3" *ngIf="id=='light'">
+      Your browser does not support the audio tag.
+    </audio>
+  </div>
+  <img src="assets/robot/A (((robot))) ( 1.png" alt="" class="w-50 border rounded" [ngClass]="{'lighting-effect': !x401Speech.paused, 'shadow': x401Speech.paused}">
+</div>

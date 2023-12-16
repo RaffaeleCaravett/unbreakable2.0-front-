@@ -1,0 +1,74 @@
+<div class="row">
+  <div class="col-md-12">
+    <h2 >
+Average ratings of this section : <span>{{media}}</span>
+    </h2>
+  </div>
+  <div class="col-md-12">
+    <div class="fs-4">
+    <p *ngIf="alreadyCensed==false"> You still didn't rate this section!</p>
+    <p *ngIf="alreadyCensed==true">Your rate:</p>
+      <div class="d-flex justify-content-center">
+         <p *ngFor="let star of stars"  [class.active]="star <= rating">
+        <i class="fas fa-star" [class.active]="star <= rating" [class.hover]="star <= hoverRating" (click)="rate(star)"></i>
+      </p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12">
+      <h2> Comments :</h2>
+    <div class="p-2 border rounded shadow-sm">
+     <div class="p-3">
+      <div class="row">
+        <div class="col-md-12 text-center p-4 border-bottom">
+          <form [formGroup]="commentiForm" class="d-flex flex-column">
+            <h2>Leave a comment</h2>
+          <textarea formControlName="textArea" cols="60" rows="5" class="m-auto rounded w-50"></textarea>
+          <div class="w-50 m-auto">
+<button class="btn btn-primary my-1" (click)="submitTextArea();">Comment</button>
+          </div>
+
+        </form>
+        </div>
+      </div>
+      <div *ngFor="let c of allComments" class="py-3">
+        <div class="col-md-12 ">
+          <div class="row" >
+            <div class="col-md-2 p-1">
+              <img src="{{c.user.img_profilo}}" alt="img_profilo" class="w-50 rounded-circle border shadow">
+            </div>
+            <div class="col-md-10 p-1" >
+              <div class="border rounded shadow-sm bg-personal p-2" style="min-width: fit-content; ">
+                <div class="d-flex ">
+                  <div class="d-flex w-100">
+                    <p class=" fs-3 fw-bolder" (click)="sendInfos(c)">{{c.user.nome}} {{c.user.cognome}}</p>
+                  <p class=" fs-5 fw-bolder py-2" *ngIf="c.user.id==user.id">(Autore)</p>
+                  </div>
+                  <div class="d-flex flex-shrink-1">
+                    <button mat-button class="btn" [matMenuTriggerFor]="menu" *ngIf="c.user.id==user.id"><mat-icon>more_vert</mat-icon></button>
+<mat-menu #menu="matMenu" >
+  <button class="btn btn-danger d-flex m-1" mat-menu-item (click)="deleteComment(c.id,user.id)">Delete <mat-icon>delete_outline</mat-icon></button>
+  <button class="btn btn-warning d-flex m-1" mat-menu-item *ngIf="c.user.id==user.id" (click)="modifyComment(c.id,user.id,c.testo)">Modify <mat-icon>edit</mat-icon></button>
+</mat-menu>
+
+                  </div>
+                </div>
+                <p class="fs-7 p-0 m-0 fw-bold " style="top:-18px;position:relative;font-size:12px">{{c.user.continent.name}} - {{c.user.nazione.name}}</p>
+                <p class="fs-7 p-0 m-0 " style="top:-18px;position:relative;font-size:12px">{{c.data}}</p>
+                <div class="col-md-12 p-2 fs-5">
+                {{c.testo}}
+              </div>
+              <div class="col-md-12">
+                <button class="btn"><mat-icon class="text-danger" (click)="interact(c,c)" [ngClass]="isThisLiked(c)?'text-danger':'text-black'">favorite</mat-icon></button>
+                <button class="btn">{{c.likes.length}}</button>
+              </div>
+              </div>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div *ngIf="allComments.length==0" class="text-center fs-1 fw-bolder"> There are no comments for this section yet!</div>
+     </div>
+    </div>
+  </div>
+</div>

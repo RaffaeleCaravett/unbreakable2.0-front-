@@ -1,0 +1,72 @@
+<div class="row sha bg-light">
+    <div class="col-md-12">
+      <div class="row  m-0">
+        <div class="col-xxl-2">
+          <app-unbreackable-letters [letter]="'U'"></app-unbreackable-letters>
+        <span class="fw-bolder">N B R E A C K A B L E</span>
+        </div>
+        <div class="col-md-8" *ngIf="navbarToShow=='forms'"></div>
+        <div class="col-xxl-9" *ngIf="navbarToShow!='forms'">
+          <div class="row m-0" >
+            <div class="col-xxl-1 col-xl-2 col-sm-2 col-3 py-2 hover">
+              <a href="#" style="text-decoration: none;"  [ngClass]="{'text-dark': bg, 'text-light': !bg}" (click)="homeLocation.emit('')">
+              Home
+              </a>
+            </div>
+           <div *ngFor="let a of argumentsArray" class="col-xxl-1 col-xl-2 col-sm-2 col-3 py-2 hover">
+                      <a href="#" style="text-decoration: none;" [ngClass]="{'text-dark': bg, 'text-light': !bg}" (click)="homeLocation.emit(a.id)">
+                        {{a.title}}
+                      </a>
+                        <br>
+                    </div>
+                    <div class="col-xxl-1 col-xl-2 col-sm-2 col-3 py-2 hover">
+                      <a href="#" style="text-decoration: none;" [ngClass]="{'text-dark': bg, 'text-light': !bg}" (click)="homeLocation.emit('10')">
+                      Connect
+                      </a>
+                    </div>
+                    <div class="col-xxl-1 col-xl-2 col-sm-2 col-3 py-2 hover">
+                      <a href="#" style="text-decoration: none;"  [ngClass]="{'text-dark': bg, 'text-light': !bg}" (click)="homeLocation.emit('profile')">
+                       Profile
+                      </a>
+                    </div>
+          </div >
+    </div>
+<div class="col-xxl-2 d-flex justify-content-end" *ngIf="navbarToShow=='forms'">
+  <a href="#" (click)="goToForms('login')">
+ <span id="login" class="text-dark-span" >Login</span>
+ <canvas #canvas1 class="pt-2"></canvas> </a>
+  <a href="#"  class="mt-2" (click)="goToForms('signup')">
+    <div class="row">
+      <div class="col-6 text-dark">Signup </div>
+    </div></a>
+</div>
+<div class="col-xxl-1 d-flex justify-content-end p-2" *ngIf="navbarToShow!='forms'">
+  <button  mat-button [matMenuTriggerFor]="menu" (click)="updateNotification()"> <a href="#" class="p-2">
+    <mat-icon [matBadge]="badgeValue" matBadgeColor="warn" matBadgePosition="above after">notifications</mat-icon>
+  </a></button>
+<mat-menu #menu="matMenu" >
+  <button mat-menu-item *ngFor="let n of notificationArray">
+  <div class="row">
+    <div class="col-md-2">
+      <img src="{{n.sender.img_profilo}}" class="w-100" alt="sender_img_profilo">
+    </div>
+    <div class="col-md-8">
+      <div class="col-md-12" *ngIf="n.comment &&n.comment.testo">{{n.sender.nome}} {{n.sender.cognome}} ha messo mi piace al tuo commento</div>
+      <div class="col-md-12 text-center" *ngIf="n.comment &&n.comment.testo">{{n.comment.testo}}</div>
+      <div class="col-md-12" *ngIf="n.friendship">{{n.sender.nome}} {{n.sender.cognome}} ha cominciato a seguirti</div>
+    </div>
+    <div class="col-md-1">
+      <mat-icon class="text-danger" *ngIf="n.comment &&n.comment.testo">favorite</mat-icon>
+      <mat-icon class="text-warning" *ngIf="n.friendship">person_add_alt_1</mat-icon>
+    </div>
+  </div>
+  </button>
+</mat-menu>
+  <a href="#" (click)="goToForms('signup','clear')" class="p-2">
+ <span id="login" class="p-2" >Logout</span>
+</a>
+</div>
+      </div>
+    </div>
+  </div>
+

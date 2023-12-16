@@ -1,0 +1,63 @@
+canvas{
+  max-width: 70px;
+  #canvas3{
+    max-width: 500px;
+    max-height: 150px;
+  }
+}
+.btn{
+  max-height: 63px;
+  min-width: 139px;
+}
+.btn-outline-secondary{
+  background-color: red;
+  }
+#login{
+  position: relative;
+  top:-13px;
+}
+h1{
+  font-size: 45px;
+}
+app-unbreackable-letters{
+  max-width: 50px;
+  margin: 0px;
+  padding: 0px;
+}
+a{text-decoration: none;
+color:black;
+font-size:20px}
+
+.hover {
+  position: relative;
+  overflow: hidden;
+  border: 2px solid transparent;
+}
+.hover {
+  padding: 1rem 1.5rem;
+  -o-transition: all .4s ease-in-out;
+  -webkit-transition: all .4s ease-in-out;
+  transition: all .4s ease-in-out;
+  background-size: 300% 100%;
+  background-position: center center;
+}
+
+.hover:hover {
+  -webkit-transition: all 2000ms ease;
+  -moz-transition: all 2000ms ease;
+  -ms-transition: all 2000ms ease;
+  -o-transition: all 2000ms ease;
+  transition: all 2000ms ease;
+  background-image: linear-gradient(138deg, #0468F7 0%, #0468F7 25%, #C645FF 65%, #C645FF 100%);
+  background-position: left center;
+}
+
+.hover:focus {
+  background-position: right center;
+}
+
+:host::ng-deep.mat-mdc-button .mat-mdc-button-touch-target, .mat-mdc-unelevated-button[_ngcontent-ng-c3502215706] .mat-mdc-button-touch-target[_ngcontent-ng-c3502215706],
+ .mat-mdc-raised-button[_ngcontent-ng-c3502215706] .mat-mdc-button-touch-target[_ngcontent-ng-c3502215706], .mat-mdc-outlined-button[_ngcontent-ng-c3502215706]
+ .mat-mdc-button-touch-targetmat-mdc-button-persistent-ripple[_ngcontent-ng-c3502215706] .mdc-button__ripple[_ngcontent-ng-c3502215706]{
+  background: transparent!important;
+}

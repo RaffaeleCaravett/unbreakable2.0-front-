@@ -1,0 +1,19 @@
+<h2 mat-dialog-title class="bg-dark text-white">Modify your comment</h2>
+
+<mat-dialog-content>
+  <p>{{dialogData[0].name}} {{dialogData[0].surname}}</p>
+  <div class="col-md-12 text-center p-2 ">
+    <form [formGroup]="commentiForm" class="d-flex flex-column">
+    <textarea formControlName="textArea" cols="60" rows="5" class="m-auto rounded"></textarea>
+    <div class="w-50 m-auto">
+    </div>
+    <button class="btn btn-danger m-1 d-none" #formButton (click)="submitTextArea();">Modify</button>
+
+  </form>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button class="btn btn-danger m-1" mat-button [mat-dialog-close]>Close</button>
+  <button class="btn btn-primary m-1" (click)="formButton.click()">Modify</button>
+</mat-dialog-actions>
+

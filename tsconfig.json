@@ -23,7 +23,7 @@
       "ES2022",
       "dom"
     ],
-    "types": ["echarts"]
+    "types": ["echarts", "@angular/material"]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
