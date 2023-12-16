@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { ErrorsDialogComponent } from 'src/app/appStructure/Shared/Components/dialogs/errors-dialog/errors-dialog.component';
 import { AuthService } from 'src/app/appStructure/Shared/Services/AuthService/Auth.service';
 import { FormsService } from 'src/app/appStructure/Shared/Services/FormsService/forms.service';
@@ -21,8 +22,8 @@ export class LoginComponent implements OnInit{
   hide:boolean=true
   @Output() location : EventEmitter<string> = new EventEmitter<string>
 
-  constructor(private sharedDataService:NavService, private formsService:FormsService,private dialogRef:MatDialog,
-    private authService:AuthService) { }
+  constructor(private router:Router, private formsService:FormsService,private dialogRef:MatDialog,
+    private authService:AuthService,private navbarService:NavService) { }
 
 
   ngOnInit(): void {
@@ -49,16 +50,17 @@ password:this.loginForm.controls['password'].value
   ).subscribe(
     (data: any) => {
       if (data) {
-
         localStorage.setItem('accessToken',data.tokens.accessToken)
         localStorage.setItem('refreshToken',data.tokens.refreshToken)
-
         this.authService.setToken(data.tokens.accessToken);
         this.authService.setRefreshToken(data.tokens.refreshToken);
-        this.location.emit('')
+        this.formsService.isUserAuthenticate(true)
+        this.navbarService.sendData('home')
+        this.router.navigate(['home'])
       }
     },
     (err) => {
+      this.formsService.isUserAuthenticate(false)
     const dialogRef = this.dialogRef.open(ErrorsDialogComponent, {
       width: '300px',
       data: err.error.message
@@ -71,7 +73,7 @@ password:this.loginForm.controls['password'].value
 }
 
   goToForms(params:string){
-    this.sharedDataService.sendData(params);
-  }
+this.location.emit(params)
+}
 
 }

@@ -4,6 +4,8 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { NavService } from '../../Services/navService/nav.service';
 import { ArgumentsServiceService } from '../../Services/ArgumentsService/arguments-service.service';
 import { CommentsAndReviewService } from '../../Services/commentsAndReviewService/commentsAndReview.service';
+import { FormsService } from '../../Services/FormsService/forms.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -20,14 +22,17 @@ export class NavbarComponent implements OnInit,AfterViewInit,OnChanges{
   private mixer!: THREE.AnimationMixer
   @Output() formLocation : EventEmitter<string>= new EventEmitter<string>
   @Output() homeLocation : EventEmitter<string>= new EventEmitter<string>
-  @Input() navbarToShow:string=''
+  @Input() navbarToShow!:string
   argumentsArray:any=[]
   @Input() user:any
 location:any=''
 bg:boolean=true
 notificationArray:any[]=[]
-constructor(private sharedDataService: NavService,private argumentsService:ArgumentsServiceService,private commentsAndReviewService:CommentsAndReviewService){
-
+constructor(private sharedDataService: NavService,private argumentsService:ArgumentsServiceService,private commentsAndReviewService:CommentsAndReviewService,
+  private formsService:FormsService,private router:Router){
+this.sharedDataService.dataSubject.subscribe((data:any)=>{
+  this.navbarToShow=data
+})
 }
   ngOnChanges(changes: SimpleChanges): void {
     if(this.user){
@@ -45,7 +50,7 @@ if(notification.receiver.id==this.user.id && notification.statoNotifica=="NOT_SA
    }
     }
   ngOnInit(): void {
-    this.navbarToShow=''
+    this.navbarToShow?this.navbarToShow=this.navbarToShow:this.navbarToShow='forms'
     this.argumentsService.getAllArguments().subscribe((data:any)=>{
       if(data){
         this.argumentsArray=data.content
@@ -94,10 +99,12 @@ if(notification.receiver.id==this.user.id && notification.statoNotifica=="NOT_SA
 
   goToForms(params:string,clear?:string){
     if(clear=='clear'){
+      this.formsService.isUserAuthenticate(true)
+      this.navbarToShow='forms'
       localStorage.clear()
     }
-    this.formLocation.emit('forms')
-    this.sharedDataService.sendData(params);
+this.router.navigate(['/forms'])
+localStorage.setItem('formsLocation',params)
   }
 
 updateNotification(){

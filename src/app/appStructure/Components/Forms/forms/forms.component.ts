@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, HostListener, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, HostListener, OnInit, Output, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import * as THREE from 'three';
@@ -17,7 +17,7 @@ import { NavService } from 'src/app/appStructure/Shared/Services/navService/nav.
   templateUrl: './forms.component.html',
   styleUrls: ['./forms.component.scss']
 })
-export class FormsComponent implements OnInit, OnDestroy,AfterViewInit{
+export class FormsComponent implements OnInit, AfterViewInit{
 rotateX:number = 0;
 rotateY:number = 0;
 
@@ -93,9 +93,7 @@ if(localStorage.getItem('formsLocation')){
   this.paramValue=localStorage.getItem('formsLocation')!
 }
   }
-ngOnDestroy(): void {
-  this.subscription.unsubscribe();
-  }
+
   geometry!:THREE.PlaneGeometry;
   planeGeometry!:THREE.PlaneGeometry;
   material!:THREE.MeshStandardMaterial
@@ -290,16 +288,6 @@ updateOpacity() {
   this.materials[0].opacity = this.opacity;
 }
 
-  cubeFaces!:HTMLElement[]
-   catchTheEvent(event: MouseEvent): void {
-      event.stopPropagation();
-    if(this.paramValue=='login'){
-     this.isDragging = true;
-     this.deltaX=this.deltaX - event.clientX;
-       this.deltaY=this.deltaY - event.clientY;
-      }
-   }
-
 
   mousePosition:THREE.Vector2 = new THREE.Vector2();
   raycaster:THREE.Raycaster = new THREE.Raycaster();
@@ -490,7 +478,8 @@ onMouseOver(event:MouseEvent){
     carousel.scrollLeft = scrollX;
   }
 }
-receiveLocation(event:string){
-this.location.emit(event)
+onReceiveLocation(event:string){
+  this.paramValue=event;
+  localStorage.setItem('formsLocation',this.paramValue)
 }
 }

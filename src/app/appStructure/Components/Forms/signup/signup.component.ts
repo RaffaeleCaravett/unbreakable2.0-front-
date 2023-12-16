@@ -2,6 +2,7 @@ import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { ErrorsDialogComponent } from 'src/app/appStructure/Shared/Components/dialogs/errors-dialog/errors-dialog.component';
 import { AuthService } from 'src/app/appStructure/Shared/Services/AuthService/Auth.service';
 import { CitiesAndNationsService } from 'src/app/appStructure/Shared/Services/ContinentsAndNations/continents-and-nations.service';
@@ -33,8 +34,8 @@ export class SignupComponent implements OnInit,OnDestroy {
   imageForm!:FormGroup
   @Output() location : EventEmitter<string> = new EventEmitter<string>
   constructor(private signUpService: FormsService,private continentsAndNations: CitiesAndNationsService,
-private emojisService:EmojisService,private sharedDataService: NavService,private _formBuilder: FormBuilder,
-private dialogRef:MatDialog, private authService:AuthService) {
+private router:Router,private _formBuilder: FormBuilder,
+private dialogRef:MatDialog, private authService:AuthService,private navbarService:NavService) {
   }
 
 
@@ -103,13 +104,18 @@ this.continentsAndNations.getAllContinents().subscribe((data:any)=>{
                   password: String(this.accountInfo.controls['password'].value),
                 }
               ).subscribe((data:any)=>{
-                localStorage.setItem('accessToken',data.accessToken)
+                localStorage.setItem('accessToken',data.tokens.accessToken)
+                localStorage.setItem('refreshToken',data.tokens.refreshToken)
                 this.authService.setToken(data.accessToken);
-                this.location.emit('home')
-              })
+                this.authService.setRefreshToken(data.tokens.refreshToken);
+                this.signUpService.isUserAuthenticate(true)
+                this.navbarService.sendData('home')
+                this.router.navigate(['/home'])
+               })
             },1000)
           },
           (error) => {
+            this.signUpService.isUserAuthenticate(false)
             const dialogRef = this.dialogRef.open(ErrorsDialogComponent, {
               width: '300px',
               data: error.error.message
@@ -142,7 +148,7 @@ if(continentId){
 }
 
 goToForms(params:string){
-  this.sharedDataService.sendData(params);
+this.location.emit(params)
 }
 showImageForm:boolean=false
 onStepChange(event: StepperSelectionEvent): void {

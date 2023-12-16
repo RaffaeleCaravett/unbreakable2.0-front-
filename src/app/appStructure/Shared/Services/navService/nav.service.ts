@@ -9,8 +9,7 @@ export class NavService {
   constructor() { }
 
 
-  private dataSubject = new Subject<string>();
-  data$ = this.dataSubject.asObservable();
+  dataSubject = new Subject<string>();
 
 
   sendData(data: string) {

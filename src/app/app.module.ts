@@ -43,7 +43,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -95,6 +95,7 @@ MatTableModule,
 MatPaginatorModule,
 MatInputModule,
 MatButtonModule,
+MatSelectModule
 
   ],
   exports:[
