@@ -10,7 +10,7 @@ export class ExerciseComponent implements OnInit,AfterViewInit{
 
   string:string='exercise'
 
-  @Input() user:any
+  user:any
 typesExercises:any
 @ViewChild('video1') video1:any
   videoUno:any
@@ -21,6 +21,8 @@ typesExercises:any
   videoTre:any
 
   ngOnInit(): void {
+    this.user=JSON.parse(localStorage.getItem('user')!)
+
 this.typesExercises=[
   {
     name:'Sprinting',

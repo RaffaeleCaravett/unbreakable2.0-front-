@@ -7,12 +7,14 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class TipsComponent implements OnInit{
 
-  @Input() user:any
+  user:any
 
   cards: any
 
 
   ngOnInit(): void {
+    this.user=JSON.parse(localStorage.getItem('user')!)
+
     this.cards=
     [
 {name:'Dr Eric Berg',

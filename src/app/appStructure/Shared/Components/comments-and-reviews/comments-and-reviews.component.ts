@@ -30,10 +30,10 @@ export class CommentsAndReviewsComponent implements OnInit,OnChanges{
   constructor(private commentsAndRatingService:CommentsAndReviewService,private argumentService:ArgumentsServiceService,private dialogRef:MatDialog,private navService:NavService,
     private formsService:FormsService){
             this.rating=0
-this.formsService.userSubject.subscribe((data:any)=>{
-  if(data!=undefined){
-      this.user=data
-  }
+
+
+this.user=localStorage.getItem('user')
+this.argument_id=Number(localStorage.getItem('param'))
           if(this.argument_id!=0){
    this.argumentService.getArgumentById(Number(this.argument_id)).subscribe((data:any)=>{
         if(data){
@@ -56,12 +56,18 @@ this.formsService.userSubject.subscribe((data:any)=>{
 
       })
    }
-})
      }
   ngOnChanges(changes: SimpleChanges): void {
-    if(this.argument){
+    if(changes){
+      this.user=JSON.parse(localStorage.getItem('user')!)
+      this.argument_id=Number(localStorage.getItem('param'))
+this.argumentService.getArgumentById(Number(this.argument_id)).subscribe((data:any)=>{
+  if(data){
+    this.argument=data
+  }
       this.takeCommenti(this.argument)
 this.takeRatings(this.argument.id)
+    })
     }
   }
 

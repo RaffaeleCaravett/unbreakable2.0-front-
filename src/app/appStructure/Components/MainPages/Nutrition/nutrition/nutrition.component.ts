@@ -9,7 +9,7 @@ declare var YT: any;
   styleUrls: ['./nutrition.component.scss']
 })
 export class NutritionComponent {
-  @Input() user:any
+  user:any
 @ViewChild('video1') video1:any
 @ViewChild('video2') video2:any
 @ViewChild('video3') video3:any
@@ -42,6 +42,8 @@ constructor(){
 }
 
   ngAfterViewInit() {
+    this.user=JSON.parse(localStorage.getItem('user')!)
+
     this.dataSource.paginator = this.paginator;
     this.videoUno = new YT.Player(this.video1.nativeElement, {
       videoId: "HN0yEn4vbRw",

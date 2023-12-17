@@ -18,16 +18,14 @@ totalPages!:number
 direction:string='ASC'
 sortBy:string ='id'
 view:string='table'
-@Input() user:any
-@Output() userToSend:EventEmitter<any>= new EventEmitter<any>
-@Output() location: EventEmitter<string> = new EventEmitter<string>
+ user:any
+
   constructor(private formBuilder: FormBuilder,private formsService:FormsService,private router:Router) {
-    this.formsService.userSubject.subscribe((data:any)=>{
-      this.user=data
-    })
+
   }
 
   ngOnInit() {
+    this.user=JSON.parse(localStorage.getItem('user')!)
     this.userForm = this.formBuilder.group({
       firstName: [''],
       lastName: [''],
@@ -65,8 +63,9 @@ this.formsService.getAllPaginated(
   });
 }
 sendInfos(user:any){
-  if(user.id!=this.user.id){
-    this.router.navigate(['/visit-profile', { user: JSON.stringify(user) }]);
+  if (user.id != this.user.id) {
+    const encodedUser = btoa(JSON.stringify(user));
+    this.router.navigate(['/visit-profile', encodedUser]);
   }
 }
 }

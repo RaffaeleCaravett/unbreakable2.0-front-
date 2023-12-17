@@ -268,6 +268,7 @@ checkTokens(){
     if(data&&data.id){
       this.authService.setToken(localStorage.getItem('accessToken')!)
       this.user= data
+      localStorage.setItem('user',JSON.stringify(this.user))
       this.formsService.sendUser(this.user)
     }
     },(err:any)=>{
@@ -278,6 +279,7 @@ checkTokens(){
         this.formsService.verifyToken(localStorage.getItem('accessToken')!).subscribe((data:any)=>{
           if(data&&data.id){
             this.user= data
+            localStorage.setItem('user',JSON.stringify(this.user))
             this.formsService.sendUser(this.user)
           }
         })

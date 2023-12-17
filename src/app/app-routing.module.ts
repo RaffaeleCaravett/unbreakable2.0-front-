@@ -31,11 +31,14 @@ const routes: Routes = [
   { path: 'heal', component: NeurogenesisComponent, canActivate: [AuthGuard] },
   { path: 'food', component: NutritionComponent, canActivate: [AuthGuard] },
   { path: 'path', component: PathComponent, canActivate: [AuthGuard] },
-  { path: 'profile/:id', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'sleep', component: SleepComponent, canActivate: [AuthGuard] },
   { path: 'tips', component: TipsComponent, canActivate: [AuthGuard] },
-  { path: 'visit-profile/:id', component: VisitProfileComponent, canActivate: [AuthGuard] },
-
+  {
+    path: 'visit-profile/:userData',
+    component: VisitProfileComponent,
+    canActivate: [AuthGuard],
+  },
   { path: '**', redirectTo: '/home' },
 ];
 

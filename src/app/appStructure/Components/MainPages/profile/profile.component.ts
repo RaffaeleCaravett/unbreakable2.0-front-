@@ -15,7 +15,7 @@ import { CommentsAndReviewService } from 'src/app/appStructure/Shared/Services/c
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit{
-  @Input() user:any
+   user:any
   commentsArray:any[]=[]
   ratingsArray:any[]=[]
   rating: number = 0;
@@ -42,6 +42,8 @@ constructor(private commentService:CommentsAndReviewService,
 
 
 ngOnInit(){
+  this.user=JSON.parse(localStorage.getItem('user')!)
+
   this.submitted=false
   this.continentsAndNations.getAllContinents().subscribe((data:any)=>{
     if(data && data.content){
@@ -151,7 +153,6 @@ callNationsByContinentId(continentId:number){
   }
 
   updateUser(){
-    console.log(this.user.id)
    this.signupService.updateUser(Number(this.user.id),
     {
       età:this.userForm.controls['eta'].value||this.user.età,

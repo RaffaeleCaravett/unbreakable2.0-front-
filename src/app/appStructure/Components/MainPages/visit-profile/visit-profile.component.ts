@@ -18,7 +18,7 @@ export class VisitProfileComponent implements OnInit{
   chat:boolean=false
   friendshipSent:boolean=false
 @Input() user: any
-@Input() userThatVisit:any
+ userThatVisit:any
 commentsArray:any[]=[]
 ratingsArray:any[]=[]
 rating: number = 0;
@@ -40,16 +40,19 @@ constructor(private commentService:CommentsAndReviewService,private route: Activ
   private continentsAndNations: CitiesAndNationsService, private friendshipService:FriendshipService,
   private commentAndReviewService:CommentsAndReviewService,private formsService:FormsService
 ){
-  this.route.params.subscribe((params) => {
-    this.user = JSON.parse(params['user']);
-  });
-  this.formsService.userSubject.subscribe((data:any)=>{
-this.userThatVisit=data
-  })
+
+
 }
 
 
 ngOnInit(){
+  this.route.params.subscribe((params) => {
+    const encodedUser = params['userData'];
+    const decodedUser = JSON.parse(atob(encodedUser));
+    this.user = decodedUser;
+  });
+  this.userThatVisit= JSON.parse(localStorage.getItem('user')!)
+
 this.getFriendship()
 this.submitted=false
 this.continentsAndNations.getAllContinents().subscribe((data:any)=>{

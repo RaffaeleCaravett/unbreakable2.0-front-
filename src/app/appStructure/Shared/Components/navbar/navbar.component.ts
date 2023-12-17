@@ -170,15 +170,10 @@ goToRoute(param:string){
      p=0
       break;
   }
-if(param=='/profile'){
-  this.router.navigate([`${param.toLowerCase()}`,this.user.id])
-}else{
-    this.router.navigate([`${param.toLowerCase()}`])
-}
-if(this.user!=undefined){
-  this.formsService.sendUser(this.user)
-}
-  this.sharedDataService.sendParam(p)
+localStorage.setItem('param', p.toString())
+  this.router.navigate([`${param.toLowerCase()}`])
+
+
 
 }
 }

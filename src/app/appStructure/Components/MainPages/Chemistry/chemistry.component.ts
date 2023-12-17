@@ -8,10 +8,12 @@ declare var YT: any;
 })
 export class ChemistryComponent implements AfterViewInit {
   string:string='chemistry'
-  @Input() user:any
+  user:any
   @ViewChild('video1') video1:any
   videoUno:any
   ngAfterViewInit(): void {
+    this.user=JSON.parse(localStorage.getItem('user')!)
+
     this.videoUno = new YT.Player(this.video1.nativeElement, {
       videoId: "Xs_46tP_hpk",
       playerVars: {

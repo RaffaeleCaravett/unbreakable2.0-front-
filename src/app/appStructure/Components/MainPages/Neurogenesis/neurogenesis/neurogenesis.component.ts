@@ -9,7 +9,7 @@ declare var YT: any;
 export class NeurogenesisComponent implements AfterViewInit {
   string:string='heal'
 
-  @Input() user:any
+   user:any
   @ViewChild('video1') video1:any
   videoUno:any
 
@@ -21,6 +21,8 @@ ngAfterViewInit(): void {
         controls: 1,
       },
     });
+    this.user=JSON.parse(localStorage.getItem('user')!)
+
   }
 
 

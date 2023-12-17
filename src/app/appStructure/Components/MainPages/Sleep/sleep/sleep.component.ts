@@ -10,7 +10,7 @@ declare var YT: any;
 export class SleepComponent implements OnInit,AfterViewInit{
   string:string='sleep'
 
-    @Input() user:any
+     user:any
     @ViewChild('player') playerElement!: ElementRef;
     private player: any;
 
@@ -24,5 +24,7 @@ export class SleepComponent implements OnInit,AfterViewInit{
         controls: 1,
       },
     });
+    this.user=JSON.parse(localStorage.getItem('user')!)
+
      }
 }
