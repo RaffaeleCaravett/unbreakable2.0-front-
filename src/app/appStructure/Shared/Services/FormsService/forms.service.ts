@@ -24,6 +24,7 @@ export class FormsService {
     this.dataSubject.next(data);
   }
   sendUser(user:any){
+    console.log(user)
     this.userSubject.next(user)
   }
 signupRequest(body:SignupRequest){

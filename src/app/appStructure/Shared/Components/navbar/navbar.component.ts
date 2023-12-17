@@ -35,6 +35,7 @@ this.sharedDataService.dataSubject.subscribe((data:any)=>{
 })
 this.formsService.userSubject.subscribe((data:any)=>{
   this.user=data
+  console.log(this.user,data)
 })
 }
   ngOnChanges(changes: SimpleChanges): void {
@@ -140,33 +141,33 @@ if(notification.comment){
 
 }
 goToRoute(param:string){
+  let p=0;
   switch (param.toLowerCase()) {
     case '/exercise':
-      this.sharedDataService.sendParam(4)
       break;
     case '/light':
-      this.sharedDataService.sendParam(9)
+      p=9
       break;
     case '/music':
-      this.sharedDataService.sendParam(5)
+      p=5
       break;
     case '/heal':
-      this.sharedDataService.sendParam(3)
+      p=3
       break;
     case '/food':
-      this.sharedDataService.sendParam(2)
+      p=2
       break;
     case '/path':
-      this.sharedDataService.sendParam(1)
+      p=1
       break;
     case '/sleep':
-      this.sharedDataService.sendParam(8)
+      p=8
       break;
     case '/tips':
-      this.sharedDataService.sendParam(6)
+      p=6
       break;
     default:
-      console.log(param)
+     p=0
       break;
   }
 if(param=='/profile'){
@@ -174,6 +175,10 @@ if(param=='/profile'){
 }else{
     this.router.navigate([`${param.toLowerCase()}`])
 }
+if(this.user!=undefined){
+  this.formsService.sendUser(this.user)
+}
+  this.sharedDataService.sendParam(p)
 
 }
 }

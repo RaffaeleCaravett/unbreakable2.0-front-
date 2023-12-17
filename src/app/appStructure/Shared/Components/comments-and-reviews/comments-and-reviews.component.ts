@@ -4,17 +4,16 @@ import { ArgumentsServiceService } from '../../Services/ArgumentsService/argumen
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ModifyCommentDialogComponent } from '../dialogs/modifyCommentDialog/modify-comment-dialog/modify-comment-dialog.component';
-import { NavigationEnd, Router } from '@angular/router';
-import { FormsService } from '../../Services/FormsService/forms.service';
 import { NavService } from '../../Services/navService/nav.service';
+import { FormsService } from '../../Services/FormsService/forms.service';
 
 @Component({
   selector: 'app-comments-and-reviews',
   templateUrl: './comments-and-reviews.component.html',
   styleUrls: ['./comments-and-reviews.component.scss']
 })
-export class CommentsAndReviewsComponent implements OnInit{
-  @Input() user:any
+export class CommentsAndReviewsComponent implements OnInit,OnChanges{
+  user:any
   @Input() argument_id:number=0
   rating: number = 0;
   hoverRating: number = 0;
@@ -28,12 +27,13 @@ export class CommentsAndReviewsComponent implements OnInit{
   @Output() location:EventEmitter<string>= new EventEmitter<string>
   @Output() userToSend:EventEmitter<any>= new EventEmitter<any>
 
-  constructor(private commentsAndRatingService:CommentsAndReviewService,private argumentService:ArgumentsServiceService,private dialogRef:MatDialog,private navService:NavService){
-
-      this.rating=0
-      this.navService.paramSubject.subscribe((data:any)=>{
-        this.argument_id=data
-        console.log(this.argument_id)
+  constructor(private commentsAndRatingService:CommentsAndReviewService,private argumentService:ArgumentsServiceService,private dialogRef:MatDialog,private navService:NavService,
+    private formsService:FormsService){
+            this.rating=0
+this.formsService.userSubject.subscribe((data:any)=>{
+  if(data!=undefined){
+      this.user=data
+  }
           if(this.argument_id!=0){
    this.argumentService.getArgumentById(Number(this.argument_id)).subscribe((data:any)=>{
         if(data){
@@ -41,23 +41,29 @@ export class CommentsAndReviewsComponent implements OnInit{
         }
        this.takeCommenti(data)
        this.takeRatings(this.argument.id)
-       this.previousArgumentId=this.argument.id
-       if(this.user){
       this.commentsAndRatingService.getRatingByUser(this.user.id).subscribe((data:any)=>{
       if(data){
         data.forEach((d:any)=>{
   if(d.argument.id==this.argument_id){
+
     this.rating=data[0].rating
     this.alreadyCensed=true
+    console.log('true')
         }
         })
    }
   })
-    }
+
       })
    }
-      })
+})
      }
+  ngOnChanges(changes: SimpleChanges): void {
+    if(this.argument){
+      this.takeCommenti(this.argument)
+this.takeRatings(this.argument.id)
+    }
+  }
 
 
   commentiForm!:FormGroup
@@ -65,6 +71,11 @@ export class CommentsAndReviewsComponent implements OnInit{
 this.commentiForm= new FormGroup({
   textArea: new FormControl('',Validators.required)
 })
+setInterval(()=>{
+
+  console.log('interval ' ,this.user)
+//  , this.argument,this.argument_id
+},2000)
   }
 
 submitTextArea(){
@@ -121,7 +132,6 @@ dialogRef.afterClosed().subscribe((data:any)=>{
 
 
 takeCommenti(data:any){
-
   this.commentsAndRatingService.getCommentByArgumentName(data.title).subscribe((comments:any)=>{
     this.allComments=[]
     if(comments){
@@ -164,20 +174,17 @@ return isItLiked
 
 sendInfos(c:any){
   if(c.user.id!=this.user.id){
-      this.userToSend.emit(c.user);
-    this.location.emit('visitProfile')
+
   }
 }
 takeRatings(argumentId:number){
-  if(argumentId!=this.previousArgumentId)
-{
+
    this.media=0
   this.ratingSum=0
   this.commentsAndRatingService.getRatingByArgumentName(this.argument.title).subscribe((dat:any)=>{
     if(dat){
      dat.forEach((da:any)=>{
        this.ratingSum+= da.rating
-       console.log(da.rating)
      })
      this.media=parseFloat((this.ratingSum / dat.length).toFixed(1));
      if(Number.isNaN(this.media)){
@@ -185,6 +192,6 @@ takeRatings(argumentId:number){
      }
    }
    })
-  }
+
 }
 }

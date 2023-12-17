@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
  import * as AOS from 'aos';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
@@ -33,15 +33,13 @@ export class AppComponent implements OnInit ,AfterViewInit{
   raindrop!: THREE.Mesh<THREE.SphereGeometry, THREE.MeshBasicMaterial, THREE.Object3DEventMap>;
   string:string=''
   user:any
-   constructor(private router:Router,private formsService:FormsService){
+   constructor(private router:Router){
   this.router.events.subscribe((data:any)=>{
     if(data instanceof NavigationEnd && data.url){
           this.string=data.url
     }
   })
-  this.formsService.userSubject.subscribe((data:any)=>{
-    this.user=data
-  })
+
    }
    ngAfterViewInit(): void {
     const canvas = this.canvasRef1.nativeElement as HTMLCanvasElement;
@@ -127,7 +125,9 @@ export class AppComponent implements OnInit ,AfterViewInit{
         }
       }
       this.animate();
-    });   }
+    });
+
+  }
 
 
 
