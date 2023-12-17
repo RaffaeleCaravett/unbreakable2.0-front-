@@ -77,11 +77,8 @@ this.takeRatings(this.argument.id)
 this.commentiForm= new FormGroup({
   textArea: new FormControl('',Validators.required)
 })
-setInterval(()=>{
 
-  console.log('interval ' ,this.user)
-//  , this.argument,this.argument_id
-},2000)
+
   }
 
 submitTextArea(){
