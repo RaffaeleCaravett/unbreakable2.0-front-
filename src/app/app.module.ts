@@ -110,24 +110,7 @@ MatSelectModule
     MapComponent,
     NavbarComponent,
     UnbreackableLettersComponent,
-    X401SpeechComponent,
-    FormsComponent,
-    SignupComponent,
-    LoginComponent,
-    HomePageComponent,
-    ChemistryComponent,
-    ExerciseComponent,
-    MakeContactComponent,
-    LightComponent,
-    MusicComponent,
-    NeurogenesisComponent,
-    NutritionComponent,
-    PathComponent,
-    ProfileComponent,
-    SleepComponent,
-    TipsComponent,
-    VisitProfileComponent
-
+    X401SpeechComponent
   ],
   providers: [
     {

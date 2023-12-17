@@ -1,25 +1,21 @@
-<div class="position-absolute text-center w-100"  [ngStyle]="{ 'width.px': windowWidth}">
-  <div class=" fixed-background" [ngClass]="{'bg-yellow': bg, 'bg-blackk': !bg}" [ngStyle]="{ 'width.px': windowWidth }" > </div>
-    <div class="row bg-transparent" [ngClass]="{'text-dark': bg, 'text-black': !bg}" [ngStyle]="{ 'width.px': windowWidth }">
+ <div class=" text-center w-100 bg-transparent"  [ngStyle]="{ 'width.px': windowWidth}">
+    <div class="row bg-transparent"  [ngStyle]="{ 'width.px': windowWidth }" >
   <!-- <div class="col-md-12 p-5"></div> -->
   <audio controls #welcomeSong class="d-none">
     <source src="assets/audios/jonnyBGoode.mp3" type="audio/mp3">
     Your browser does not support the audio tag.
   </audio>
-  <div class="col-md-4 d-flex flex-row p-3">
-             <div class="p-0" style="max-width: 150px;"><canvas #canvas1 class="w-100" (click)="bg=true"> </canvas></div>
-             <div class="p-0" style="max-width: 150px;"> <canvas #canvas2 class="w-100" (click)="bg=false"> </canvas></div>
-  </div>
-  <div class="col-md-4 p-3 text-center">
+
+  <div class="col-md-4 p-3 text-center m-auto" style="z-index: 2;">
     <h1 class="p-0 m-0 fw-bolder ">Welcome here!</h1>
     <p class="text-secondary p-0 m-0">As already said earlier it's a <span>pleasure</span> to have you here!</p>
   </div>
 
 
 
-      <div class="row">
+      <div class="row" >
         <div class="col-md-12 d-flex  justify-content-end" *ngIf="chat==false">
-          <button class="btn btn-light px-3">
+          <button class="btn btn-light px-3"  style="z-index: 2;">
             <h2 ><a class="text-dark" (click)="chat=true"><mat-icon class="text-primary">chat</mat-icon> Chat</a>
           </h2>
           </button>
@@ -30,13 +26,13 @@
 <div class="col-md-12 p-1">
 <div class="row p-1 d-flex align-items-end">
   <div class="col-md-5 p-2">
-    <div class="row">
-      <div class="col-12">
+    <div class="row"  >
+      <div class="col-12"  style="z-index: 2;">
        <h1 class="p-0 m-0">He is X401, our avatar.</h1>
 <p class="text-secondary p-0 m-0">And he'll explain us the pillars of the <span>unbreackable</span> concept!</p>
       </div>
-      <div class="col-12 p-2">
-        <h4>Make X401 talk <i class="fas fa-arrow-down text-danger"></i>
+      <div class="col-12 p-2"  style="z-index: 2;">
+        <h4 >Make X401 talk <i class="fas fa-arrow-down text-danger"></i>
         </h4>
         <div>
           <i class="fas fa-play fs-1 py-5" (click)="playSpeech()" *ngIf="x401Speech.paused"></i>
@@ -51,10 +47,11 @@
     </div>
 
   </div>
-  <div class="col-md-5 p-2">
-                <img src="assets/robot/A (((robot))) ( 1.png" alt="" class="w-100 border rounded" [ngClass]="{'lighting-effect': !x401Speech.paused, 'shadow': x401Speech.paused}">
+  <div class="col-md-5 p-2" >
+                <img src="assets/robot/A (((robot))) ( 1.png" alt="" class="w-100 border rounded" [ngClass]="{'lighting-effect': !x401Speech.paused, 'shadow': x401Speech.paused}"
+                 data-aos="zoom-in" data-aos-duration="3000">
   </div>
-  <div class="col-md-2 " *ngIf="chat">
+  <div class="col-md-2 " *ngIf="chat" >
     <div class="row  " *ngFor="let c of chatArray" [style.min-height.px]="heightChat">
       <div class="col-md-12" >
         <div class="row d-flex align-items-end">
@@ -78,7 +75,7 @@
             <div class="row p-1" *ngIf="heightChat==350">
               <div class="border rounded overflow-scroll" [style.height.px]="300">
                 <div class="row p-1" *ngFor="let message of messagesArray">
-<div class="d-flex justify-content-end" *ngIf="message.sender.id==user.id" >
+<div class="d-flex justify-content-end" *ngIf=" message.sender && message.sender.id==user.id" >
 <p>
 <span style="font-size: 10px;">{{message.sender.nome}} {{message.sender.cognome}}</span><br>
 <span style="font-size: 8px;position:relative; top:-12px">{{message.createdAt}}</span>
@@ -87,7 +84,7 @@
 </p>
 <img src="{{message.sender.img_profilo}}" alt="" class="rounded-circle border mx-1" style="max-width: 25px;max-height: 25px;">
 </div>
-<div class="d-flex justify-content-start" *ngIf="message.sender.id!=user.id" >
+<div class="d-flex justify-content-start" *ngIf="message.sender&&message.sender.id!=user.id" >
 <img src="{{message.sender.img_profilo}}" alt="" class="rounded-circle border " style="max-width: 25px;max-height: 25px;">
 <p class="mx-1">
 <span style="font-size: 10px;">{{message.sender.nome}} {{message.sender.cognome}}</span><br>
@@ -168,7 +165,7 @@
       </div>
 
 </div> -->
-<div class="col-xxl-2 bg-white p-4 overflow-scroll rounded-top shadow-lg m-auto" *ngIf="chat==true" style="max-width: 700px">
+<div class="col-xxl-2 bg-white p-4 overflow-scroll rounded-top shadow-lg m-auto" *ngIf="chat==true" style="max-width: 700px"  style="z-index: 2;">
   <div class="d-flex justify-content-end">
     <button class="btn" (click)="chat=false"><mat-icon class="text-danger" >clear</mat-icon></button>
   </div>

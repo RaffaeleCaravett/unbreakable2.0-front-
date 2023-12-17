@@ -1,6 +1,23 @@
 app-navbar,app-footer{
   z-index: 10000!important;
 }
-body{
+
+.fixed-background {
+  background-image: url('../assets/background-image/background.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
   z-index: -1;
+  opacity: 0.5;
+  width: 100%;
 }
+.bg-yellow{
+  background-color: rgb(193, 255, 219);
+  }
+  .bg-blackk{
+    background-color: black;
+  }

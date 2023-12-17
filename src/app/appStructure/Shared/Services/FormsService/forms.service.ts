@@ -11,10 +11,8 @@ export class FormsService {
 
   constructor(private httpModule:HttpClient) { }
 
-  private dataSubject = new Subject<number>();
-  data$ = this.dataSubject.asObservable();
-  private sectionNumberSubject = new Subject<number>();
-  sectionNumber$ = this.sectionNumberSubject.asObservable();
+  dataSubject = new Subject<number>();
+  userSubject = new Subject<any>();
   private signup = "/auth/register"
   private login = "/auth/login"
   private verifyTkn = "/auth/"
@@ -25,8 +23,8 @@ export class FormsService {
   sendData(data: number) {
     this.dataSubject.next(data);
   }
-  sendSectionNumber(number:number){
-    this.sectionNumberSubject.next(number)
+  sendUser(user:any){
+    this.userSubject.next(user)
   }
 signupRequest(body:SignupRequest){
 return this.httpModule.post(environment.API_URL+this.signup,body)

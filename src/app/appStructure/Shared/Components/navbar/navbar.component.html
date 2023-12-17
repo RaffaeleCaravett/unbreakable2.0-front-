@@ -9,23 +9,23 @@
         <div class="col-xxl-9" *ngIf="navbarToShow!='forms'">
           <div class="row m-0" >
             <div class="col-xxl-1 col-xl-2 col-sm-2 col-3 py-2 hover">
-              <a href="#" style="text-decoration: none;"  [ngClass]="{'text-dark': bg, 'text-light': !bg}" (click)="homeLocation.emit('')">
+              <a  style="text-decoration: none;"  [ngClass]="{'text-dark': bg, 'text-light': !bg}" (click)="goToRoute('/home')">
               Home
               </a>
             </div>
            <div *ngFor="let a of argumentsArray" class="col-xxl-1 col-xl-2 col-sm-2 col-3 py-2 hover">
-                      <a href="#" style="text-decoration: none;" [ngClass]="{'text-dark': bg, 'text-light': !bg}" (click)="homeLocation.emit(a.id)">
+                      <a  style="text-decoration: none;" [ngClass]="{'text-dark': bg, 'text-light': !bg}" (click)="goToRoute('/'+a.title)">
                         {{a.title}}
                       </a>
                         <br>
                     </div>
                     <div class="col-xxl-1 col-xl-2 col-sm-2 col-3 py-2 hover">
-                      <a href="#" style="text-decoration: none;" [ngClass]="{'text-dark': bg, 'text-light': !bg}" (click)="homeLocation.emit('10')">
+                      <a  style="text-decoration: none;" [ngClass]="{'text-dark': bg, 'text-light': !bg}" (click)="goToRoute('/connect')">
                       Connect
                       </a>
                     </div>
                     <div class="col-xxl-1 col-xl-2 col-sm-2 col-3 py-2 hover">
-                      <a href="#" style="text-decoration: none;"  [ngClass]="{'text-dark': bg, 'text-light': !bg}" (click)="homeLocation.emit('profile')">
+                      <a  style="text-decoration: none;"  [ngClass]="{'text-dark': bg, 'text-light': !bg}" (click)="goToRoute('/profile')">
                        Profile
                       </a>
                     </div>

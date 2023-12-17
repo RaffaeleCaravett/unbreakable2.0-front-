@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { FormsService } from 'src/app/appStructure/Shared/Services/FormsService/forms.service';
 
 @Component({
@@ -20,7 +21,11 @@ view:string='table'
 @Input() user:any
 @Output() userToSend:EventEmitter<any>= new EventEmitter<any>
 @Output() location: EventEmitter<string> = new EventEmitter<string>
-  constructor(private formBuilder: FormBuilder,private formsService:FormsService) {}
+  constructor(private formBuilder: FormBuilder,private formsService:FormsService,private router:Router) {
+    this.formsService.userSubject.subscribe((data:any)=>{
+      this.user=data
+    })
+  }
 
   ngOnInit() {
     this.userForm = this.formBuilder.group({
@@ -32,6 +37,7 @@ view:string='table'
       age: [''],
     });
 this.allUsers=[]
+this.getUsers()
   }
 previousPage(){
   this.page-=1
@@ -60,8 +66,7 @@ this.formsService.getAllPaginated(
 }
 sendInfos(user:any){
   if(user.id!=this.user.id){
-      this.userToSend.emit(user);
-    this.location.emit('visitProfile')
+    this.router.navigate(['/visit-profile', { user: JSON.stringify(user) }]);
   }
 }
 }

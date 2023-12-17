@@ -4,16 +4,18 @@ import { ArgumentsServiceService } from '../../Services/ArgumentsService/argumen
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ModifyCommentDialogComponent } from '../dialogs/modifyCommentDialog/modify-comment-dialog/modify-comment-dialog.component';
-import { BehaviorSubject } from 'rxjs';
+import { NavigationEnd, Router } from '@angular/router';
+import { FormsService } from '../../Services/FormsService/forms.service';
+import { NavService } from '../../Services/navService/nav.service';
 
 @Component({
   selector: 'app-comments-and-reviews',
   templateUrl: './comments-and-reviews.component.html',
   styleUrls: ['./comments-and-reviews.component.scss']
 })
-export class CommentsAndReviewsComponent implements OnInit,OnChanges{
+export class CommentsAndReviewsComponent implements OnInit{
   @Input() user:any
-  @Input() argument_id:String=''
+  @Input() argument_id:number=0
   rating: number = 0;
   hoverRating: number = 0;
   stars = [1, 2, 3, 4, 5];
@@ -26,38 +28,38 @@ export class CommentsAndReviewsComponent implements OnInit,OnChanges{
   @Output() location:EventEmitter<string>= new EventEmitter<string>
   @Output() userToSend:EventEmitter<any>= new EventEmitter<any>
 
-  constructor(private commentsAndRatingService:CommentsAndReviewService,private argumentService:ArgumentsServiceService,private dialogRef:MatDialog){
+  constructor(private commentsAndRatingService:CommentsAndReviewService,private argumentService:ArgumentsServiceService,private dialogRef:MatDialog,private navService:NavService){
 
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    this.rating=0
-if(changes&&changes['argument_id']){
-  this.argument_id=changes['argument_id'].currentValue
-this.argumentService.getArgumentById(changes['argument_id'].currentValue).subscribe((data:any)=>{
-  if(data){
-    this.argument=data
-  }
- this.takeCommenti(data)
- this.takeRatings(this.argument.id)
- this.previousArgumentId=this.argument.id
-})
-
-if(this.user){
-   this.commentsAndRatingService.getRatingByUser(this.user.id).subscribe((data:any)=>{
-    if(data){
-      data.forEach((d:any)=>{
-if(d.argument.id==this.argument_id){
-  this.rating=data[0].rating
-  this.alreadyCensed=true
-      }
-      })
-      }
+      this.rating=0
+      this.navService.paramSubject.subscribe((data:any)=>{
+        this.argument_id=data
+        console.log(this.argument_id)
+          if(this.argument_id!=0){
+   this.argumentService.getArgumentById(Number(this.argument_id)).subscribe((data:any)=>{
+        if(data){
+          this.argument=data
+        }
+       this.takeCommenti(data)
+       this.takeRatings(this.argument.id)
+       this.previousArgumentId=this.argument.id
+       if(this.user){
+      this.commentsAndRatingService.getRatingByUser(this.user.id).subscribe((data:any)=>{
+      if(data){
+        data.forEach((d:any)=>{
+  if(d.argument.id==this.argument_id){
+    this.rating=data[0].rating
+    this.alreadyCensed=true
+        }
+        })
+   }
   })
-}
-  // this.commentsAndRatingService.getRatingByArgumentName()
-}
-  }
+    }
+      })
+   }
+      })
+     }
+
+
   commentiForm!:FormGroup
   ngOnInit(): void {
 this.commentiForm= new FormGroup({

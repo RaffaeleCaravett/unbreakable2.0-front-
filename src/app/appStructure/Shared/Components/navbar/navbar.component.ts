@@ -24,7 +24,7 @@ export class NavbarComponent implements OnInit,AfterViewInit,OnChanges{
   @Output() homeLocation : EventEmitter<string>= new EventEmitter<string>
   @Input() navbarToShow!:string
   argumentsArray:any=[]
-  @Input() user:any
+  user:any
 location:any=''
 bg:boolean=true
 notificationArray:any[]=[]
@@ -32,6 +32,9 @@ constructor(private sharedDataService: NavService,private argumentsService:Argum
   private formsService:FormsService,private router:Router){
 this.sharedDataService.dataSubject.subscribe((data:any)=>{
   this.navbarToShow=data
+})
+this.formsService.userSubject.subscribe((data:any)=>{
+  this.user=data
 })
 }
   ngOnChanges(changes: SimpleChanges): void {
@@ -131,9 +134,46 @@ if(notification.comment){
 
     this.commentsAndReviewService.updateNotification(notification.id,this.user.id,
       body).subscribe((check:any)=>{
-console.log('modified')  })
+
+       })
   })
 
 }
+goToRoute(param:string){
+  switch (param.toLowerCase()) {
+    case '/exercise':
+      this.sharedDataService.sendParam(4)
+      break;
+    case '/light':
+      this.sharedDataService.sendParam(9)
+      break;
+    case '/music':
+      this.sharedDataService.sendParam(5)
+      break;
+    case '/heal':
+      this.sharedDataService.sendParam(3)
+      break;
+    case '/food':
+      this.sharedDataService.sendParam(2)
+      break;
+    case '/path':
+      this.sharedDataService.sendParam(1)
+      break;
+    case '/sleep':
+      this.sharedDataService.sendParam(8)
+      break;
+    case '/tips':
+      this.sharedDataService.sendParam(6)
+      break;
+    default:
+      console.log(param)
+      break;
+  }
+if(param=='/profile'){
+  this.router.navigate([`${param.toLowerCase()}`,this.user.id])
+}else{
+    this.router.navigate([`${param.toLowerCase()}`])
+}
 
+}
 }

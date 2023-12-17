@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomePageComponent } from './appStructure/Components/MainPages/home-page/home-page.component';
 import { FormsComponent } from './appStructure/Components/Forms/forms/forms.component';
-import { LoginComponent } from './appStructure/Components/Forms/login/login.component';
-import { SignupComponent } from './appStructure/Components/Forms/signup/signup.component';
 import { ChemistryComponent } from './appStructure/Components/MainPages/Chemistry/chemistry.component';
 import { ExerciseComponent } from './appStructure/Components/MainPages/Exercise/exercise/exercise.component';
 import { LightComponent } from './appStructure/Components/MainPages/Light/light/light.component';
@@ -27,20 +25,17 @@ const routes: Routes = [
   { path: 'home', component: HomePageComponent, canActivate: [AuthGuard] },
   { path: 'chemistry', component: ChemistryComponent, canActivate: [AuthGuard] },
   { path: 'exercise', component: ExerciseComponent, canActivate: [AuthGuard] },
-  { path: 'make-contact', component: MakeContactComponent, canActivate: [AuthGuard] },
+  { path: 'connect', component: MakeContactComponent, canActivate: [AuthGuard] },
   { path: 'light', component: LightComponent, canActivate: [AuthGuard] },
   { path: 'music', component: MusicComponent, canActivate: [AuthGuard] },
-  { path: 'neurogenesis', component: NeurogenesisComponent, canActivate: [AuthGuard] },
-  { path: 'nutrition', component: NutritionComponent, canActivate: [AuthGuard] },
+  { path: 'heal', component: NeurogenesisComponent, canActivate: [AuthGuard] },
+  { path: 'food', component: NutritionComponent, canActivate: [AuthGuard] },
   { path: 'path', component: PathComponent, canActivate: [AuthGuard] },
-  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'profile/:id', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'sleep', component: SleepComponent, canActivate: [AuthGuard] },
   { path: 'tips', component: TipsComponent, canActivate: [AuthGuard] },
   { path: 'visit-profile/:id', component: VisitProfileComponent, canActivate: [AuthGuard] },
 
-  // Add more routes as needed
-
-  // Fallback route for unknown paths
   { path: '**', redirectTo: '/home' },
 ];
 

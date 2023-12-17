@@ -1,5 +1,13 @@
-<body class="d-flex flex-column">
+<body class="d-flex flex-column bg-transparent" [ngClass]="{'text-dark ': bg, 'text-primary ': !bg}">
   <app-navbar></app-navbar>
+  <div class="row">
+   <div class="col-md-4 d-flex flex-row p-3">
+    <div class="p-0" style="max-width: 150px;"><canvas #canvas1 class="w-100" (click)="bg=true"> </canvas></div>
+    <div class="p-0" style="max-width: 150px;"> <canvas #canvas2 class="w-100" (click)="bg=false"> </canvas></div>
+</div>
+  </div>
   <router-outlet></router-outlet>
-  <app-footer></app-footer>
+  <app-comments-and-reviews *ngIf="string!='/'&&string!='/home'" [user]="user"></app-comments-and-reviews>
+  <app-footer *ngIf="string!='/home'"></app-footer>
+  <div class="fixed-background" [ngClass]="{'text-dark bg-yellow': bg, 'text-success bg-blackk': !bg}"></div>
 </body>

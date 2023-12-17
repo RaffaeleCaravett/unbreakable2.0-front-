@@ -19,30 +19,12 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class HomePageComponent implements AfterViewInit, OnChanges{
   chat:boolean=false
-  @ViewChild('canvas1', { static: false }) private canvasRef1!: ElementRef;
-  @ViewChild('canvas2', { static: false }) private canvasRef2!: ElementRef;
+
   @ViewChild('x401Speech', { static: false }) private x401Speech!:ElementRef;
   @ViewChild('welcomeSong', { static: false }) private welcomeSong!:ElementRef;
   @Input()location!:String
-  bg:boolean=true
-  private scene!: THREE.Scene;
-  private camera!: THREE.PerspectiveCamera;
-  private renderer!: THREE.WebGLRenderer;
-  private model!: THREE.Group;
-  private mixer!: THREE.AnimationMixer
-  private scene1!: THREE.Scene;
-  private camera1!: THREE.PerspectiveCamera;
-  private renderer1!: THREE.WebGLRenderer;
-  private model1!: THREE.Group;
-  negativePositionValue!:number;
-  positivePositionValue!:number;
-  raindropGeometry!: THREE.SphereGeometry;
-  raindropMaterial!: THREE.MeshBasicMaterial;
-  raindrops: any[]=[];
-  raindrop!: THREE.Mesh<THREE.SphereGeometry, THREE.MeshBasicMaterial, THREE.Object3DEventMap>;
-  sondaggio:boolean=true
-  sondaggioForm!:FormGroup
-  thankYouPhrase!:string
+
+
   events: string[] = [];
   opened!: boolean ;
   argumentsArray: any=[];
@@ -65,8 +47,7 @@ route:Router=this.router
 this.checkTokens();
       localStorage.getItem('welcomeAudioHasStarted')&& localStorage.getItem('welcomeAudioHasStarted')=='true'?
       this.welcomeAudioHasStarted=true:this.welcomeAudioHasStarted=false
-this.negativePositionValue=-18;
-this.positivePositionValue=18
+
 this.argumentsService.getAllArguments().subscribe((data:any)=>{
   if(data){
     this.argumentsArray=data.content
@@ -84,90 +65,7 @@ playWelcomeAudio(){
 }
 
   ngAfterViewInit(): void {
-    const canvas = this.canvasRef1.nativeElement as HTMLCanvasElement;
-    const canvas1 = this.canvasRef2.nativeElement as HTMLCanvasElement;
 
-    this.scene = new THREE.Scene();
-    this.camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
-    this.camera.position.z = 5;
-    this.renderer = new THREE.WebGLRenderer({ canvas, alpha: true ,antialias:true});
-    this.renderer.setSize(canvas.clientWidth, canvas.clientHeight);
-    this.renderer.setPixelRatio(window.devicePixelRatio)
-    this.renderer.setClearColor(0x0077ff, 1);
-
-    this.scene1 = new THREE.Scene();
-    this.camera1 = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
-    this.camera1.position.z = 5;
-    this.renderer1 = new THREE.WebGLRenderer({ canvas:canvas1, alpha: true ,antialias:true});
-    this.renderer1.setSize(canvas.clientWidth, canvas.clientHeight);
-    this.renderer1.setPixelRatio(window.devicePixelRatio)
-    this.renderer1.setClearColor(0x000000, 1);
-
-    const loader = new GLTFLoader();
-    loader.load('assets/models/sun.glb', (gltf:any) => {
-      this.model = gltf.scene;
-      this.model.position.x=this.negativePositionValue
-      this.model.scale.set(2.7,2.7,2.7 )
-      this.scene.add(this.model);
-      this.mixer = new THREE.AnimationMixer(this.model);
-      const animations = gltf.animations;
-      this.mixer.clipAction(animations[0]).play();
-      const ambientLight = new THREE.AmbientLight(0xffa500, 2);
-       this.scene.add(ambientLight);
-    });
-    loader.load('assets/models/moon.glb', (gltf:any) => {
-      this.model1 = gltf.scene;
-      this.model1.position.x=this.positivePositionValue
-      this.model1.scale.set(8,8,8 )
-      this.scene1.add(this.model1);
-      this.mixer = new THREE.AnimationMixer(this.model1);
-      const animations = gltf.animations;
-      this.mixer.clipAction(animations[0]).play();
-      const ambientLight = new THREE.AmbientLight(0xffa500, 2);
-       const directionalLight = new THREE.DirectionalLight(0xffeedd);
-       this.scene1.add(ambientLight,directionalLight);
-       this.raindropGeometry = new THREE.SphereGeometry(0.02, 4, 7);
-       this.raindropMaterial = new THREE.MeshBasicMaterial({color: 0x888888});
-       for (let i = 0; i < 1000; i++) {
-        this.raindrop = new THREE.Mesh(this.raindropGeometry, this.raindropMaterial);
-        this.raindrop.position.set(
-          Math.random() * 10 - 5,
-          Math.random() * 10 - 5,
-          Math.random() * 10 - 5
-        );
-        this.raindrops.push(this.raindrop);
-        this.scene1.add(this.raindrop);
-      }
-
-    });
-    loader.load('assets/models/cloud.glb', (gltf:any) => {
-      for(let i=0;i<=7;i++){
-        const minScale = 0.18;
-        const maxScale = 0.22;
-        for (let i = 0; i <= 7; i++) {
-          const model = gltf.scene.clone()
-          const x = Math.random() * 15 - 8;
-          const y = Math.random() * 14 - 7;
-          const z = Math.random() * 10 - 5;
-
-          model.position.set(x, y, z);
-          model.rotation.set(Math.random()*3,Math.random()*3,Math.random()*3)
-          const scale = Math.random() * (maxScale - minScale) + minScale;
-          model.scale.set(scale, scale, scale);
-
-          const whiteMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
-
-          model.traverse((child: any) => {
-            if (child instanceof THREE.Mesh) {
-              child.material = whiteMaterial;
-            }
-          });
-          model.name=`${'cloud'}`
-          this.scene.add(model);
-        }
-      }
-      this.animate();
-    });
 
 setTimeout(()=>{
  if(this.user &&this.user.img_profilo==null){
@@ -224,25 +122,9 @@ this.chatForm= new FormGroup({
     this.location=localStorage.getItem('location')!;
   }
 
-  animate() {
-    requestAnimationFrame(() => this.animate());
-    this.renderer.render(this.scene, this.camera);
-    // this.animateRain()
-    this.renderer1.render(this.scene1, this.camera1);
-    this.restoreModelsPositions(this.model,this.model1)
 
-  }
 
-restoreModelsPositions(model:any,model1:any){
-if(this.negativePositionValue!=0&&this.positivePositionValue!=0){
-  this.negativePositionValue=this.negativePositionValue+0.25
-  this.positivePositionValue=this.positivePositionValue-0.25
-  if(this.model1){
-    model.position.x=this.negativePositionValue
-      model1.position.x=this.positivePositionValue
-  }
-}
-}
+
 
 @ViewChild('avatarText',{static:false})private textElement!:ElementRef;
 text =
@@ -351,32 +233,32 @@ this.checkMessages(us)
 }
 
 checkMessages(user:any){
+  this.messagesArray=[]
   this.chatService.findChatByPartecipantId(user.id).subscribe((data:any)=>{
     if(data){
-      console.log(data)
         data.forEach((d:any)=>{
   if(d.starter.id==this.user.id){
+    this.chat=true
     this.currentChat=[]
     this.messagesArray=[]
   this.currentChat=data
+  this.messagesArray=data[0].messageList
   }
   })
-// this.messagesArray=this.currentChat[0]||null
-console.log(this.messagesArray)
       }
     })
     this.chatService.findChatByStarterId(user.id).subscribe((data:any)=>{
         if(data){
-  console.log(data)
-
             data.forEach((d:any)=>{
       if(d.partecipant.id==this.user.id){
+        this.chat=true
         this.currentChat=[]
         this.messagesArray=[]
         this.currentChat=data
+    this.messagesArray=data[0].messageList
+    console.log(this.messagesArray)
       }
       })
-    // this.messagesArray=this.currentChat[0]||null
           }
         })
 }
@@ -386,6 +268,7 @@ checkTokens(){
     if(data&&data.id){
       this.authService.setToken(localStorage.getItem('accessToken')!)
       this.user= data
+      this.formsService.sendUser(this.user)
     }
     },(err:any)=>{
     this.formsService.verifyRefreshToken(localStorage.getItem('refreshToken')!).subscribe((data:any)=>{
@@ -395,6 +278,7 @@ checkTokens(){
         this.formsService.verifyToken(localStorage.getItem('accessToken')!).subscribe((data:any)=>{
           if(data&&data.id){
             this.user= data
+            this.formsService.sendUser(this.user)
           }
         })
       }

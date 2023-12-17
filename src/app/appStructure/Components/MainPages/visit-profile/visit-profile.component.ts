@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { EChartsOption } from 'echarts';
 import * as L from 'leaflet';
 import { AuthService } from 'src/app/appStructure/Shared/Services/AuthService/Auth.service';
@@ -35,14 +36,20 @@ userForm!:FormGroup
 nations:any[]=[]
 continents:any[]=[]
 submitted:boolean=false
-constructor(private commentService:CommentsAndReviewService,private authService:AuthService,private cdr: ChangeDetectorRef,
-  private continentsAndNations: CitiesAndNationsService,private signupService:FormsService, private friendshipService:FriendshipService,
-  private commentAndReviewService:CommentsAndReviewService
-){}
+constructor(private commentService:CommentsAndReviewService,private route: ActivatedRoute,
+  private continentsAndNations: CitiesAndNationsService, private friendshipService:FriendshipService,
+  private commentAndReviewService:CommentsAndReviewService,private formsService:FormsService
+){
+  this.route.params.subscribe((params) => {
+    this.user = JSON.parse(params['user']);
+  });
+  this.formsService.userSubject.subscribe((data:any)=>{
+this.userThatVisit=data
+  })
+}
 
 
 ngOnInit(){
-  console.log(this.user)
 this.getFriendship()
 this.submitted=false
 this.continentsAndNations.getAllContinents().subscribe((data:any)=>{
