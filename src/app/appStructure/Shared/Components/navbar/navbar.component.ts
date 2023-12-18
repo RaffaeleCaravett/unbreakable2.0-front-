@@ -57,6 +57,7 @@ if(notification.receiver.id==this.user.id && notification.statoNotifica=="NOT_SA
     this.navbarToShow?this.navbarToShow=this.navbarToShow:this.navbarToShow='forms'
     this.argumentsService.getAllArguments().subscribe((data:any)=>{
       if(data){
+        console.log(data.content)
         this.argumentsArray=data.content
       }
     },err=>{
@@ -93,7 +94,9 @@ if(notification.receiver.id==this.user.id && notification.statoNotifica=="NOT_SA
     });
   }
 
-
+if(localStorage.getItem('param')){
+  this.navbarToShow=''
+}
   }
   animate() {
     requestAnimationFrame(() => this.animate());
@@ -144,6 +147,7 @@ goToRoute(param:string){
   let p=0;
   switch (param.toLowerCase()) {
     case '/exercise':
+      p=4
       break;
     case '/light':
       p=9
@@ -165,6 +169,9 @@ goToRoute(param:string){
       break;
     case '/tips':
       p=6
+      break;
+      case '/chemistry':
+      p=4
       break;
     default:
      p=0

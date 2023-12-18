@@ -8,8 +8,15 @@ h1{
 a{
   text-decoration: none;
 }
+@media screen and (max-width:1120px){
+  .personalized-chat{
+  display: none;
+  }
+  .personalized-mini-chat{
+left: 0;    }
+}
 
-
-
-
-
+.personalized-mini-chat{
+  right:453px;
+  z-index:5;
+}

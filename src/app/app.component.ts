@@ -4,6 +4,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { FormsService } from './appStructure/Shared/Services/FormsService/forms.service';
+import { AuthService } from './appStructure/Shared/Services/AuthService/Auth.service';
 
  @Component({
   selector: 'app-root',
@@ -33,7 +34,7 @@ export class AppComponent implements OnInit ,AfterViewInit{
   raindrop!: THREE.Mesh<THREE.SphereGeometry, THREE.MeshBasicMaterial, THREE.Object3DEventMap>;
   string:string=''
   user:any
-   constructor(private router:Router){
+   constructor(private router:Router,private formsService:FormsService,private authService:AuthService){
   this.router.events.subscribe((data:any)=>{
     if(data instanceof NavigationEnd && data.url){
           this.string=data.url
@@ -42,6 +43,7 @@ export class AppComponent implements OnInit ,AfterViewInit{
 
    }
    ngAfterViewInit(): void {
+
     const canvas = this.canvasRef1.nativeElement as HTMLCanvasElement;
     const canvas1 = this.canvasRef2.nativeElement as HTMLCanvasElement;
 
@@ -126,6 +128,7 @@ export class AppComponent implements OnInit ,AfterViewInit{
       }
       this.animate();
     });
+    this.checkTokens();
 
   }
 
@@ -160,4 +163,109 @@ this.positivePositionValue=18
       }
     }
     }
+
+
+    checkTokens(){
+      if(localStorage.getItem('accessToken')){
+        this.formsService.verifyToken(localStorage.getItem('accessToken')!).subscribe((data:any)=>{
+        if(data&&data.id){
+          this.authService.setToken(localStorage.getItem('accessToken')!)
+          this.user= data
+          localStorage.setItem('user',JSON.stringify(this.user))
+           this.formsService.isUserAuthenticate(true)
+        switch(localStorage.getItem('param')){
+          case '1':
+            this.router.navigate(['/path'])
+break;
+case '2':
+  this.router.navigate(['/food'])
+break;
+case '3':
+  this.router.navigate(['/heal'])
+break;
+case '4':
+  this.router.navigate(['/exercise'])
+break;
+case '5':
+  this.router.navigate(['/music'])
+break;
+case '6':
+  this.router.navigate(['/tips'])
+break;
+case '7':
+  this.router.navigate(['/chemistry'])
+break;
+case '8':
+  this.router.navigate(['/sleep'])
+break;
+case '9':
+  this.router.navigate(['/light'])
+break;
+case '10':
+  this.router.navigate(['/home'])
+break;
+default:
+  this.formsService.isUserAuthenticate(false)
+  this.router.navigate([''])
+    break;
+        }
+
+        }
+        },(err:any)=>{
+        this.formsService.verifyRefreshToken(localStorage.getItem('refreshToken')!).subscribe((data:any)=>{
+          if(data){
+            localStorage.setItem('accessToken',data.accessToken)
+            this.authService.setToken(localStorage.getItem('accessToken')!);
+            this.formsService.verifyToken(localStorage.getItem('accessToken')!).subscribe((data:any)=>{
+              if(data&&data.id){
+                this.user= data
+                localStorage.setItem('user',JSON.stringify(this.user))
+                this.formsService.isUserAuthenticate(true)
+                switch(localStorage.getItem('param')){
+                  case '1':
+                    this.router.navigate(['/path'])
+        break;
+        case '2':
+          this.router.navigate(['/food'])
+        break;
+        case '3':
+          this.router.navigate(['/heal'])
+        break;
+        case '4':
+          this.router.navigate(['/exercise'])
+        break;
+        case '5':
+          this.router.navigate(['/music'])
+        break;
+        case '6':
+          this.router.navigate(['/tips'])
+        break;
+        case '7':
+          this.router.navigate(['/chemistry'])
+        break;
+        case '8':
+          this.router.navigate(['/sleep'])
+        break;
+        case '9':
+          this.router.navigate(['/light'])
+        break;
+        case '10':
+          this.router.navigate(['/home'])
+        break;
+        default:
+          this.formsService.isUserAuthenticate(false)
+          this.router.navigate([''])
+            break;
+                }
+              }
+            })
+          }
+        },err=>{
+          this.formsService.isUserAuthenticate(false)
+          this.router.navigate([''])
+        })
+        })
+        }
+    }
+
 }

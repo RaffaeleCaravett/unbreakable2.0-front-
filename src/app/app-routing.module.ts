@@ -39,7 +39,7 @@ const routes: Routes = [
     component: VisitProfileComponent,
     canActivate: [AuthGuard],
   },
-  { path: '**', redirectTo: '/home' },
+  { path: '**', redirectTo: '/forms' },
 ];
 
 @NgModule({

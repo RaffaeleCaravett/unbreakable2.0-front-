@@ -41,10 +41,9 @@ export class HomePageComponent implements AfterViewInit, OnChanges{
  constructor(private argumentsService:ArgumentsServiceService, private router :Router, private formsService:FormsService,private friendship:FriendshipService,
   private chatService:ChatService,private authService:AuthService,private spinnerService: NgxSpinnerService){}
 
-route:Router=this.router
     ngOnInit(){
-      localStorage.setItem('location','home')
-this.checkTokens();
+      localStorage.setItem('param', '10')
+      this.user=JSON.parse(localStorage.getItem('user')!)
       localStorage.getItem('welcomeAudioHasStarted')&& localStorage.getItem('welcomeAudioHasStarted')=='true'?
       this.welcomeAudioHasStarted=true:this.welcomeAudioHasStarted=false
 
@@ -262,35 +261,7 @@ checkMessages(user:any){
           }
         })
 }
-checkTokens(){
-  if(localStorage.getItem('accessToken')){
-    this.formsService.verifyToken(localStorage.getItem('accessToken')!).subscribe((data:any)=>{
-    if(data&&data.id){
-      this.authService.setToken(localStorage.getItem('accessToken')!)
-      this.user= data
-      localStorage.setItem('user',JSON.stringify(this.user))
-      this.formsService.sendUser(this.user)
-    }
-    },(err:any)=>{
-    this.formsService.verifyRefreshToken(localStorage.getItem('refreshToken')!).subscribe((data:any)=>{
-      if(data){
-        localStorage.setItem('accessToken',data.accessToken)
-        this.authService.setToken(localStorage.getItem('accessToken')!);
-        this.formsService.verifyToken(localStorage.getItem('accessToken')!).subscribe((data:any)=>{
-          if(data&&data.id){
-            this.user= data
-            localStorage.setItem('user',JSON.stringify(this.user))
-            this.formsService.sendUser(this.user)
-          }
-        })
-      }
-    },err=>{
-      this.location='forms'
-    })
-    })
-    }
-    this.showSpinner()
-}
+
 showSpinner() {
   this.spinnerService.show();
 
