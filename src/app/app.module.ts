@@ -46,6 +46,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { AuthTokenInterceptor } from './appStructure/Core/Interceptors/auth-token.interceptor';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -98,7 +99,9 @@ MatTableModule,
 MatPaginatorModule,
 MatInputModule,
 MatButtonModule,
-MatSelectModule
+MatSelectModule,
+MatTooltipModule,
+
 
   ],
   exports:[

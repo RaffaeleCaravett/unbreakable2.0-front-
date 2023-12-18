@@ -9,23 +9,23 @@
         <div class="col-xxl-9" *ngIf="navbarToShow!='forms'">
           <div class="row m-0" >
             <div class="col-xxl-1 col-xl-2 col-sm-2 col-3 py-2 hover">
-              <button  class="btn"  [ngClass]="{'text-dark': bg, 'text-light': !bg}" (click)="goToRoute('/home')">
+              <button matTooltip="Home"  class="btn"  [ngClass]="{'text-dark': bg, 'text-light': !bg}" (click)="goToRoute('/home')">
                 🏠
               </button>
             </div>
            <div *ngFor="let a of argumentsArray" class="col-xxl-1 col-xl-2 col-sm-2 col-3 py-2 hover text-center">
-                      <button class="btn text-center"  [ngClass]="{'text-dark': bg, 'text-light': !bg}" (click)="goToRoute('/'+a.title)">
+                      <button class="btn text-center" matTooltip="{{a.title}}"   [ngClass]="{'text-dark': bg, 'text-light': !bg}" (click)="goToRoute('/'+a.title)">
                         {{a.icon}}
                       </button>
                         <br>
                     </div>
                     <div class="col-xxl-1 col-xl-2 col-sm-2 col-3 py-2 hover">
-                      <button class="btn text-center"  [ngClass]="{'text-dark': bg, 'text-light': !bg}" (click)="goToRoute('/connect')">
+                      <button class="btn text-center" matTooltip="Make contact"  [ngClass]="{'text-dark': bg, 'text-light': !bg}" (click)="goToRoute('/connect')">
                         🤝
                       </button>
                     </div>
                     <div class="col-xxl-1 col-xl-2 col-sm-2 col-3 py-2 hover">
-                      <button class="btn text-center"   [ngClass]="{'text-dark': bg, 'text-light': !bg}" (click)="goToRoute('/profile')">
+                      <button class="btn text-center" matTooltip="Profile"   [ngClass]="{'text-dark': bg, 'text-light': !bg}" (click)="goToRoute('/profile')">
                         👤
                       </button>
                     </div>

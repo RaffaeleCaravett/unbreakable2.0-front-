@@ -21,3 +21,7 @@ app-navbar,app-footer{
   .bg-blackk{
     background-color: black;
   }
+  ::ng-deep .mat-tooltip {
+    font-size: 14px;
+    z-index: 100000!important;
+  }

@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ModifyCommentDialogComponent } from '../dialogs/modifyCommentDialog/modify-comment-dialog/modify-comment-dialog.component';
 import { NavService } from '../../Services/navService/nav.service';
 import { FormsService } from '../../Services/FormsService/forms.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-comments-and-reviews',
@@ -27,8 +28,8 @@ export class CommentsAndReviewsComponent implements OnInit,OnChanges{
   @Output() location:EventEmitter<string>= new EventEmitter<string>
   @Output() userToSend:EventEmitter<any>= new EventEmitter<any>
 
-  constructor(private commentsAndRatingService:CommentsAndReviewService,private argumentService:ArgumentsServiceService,private dialogRef:MatDialog,private navService:NavService,
-    private formsService:FormsService){
+  constructor(private commentsAndRatingService:CommentsAndReviewService,private argumentService:ArgumentsServiceService,private dialogRef:MatDialog,
+    private router:Router){
             this.rating=0
 
 
@@ -177,8 +178,8 @@ return isItLiked
 
 sendInfos(c:any){
   if(c.user.id!=this.user.id){
-
-  }
+    const encodedUser = btoa(JSON.stringify(c.user));
+    this.router.navigate(['/visit-profile', encodedUser]);  }
 }
 takeRatings(argumentId:number){
 
