@@ -39,11 +39,14 @@ export class HomePageComponent implements AfterViewInit, OnChanges{
   messagesArray:any[]=[]
   currentChat:any
  constructor(private argumentsService:ArgumentsServiceService, private router :Router, private formsService:FormsService,private friendship:FriendshipService,
-  private chatService:ChatService,private authService:AuthService,private spinnerService: NgxSpinnerService){}
+  private chatService:ChatService,private authService:AuthService,private spinnerService: NgxSpinnerService){
+
+  }
 
     ngOnInit(){
+
       localStorage.setItem('param', '10')
-      this.user=JSON.parse(localStorage.getItem('user')!)
+        this.checkTokens()
       localStorage.getItem('welcomeAudioHasStarted')&& localStorage.getItem('welcomeAudioHasStarted')=='true'?
       this.welcomeAudioHasStarted=true:this.welcomeAudioHasStarted=false
 
@@ -269,4 +272,107 @@ showSpinner() {
     this.spinnerService.hide();
   }, 1000);
 }
+checkTokens(){
+  if(localStorage.getItem('accessToken')){
+    this.formsService.verifyToken(localStorage.getItem('accessToken')!).subscribe((data:any)=>{
+    if(data&&data.id){
+      this.authService.setToken(localStorage.getItem('accessToken')!)
+      this.user= data
+      localStorage.setItem('user',JSON.stringify(this.user))
+       this.formsService.isUserAuthenticate(true)
+    switch(localStorage.getItem('param')){
+      case '1':
+        this.router.navigate(['/path'])
+break;
+case '2':
+this.router.navigate(['/food'])
+break;
+case '3':
+this.router.navigate(['/heal'])
+break;
+case '4':
+this.router.navigate(['/exercise'])
+break;
+case '5':
+this.router.navigate(['/music'])
+break;
+case '6':
+this.router.navigate(['/tips'])
+break;
+case '7':
+this.router.navigate(['/chemistry'])
+break;
+case '8':
+this.router.navigate(['/sleep'])
+break;
+case '9':
+this.router.navigate(['/light'])
+break;
+case '10':
+this.router.navigate(['/home'])
+break;
+default:
+this.formsService.isUserAuthenticate(false)
+this.router.navigate([''])
+break;
+    }
+
+    }
+    },(err:any)=>{
+    this.formsService.verifyRefreshToken(localStorage.getItem('refreshToken')!).subscribe((data:any)=>{
+      if(data){
+        localStorage.setItem('accessToken',data.accessToken)
+        this.authService.setToken(localStorage.getItem('accessToken')!);
+        this.formsService.verifyToken(localStorage.getItem('accessToken')!).subscribe((data:any)=>{
+          if(data&&data.id){
+            this.user= data
+            localStorage.setItem('user',JSON.stringify(this.user))
+            this.formsService.isUserAuthenticate(true)
+            switch(localStorage.getItem('param')){
+              case '1':
+                this.router.navigate(['/path'])
+    break;
+    case '2':
+      this.router.navigate(['/food'])
+    break;
+    case '3':
+      this.router.navigate(['/heal'])
+    break;
+    case '4':
+      this.router.navigate(['/exercise'])
+    break;
+    case '5':
+      this.router.navigate(['/music'])
+    break;
+    case '6':
+      this.router.navigate(['/tips'])
+    break;
+    case '7':
+      this.router.navigate(['/chemistry'])
+    break;
+    case '8':
+      this.router.navigate(['/sleep'])
+    break;
+    case '9':
+      this.router.navigate(['/light'])
+    break;
+    case '10':
+      this.router.navigate(['/home'])
+    break;
+    default:
+      this.formsService.isUserAuthenticate(false)
+      this.router.navigate([''])
+        break;
+            }
+          }
+        })
+      }
+    },err=>{
+      this.formsService.isUserAuthenticate(false)
+      this.router.navigate([''])
+    })
+    })
+    }
+}
+
 }
