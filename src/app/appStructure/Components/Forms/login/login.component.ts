@@ -55,8 +55,15 @@ password:this.loginForm.controls['password'].value
         this.authService.setToken(data.tokens.accessToken);
         this.authService.setRefreshToken(data.tokens.refreshToken);
         this.formsService.isUserAuthenticate(true)
-        this.navbarService.sendData('home')
-        this.router.navigate(['home'])
+        this.formsService.verifyToken(localStorage.getItem('accessToken')!).subscribe((data:any)=>{
+          if(data&&data.id){
+            this.authService.setToken(localStorage.getItem('accessToken')!)
+            this.user= data
+            localStorage.setItem('user',JSON.stringify(this.user))
+          }
+           this.navbarService.sendData('home')
+           this.router.navigate(['home'])
+        })
       }
     },
     (err) => {
