@@ -42,7 +42,7 @@ loginRequest(body:LoginRequest){
   }
   uploadProfileImage(selectedImage: File, id:number) {
     const formData = new FormData();
-      formData.append('immagine_profilo', selectedImage||null);
+      formData.append('immagine_profilo', selectedImage||'');
 return this.httpModule.post(environment.API_URL+this.uploadImage+id, formData);
   }
   updateUser(id:number,body:{}){

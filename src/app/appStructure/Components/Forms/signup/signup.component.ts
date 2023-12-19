@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { ErrorsDialogComponent } from 'src/app/appStructure/Shared/Components/dialogs/errors-dialog/errors-dialog.component';
 import { AuthService } from 'src/app/appStructure/Shared/Services/AuthService/Auth.service';
 import { CitiesAndNationsService } from 'src/app/appStructure/Shared/Services/ContinentsAndNations/continents-and-nations.service';
-import { EmojisService } from 'src/app/appStructure/Shared/Services/EmojisService/emojis.service';
 import { FormsService } from 'src/app/appStructure/Shared/Services/FormsService/forms.service';
 import { NavService } from 'src/app/appStructure/Shared/Services/navService/nav.service';
 
@@ -15,7 +14,7 @@ import { NavService } from 'src/app/appStructure/Shared/Services/navService/nav.
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss'],
 })
-export class SignupComponent implements OnInit,OnDestroy {
+export class SignupComponent implements OnInit {
   signupForm!: FormGroup;
   isLinear:boolean=true
   formSectionCount!: number;
@@ -32,17 +31,13 @@ export class SignupComponent implements OnInit,OnDestroy {
   hide1:boolean=true
   profile_picture!:string
   imageForm!:FormGroup
+  user!:any;
   @Output() location : EventEmitter<string> = new EventEmitter<string>
   constructor(private signUpService: FormsService,private continentsAndNations: CitiesAndNationsService,
 private router:Router,private _formBuilder: FormBuilder,
 private dialogRef:MatDialog, private authService:AuthService,private navbarService:NavService) {
   }
 
-
-
-  ngOnDestroy(): void {
-    localStorage.clear()
-  }
 
   ngOnInit(): void {
     this.profile_picture='../../../../../assets/signup/default_profile_picture.jpg'
@@ -95,24 +90,30 @@ this.continentsAndNations.getAllContinents().subscribe((data:any)=>{
         })
         .subscribe(
           (data: any) => {
-              this.signUpService.uploadProfileImage(this.selectedImage,data.id).subscribe((uploaded:any)=>{
-            })
-            setTimeout(()=>{
+           localStorage.setItem('img_profilo',this.selectedImage||'')
               this.signUpService.loginRequest(
                 {
                   email: String(this.accountInfo.controls['email'].value),
                   password: String(this.accountInfo.controls['password'].value),
                 }
               ).subscribe((data:any)=>{
-                localStorage.setItem('accessToken',data.tokens.accessToken)
-                localStorage.setItem('refreshToken',data.tokens.refreshToken)
-                this.authService.setToken(data.accessToken);
-                this.authService.setRefreshToken(data.tokens.refreshToken);
-                this.signUpService.isUserAuthenticate(true)
-                this.navbarService.sendData('home')
-                this.router.navigate(['/home'])
-               })
-            },1000)
+                if (data) {
+                  localStorage.setItem('accessToken',data.tokens.accessToken)
+                  localStorage.setItem('refreshToken',data.tokens.refreshToken)
+                  this.authService.setToken(data.tokens.accessToken);
+                  this.authService.setRefreshToken(data.tokens.refreshToken);
+                  this.signUpService.isUserAuthenticate(true)
+                  this.signUpService.verifyToken(localStorage.getItem('accessToken')!).subscribe((data:any)=>{
+                    if(data&&data.id){
+                      this.authService.setToken(localStorage.getItem('accessToken')!)
+                      this.user= data
+                      localStorage.setItem('user',JSON.stringify(this.user))
+                    }
+                     this.navbarService.sendData('home')
+                     this.router.navigate(['/home'])
+                  })
+                }
+                })
           },
           (error) => {
             this.signUpService.isUserAuthenticate(false)

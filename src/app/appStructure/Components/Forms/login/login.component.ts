@@ -62,7 +62,7 @@ password:this.loginForm.controls['password'].value
             localStorage.setItem('user',JSON.stringify(this.user))
           }
            this.navbarService.sendData('home')
-           this.router.navigate(['home'])
+           this.router.navigate(['/home'])
         })
       }
     },

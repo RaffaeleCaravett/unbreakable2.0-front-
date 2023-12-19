@@ -70,7 +70,7 @@ playWelcomeAudio(){
 
 
 setTimeout(()=>{
- if(this.user &&this.user.img_profilo==null){
+ if(this.user ){
       this.formsService.updateUser(this.user.id,
         {
           età:this.user.età,
@@ -79,7 +79,7 @@ setTimeout(()=>{
     cognome:this.user.cognome,
     continente:this.user.continent.id,
     nazione:this.user.nazione.id,
-    img_profilo:"assets/signup/default_profile_picture.jpg"
+    img_profilo:localStorage.getItem('img_profilo')==''?"assets/signup/default_profile_picture.jpg":localStorage.getItem('img_profilo')
         }
       ).subscribe((updated:any)=>{
         this.user=updated
@@ -277,7 +277,7 @@ checkTokens(){
     this.formsService.verifyToken(localStorage.getItem('accessToken')!).subscribe((data:any)=>{
     if(data&&data.id){
       this.authService.setToken(localStorage.getItem('accessToken')!)
-      console.log("data :"+ data)
+      console.log("data :", data)
       this.user= data
       localStorage.setItem('user',JSON.stringify(this.user))
        this.formsService.isUserAuthenticate(true)
