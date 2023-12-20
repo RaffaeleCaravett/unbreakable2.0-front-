@@ -1,6 +1,6 @@
 <div class="row p-2 w-75 m-auto">
-  <div  class="bg-light border rounded">
-    <mat-stepper [linear]="true" class="bg-transparent" style="opacity: 0.7;" #stepper (selectionChange)="onStepChange($event)">
+  <div  class="bg-light border rounded  shadow">
+    <mat-stepper [linear]="true" class="bg-transparent w-100" style="opacity: 0.7;" #stepper (selectionChange)="onStepChange($event)">
     <mat-step [stepControl]="personalInfo">
       <form [formGroup]="personalInfo" class="d-flex flex-column w-75 m-auto">
         <ng-template matStepLabel>Personal Information</ng-template>
@@ -85,7 +85,7 @@
     </form>
   </div>
   <hr class="w-75 m-auto">
-<div class="col-md-12 text-center pt-2">
+<div class="col-md-12 text-center pt-4">
   <p>Or signin <span class="colors" (click)="goToForms('login')"><a href="#">here!</a></span></p>
 </div>
 </div>

@@ -45,3 +45,6 @@ p{
   background: linear-gradient(to top right, rgba(255, 255, 255, 0.5), rgb(255, 187, 0))!important;
   border-radius: 5px;
 }
+::ng-deep mat-form-field{
+  width:100%;
+}

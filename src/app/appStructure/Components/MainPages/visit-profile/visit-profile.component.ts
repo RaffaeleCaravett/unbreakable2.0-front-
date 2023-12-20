@@ -36,9 +36,10 @@ userForm!:FormGroup
 nations:any[]=[]
 continents:any[]=[]
 submitted:boolean=false
+
 constructor(private commentService:CommentsAndReviewService,private route: ActivatedRoute,
   private continentsAndNations: CitiesAndNationsService, private friendshipService:FriendshipService,
-  private commentAndReviewService:CommentsAndReviewService,private formsService:FormsService
+  private commentAndReviewService:CommentsAndReviewService
 ){
 
 
@@ -46,10 +47,12 @@ constructor(private commentService:CommentsAndReviewService,private route: Activ
 
 
 ngOnInit(){
+  localStorage.setItem('param', '13')
   this.route.params.subscribe((params) => {
     const encodedUser = params['userData'];
     const decodedUser = JSON.parse(atob(encodedUser));
     this.user = decodedUser;
+    localStorage.setItem('userToVisit',JSON.stringify(this.user))
   });
   this.userThatVisit= JSON.parse(localStorage.getItem('user')!)
 

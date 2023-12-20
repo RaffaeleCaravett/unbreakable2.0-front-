@@ -61,3 +61,17 @@ font-size:20px}
  .mat-mdc-button-touch-targetmat-mdc-button-persistent-ripple[_ngcontent-ng-c3502215706] .mdc-button__ripple[_ngcontent-ng-c3502215706]{
   background: transparent!important;
 }
+@media screen and (max-width:1200px) {
+  canvas {
+visibility: hidden;  }
+
+}
+@media screen and (max-width:1780px) {
+  .xxl-width {
+display:none  }
+}
+@media screen and (min-width:1780px) {
+  .xl-width ,mat-menu,[mat-menu-item],.mat-mdc-menu-content, .mat-mdc-menu-content .mat-mdc-menu-item .mat-mdc-menu-item-text {
+display: none!important;
+}
+}

@@ -204,6 +204,22 @@ break;
 case '10':
   this.router.navigate(['/home'])
 break;
+case '11':
+  this.router.navigate(['/profile'])
+break;
+case '12':
+  this.router.navigate(['/connect'])
+break;
+case '13':
+  if (localStorage.getItem('userToVisit')) {
+    const userToVisit = localStorage.getItem('userToVisit')!;
+  const encodedUser = btoa(JSON.stringify(JSON.parse(userToVisit)));
+  this.router.navigate(['/visit-profile',encodedUser])
+  }else {
+    this.router.navigate(['/home'])
+
+  }
+break;
 default:
   this.formsService.isUserAuthenticate(false)
   this.router.navigate([''])

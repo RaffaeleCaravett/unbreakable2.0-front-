@@ -8,31 +8,43 @@
         <div class="col-md-8" *ngIf="navbarToShow=='forms'"></div>
         <div class="col-xxl-9" *ngIf="navbarToShow!='forms'">
           <div class="row m-0" >
-            <div class="col-xxl-1 col-xl-2 col-sm-2 col-3 py-2 hover">
-              <button matTooltip="Home"  class="btn"  [ngClass]="{'text-dark': bg, 'text-light': !bg}" (click)="goToRoute('/home')">
+            <div class="row m-0 xxl-width">
+            <div  class="col-xxl-1 hover">
+              <button  matTooltip="Home"  class="btn"  [ngClass]="{'text-dark': bg, 'text-light': !bg}" (click)="goToRoute('/home')">
                 🏠
               </button>
             </div>
-           <div *ngFor="let a of argumentsArray" class="col-xxl-1 col-xl-2 col-sm-2 col-3 py-2 hover text-center">
-                      <button class="btn text-center" matTooltip="{{a.title}}"   [ngClass]="{'text-dark': bg, 'text-light': !bg}" (click)="goToRoute('/'+a.title)">
+           <div *ngFor="let a of argumentsArray"  class="col-xxl-1 hover text-center">
+                      <button class="btn text-center"  matTooltip="{{a.title}}"   [ngClass]="{'text-dark': bg, 'text-light': !bg}" (click)="goToRoute('/'+a.title)">
                         {{a.icon}}
                       </button>
                         <br>
                     </div>
-                    <div class="col-xxl-1 col-xl-2 col-sm-2 col-3 py-2 hover">
-                      <button class="btn text-center" matTooltip="Make contact"  [ngClass]="{'text-dark': bg, 'text-light': !bg}" (click)="goToRoute('/connect')">
+                    <div  class="col-xxl-1 hover">
+                      <button  class="btn text-center" matTooltip="Make contact"  [ngClass]="{'text-dark': bg, 'text-light': !bg}" (click)="goToRoute('/connect')">
                         🤝
                       </button>
                     </div>
-                    <div class="col-xxl-1 col-xl-2 col-sm-2 col-3 py-2 hover">
-                      <button class="btn text-center" matTooltip="Profile"   [ngClass]="{'text-dark': bg, 'text-light': !bg}" (click)="goToRoute('/profile')">
+                    <div  class="col-xxl-1 hover">
+                      <button  class="btn text-center" matTooltip="Profile"   [ngClass]="{'text-dark': bg, 'text-light': !bg}" (click)="goToRoute('/profile')">
                         👤
                       </button>
                     </div>
+                   </div>
+                   <div class="row m-0 xl-width" style="z-index: 999999999;">
+                    <button mat-button [matMenuTriggerFor]="menu" class="w-25">Menu</button>
+                    <mat-menu #menu="matMenu" style="z-index: 999999999;">
+                      <button mat-menu-item matTooltip="Home" [ngClass]="{'text-dark': bg, 'text-light': !bg}" (click)="goToRoute('/home')">Home</button>
+                      <button mat-menu-item  matTooltip="{{a.title}}" [ngClass]="{'text-dark': bg, 'text-light': !bg}" (click)="goToRoute('/'+a.title)" *ngFor="let a of argumentsArray">
+                      {{a.title}}</button>
+                      <button mat-menu-item matTooltip="Make Contact" [ngClass]="{'text-dark': bg, 'text-light': !bg}" (click)="goToRoute('/connect')">Make Contact</button>
+                      <button mat-menu-item matTooltip="Profile" [ngClass]="{'text-dark': bg, 'text-light': !bg}" (click)="goToRoute('/profile')">Profile</button>
+                    </mat-menu>
+                   </div>
           </div >
     </div>
 <div class="col-xxl-2 d-flex justify-content-end" *ngIf="navbarToShow=='forms'">
-  <a href="#" (click)="goToForms('login')">
+  <a href="#" (click)="goToForms('login')" class="mt">
  <span id="login" class="text-dark-span" >Login</span>
  <canvas #canvas1 class="pt-2"></canvas> </a>
   <a href="#"  class="mt-2" (click)="goToForms('signup')">
@@ -41,7 +53,7 @@
     </div></a>
 </div>
 <div class="col-xxl-1 d-flex justify-content-end p-2" *ngIf="navbarToShow!='forms'">
-  <button  mat-button [matMenuTriggerFor]="menu" (click)="updateNotification()"> <a href="#" class="p-2">
+  <button  mat-button [matMenuTriggerFor]="menu" (click)="updateNotification()"> <a class="btn p-2">
     <mat-icon [matBadge]="badgeValue" matBadgeColor="warn" matBadgePosition="above after">notifications</mat-icon>
   </a></button>
 <mat-menu #menu="matMenu" >
@@ -61,6 +73,7 @@
     </div>
   </div>
   </button>
+
 </mat-menu>
   <a href="#" (click)="goToForms('login','clear')" class="p-2">
  <span id="login" class="p-2" >Logout</span>

@@ -29,12 +29,16 @@ export class ProfileComponent implements OnInit{
   option!:EChartsOption
   @Output() location= new EventEmitter<string>()
   updateDescription!:FormGroup
+  imageForm!:FormGroup
   userForm!:FormGroup
   nations:any[]=[]
   continents:any[]=[]
   submitted:boolean=false
   likesArray:any=[]
   friendshipArray:any=[]
+  profile_preview:any=null;
+  selectedImage:any=null;
+
 constructor(private commentService:CommentsAndReviewService,
   private authService:AuthService,
   private cdr: ChangeDetectorRef,private continentsAndNations: CitiesAndNationsService,private signupService:FormsService,
@@ -42,8 +46,10 @@ constructor(private commentService:CommentsAndReviewService,
 
 
 ngOnInit(){
+  localStorage.setItem('param', '11')
   this.user=JSON.parse(localStorage.getItem('user')!)
-
+  var userNation = this.user.nazione.name;
+  this.setMapViewForNation(userNation);
   this.submitted=false
   this.continentsAndNations.getAllContinents().subscribe((data:any)=>{
     if(data && data.content){
@@ -111,20 +117,24 @@ setTimeout(() => {
     ]
   };
 }, 1000);
-const map = L.map('map').setView([51.505, -0.09], 13);
+// const map = L.map('map').setView([51.505, -0.09], 13);
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '© OpenStreetMap contributors'
-}).addTo(map);
+// L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+//   attribution: '© OpenStreetMap contributors'
+// }).addTo(map);
 
-L.marker([51.5, -0.09]).addTo(map)
-  .bindPopup('You are here.')
-  .openPopup();
+// L.marker([51.5, -0.09]).addTo(map)
+//   .bindPopup('You are here.')
+//   .openPopup();
 
 
 
   this.updateDescription=new FormGroup({
     description: new FormControl(this.user.description||'')
+  })
+
+  this.imageForm=new FormGroup({
+    img_profile: new FormControl('')
   })
 
 this.userForm=new FormGroup({
@@ -165,6 +175,10 @@ callNationsByContinentId(continentId:number){
       description:this.updateDescription.controls['description'].value||this.user.description
    }).subscribe((data:any)=>{
     if(data){
+      if(this.selectedImage){
+        this.signupService.uploadProfileImage(this.selectedImage,data.id).subscribe(data=>{})
+      }
+      localStorage.setItem('user',JSON.stringify(data))
       this.user=data
 this.authService.updateUserDatas(data)
       this.cdr.detectChanges()
@@ -172,4 +186,84 @@ this.authService.updateUserDatas(data)
     }
    })
   }
+  handleFileInput(event: any): void {
+    const file = event.target.files?.[0];
+
+    if (file && file.size > 1048576) {
+      this.selectedImage = null;
+      alert('File size exceeds the maximum allowed size (1 MB). Please choose a smaller file.');
+    } else {
+      this.selectedImage = file;
+    }
+  if (this.selectedImage) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.profile_preview = reader.result;
+        };
+        reader.readAsDataURL(this.selectedImage);
+      }
+  }
+
+  setMapViewForNation(nation: string) {
+    var openCageApiKey = '46d2c313a2cf4ff8a6526625fc1a3001';
+    var geocodingEndpoint = 'https://api.opencagedata.com/geocode/v1/json';
+
+    fetch(`${geocodingEndpoint}?key=${openCageApiKey}&q=${encodeURIComponent(nation)}`)
+      .then(response => response.json())
+      .then(data => {
+        let map;
+        if (data.results && data.results.length > 0) {
+          var coordinates = data.results[0].geometry;
+          map = L.map('map').setView([coordinates.lat, coordinates.lng], 13);
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+          }).addTo(map);
+
+          L.marker([ coordinates.lat, coordinates.lng]).addTo(map)
+            .bindPopup('You are here.')
+            .openPopup();
+        } else {
+          var continentCoordinates:any = {
+            'North America': { lat: 37.0902, lng: -95.7129 },
+            'South America': { lat: -14.235, lng: -51.9253 },
+            'Europe': { lat: 51.1657, lng: 10.4515 },
+            'Africa': { lat: 9.082, lng: 8.6753 },
+            'Asia': { lat: 34.0479, lng: 100.6197 },
+            'Australia (Oceania)': { lat: -25.2744, lng: 133.7751 },
+            'Antartica': { lat: -82, lng: 0 },
+          };
+
+          if (continentCoordinates.hasOwnProperty(this.user.continent.name)) {
+            var continentCoords = continentCoordinates[this.user.continent.name];
+            map = L.map('map').setView([continentCoords.lat, continentCoords.lng], 13);
+          } else {
+            map = L.map('map').setView([51.505, -0.09], 13);
+
+          }
+        }
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        L.marker([continentCoords.lat, continentCoords.lng]).addTo(map)
+          .bindPopup('You are here.')
+          .openPopup();
+      })
+      .catch(error => {
+
+        let map = L.map('map').setView([51.505, -0.09], 13);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        L.marker([51.5, -0.09]).addTo(map)
+          .bindPopup('You are here.')
+          .openPopup();
+        console.error('Error fetching geocoding data:', error);
+      });
+  }
+
+
 }

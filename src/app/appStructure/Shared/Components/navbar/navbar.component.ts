@@ -171,7 +171,7 @@ goToRoute(param:string){
       p=6
       break;
       case '/chemistry':
-      p=4
+      p=7
       break;
     default:
      p=0

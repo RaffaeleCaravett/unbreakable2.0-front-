@@ -6,10 +6,21 @@
   <div class="col-md-6">
     <div class="row">
       <div class="col-md-3"></div>
-      <div class="col-md-6 p-3 border rounded shadow-lg fs-5 overflow-auto">
+      <div class="col-md-6 p-3 border rounded shadow fs-5 overflow-auto">
         <div class="row">
           <div class="col-md-12 p-1">
-<img src="{{user.img_profilo}}" alt="" class="w-100 rounded-top shadow-sm" style="max-height: 270px;">
+<img src="{{profile_preview||user.img_profilo}}" alt="" class="w-100 rounded-top shadow-sm" style="height: 270px;">
+
+<form [formGroup]="imageForm" >
+  <input (change)="handleFileInput($event)" formControlName="img_profile" type="file" accept=".jpg, .jpeg, .png" placeholder="Select your profile image" class="d-none" required #imageInput>
+<div class="p-2 d-flex flex-column text-center">
+<label class="p-2">Profile Image</label>
+<div class="p-2">
+ <button class="btn m-2" (click)="imageInput.click()"><mat-icon>photo_camera</mat-icon></button>
+ <button class="btn btn-danger m-2" *ngIf="profile_preview" (click)="profile_preview=null"><mat-icon>delete</mat-icon></button>
+</div>
+</div>
+ </form>
     </div>
 
 <div class="col-md-12">
@@ -67,9 +78,9 @@
       <div class="col-md-3"></div>
     </div>
   </div>
-  <div class="col-md-6">
-    <div class="row">
-      <div class="col-md-12 m-4 border rounded shadow-lg fs-5">
+  <div class="col-md-6 px-3">
+    <div class="row p-2">
+      <div class="col-md-12 my-4 border rounded shadow fs-5">
         <div class=" text-center border-bottom">
           <h2>Account informations <mat-icon>person</mat-icon></h2>
         </div>
@@ -84,7 +95,7 @@
           </p>
         </div>
       </div>
-      <div class="col-md-12 m-4 border rounded shadow-lg fs-5">
+      <div class="col-md-12 my-4 border rounded shadow fs-5">
         <div class="p-1 text-center border-bottom">
           <div class="d-flex">
             <h2>Arguments you reviewed </h2>
@@ -125,9 +136,9 @@
   </div>
 </div>
 <div class="col-md-12 p-3">
-  <div class="chart" echarts [options]="option"></div>
+  <div class="chart w-75 m-auto" echarts [options]="option"></div>
 </div>
-<div class="col-md-12 p-2">
+<div class="col-md-12 p-4 text-center">
   <app-map class="py-5"></app-map>
 </div>
 </div>

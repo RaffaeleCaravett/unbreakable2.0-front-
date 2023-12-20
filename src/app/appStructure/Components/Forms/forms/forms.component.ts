@@ -139,7 +139,6 @@ this.argumentsService.getAllArguments().subscribe((data:any)=>{
     this.camera2 = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
     this.renderer2 = new THREE.WebGLRenderer({ canvas: this.myCanvas2.nativeElement ,antialias:true,alpha:true});
     this.renderer2.setSize(window.innerWidth, window.innerHeight);
-    this.renderer2.setClearColor(0xffffff)
     this.renderer2.shadowMap.enabled = true;
 this.renderer2.shadowMap.type = THREE.PCFSoftShadowMap;
     this.planeGeometry=new THREE.PlaneGeometry(10,10)
@@ -442,7 +441,8 @@ this.sphere.position.y=-mappedValueY*1.1
   onResize(event: Event): void {
     const newWidth = window.innerWidth;
     const newHeight = window.innerHeight;
-    this.camera.aspect = newWidth / newHeight;
+    if(this.myCanvas&&this.myCanvas1&&this.myCanvas2){
+      this.camera.aspect = newWidth / newHeight;
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(newWidth, newHeight);
     this.camera1.aspect = newWidth / newHeight;
@@ -451,6 +451,7 @@ this.sphere.position.y=-mappedValueY*1.1
     this.camera2.aspect = newWidth / newHeight;
     this.camera2.updateProjectionMatrix();
     this.renderer2.setSize(newWidth, newHeight);
+    }
   }
 
 moveBackward(){

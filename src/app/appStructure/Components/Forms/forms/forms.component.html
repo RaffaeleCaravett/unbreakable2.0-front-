@@ -1,7 +1,7 @@
   <canvas #myCanvas2 [style.position]="'fixed'"  [style.top]="0"
   style="position: fixed; top: 0; max-width: 100%;z-index: 0;"
   class="canvas2" ></canvas>
-  <div style="height: 100%; position: fixed; top: 0; width: 100%; background: url('assets/forest-and-sun.jpg') center/cover no-repeat;  opacity: 0.1;z-index: 0;"></div>
+  <div style="height: 100%; position: fixed; top: 0; width: 100%; max-width:100%; background: url('assets/forest-and-sun.jpg') center/cover no-repeat;  opacity: 0.1;z-index: 0;"></div>
   <div class="container bg-transparent ">
 <div class="row p-5 text-center ">
   <div class="col-md-12">
@@ -11,8 +11,8 @@
   </div>
 <div class="col-12 p-3">
   <div class="cube m-auto rounded" #cube >
-      <app-login *ngIf="paramValue=='login'" (location)="onReceiveLocation($event)"></app-login>
-      <app-signup *ngIf="paramValue=='signup'||!paramValue" (location)="onReceiveLocation($event)"></app-signup>
+      <app-login *ngIf="paramValue=='login'" (location)="onReceiveLocation($event)" ></app-login>
+      <app-signup *ngIf="paramValue=='signup'||!paramValue" (location)="onReceiveLocation($event)" ></app-signup>
   </div>
 </div>
 <div class="col-12 p-4">
@@ -22,7 +22,7 @@
 </div>
 <div class="col-md-12">
   <div class="row text-center">
-    <div class="col-md-6 p-2">
+    <div class="col-md-6 p-3">
       <div class="border rounded text-dark shadow fs-5 shake-on-hover">
         <h1>Grow up <i class="fas fa-arrow-up text-success"></i></h1>
         <hr>
@@ -33,7 +33,7 @@
     <p>Overall Health</p>
       </div>
     </div>
-    <div class="col-md-6 p-2">
+    <div class="col-md-6 p-3">
       <div class="border rounded shadow fs-5 shake-on-hover">
         <h1>Slow down <i class="fas fa-arrow-down text-danger "></i></h1>
         <hr>

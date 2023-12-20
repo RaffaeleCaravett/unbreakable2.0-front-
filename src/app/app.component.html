@@ -1,9 +1,11 @@
-<body class="d-flex flex-column bg-transparent" [ngClass]="{'text-dark ': bg, 'text-primary ': !bg}" [style.max-width]="'100%'">
+<body class="d-flex flex-column bg-transparent" [ngClass]="{'text-dark ': bg, 'text-primary ': !bg}" >
   <app-navbar></app-navbar>
   <div class="row">
    <div class="col-md-4 d-flex flex-row p-3">
-    <div class="p-0" style="max-width: 150px;"><canvas #canvas1 class="w-100" (click)="bg=true"> </canvas></div>
-    <div class="p-0" style="max-width: 150px;"> <canvas #canvas2 class="w-100" (click)="bg=false"> </canvas></div>
+    <div class="p-0" style="max-width: 150px; z-index:1000" *ngIf="string!='/forms'"><button class="btn" (click)="bg=true"><canvas #canvas1 class="w-100" > </canvas></button></div>
+    <div class="p-0" style="max-width: 150px; z-index:1000" *ngIf="string!='/forms'"><button class="btn" (click)="bg=false"> <canvas #canvas2 class="w-100" > </canvas></button></div>
+    <div class="p-0" style="max-width: 150px; z-index:1000"><button class="w-100" (click)="bg=true" class="btn btn-light btn-mode m-1"> Light mode 🌞</button></div>
+    <div class="p-0" style="max-width: 150px; z-index:1000"> <button class="w-100" (click)="bg=false" class="btn btn-dark btn-mode m-1"> Dark mode 🌕</button></div>
 </div>
   </div>
   <router-outlet></router-outlet>

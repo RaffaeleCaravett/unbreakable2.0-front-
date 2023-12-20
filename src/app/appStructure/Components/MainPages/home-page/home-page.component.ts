@@ -79,7 +79,7 @@ setTimeout(()=>{
     cognome:this.user.cognome,
     continente:this.user.continent.id,
     nazione:this.user.nazione.id,
-    img_profilo:localStorage.getItem('img_profilo')==''?"assets/signup/default_profile_picture.jpg":localStorage.getItem('img_profilo')
+    img_profilo:this.user.img_profilo==null?"assets/signup/default_profile_picture.jpg":localStorage.getItem('img_profilo')
         }
       ).subscribe((updated:any)=>{
         this.user=updated

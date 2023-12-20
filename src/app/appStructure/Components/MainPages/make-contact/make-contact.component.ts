@@ -25,6 +25,7 @@ view:string='table'
   }
 
   ngOnInit() {
+    localStorage.setItem('param', '12')
     this.user=JSON.parse(localStorage.getItem('user')!)
     this.userForm = this.formBuilder.group({
       firstName: [''],
@@ -65,6 +66,7 @@ this.formsService.getAllPaginated(
 sendInfos(user:any){
   if (user.id != this.user.id) {
     const encodedUser = btoa(JSON.stringify(user));
+    localStorage.setItem('userToVisit',JSON.stringify(user))
     this.router.navigate(['/visit-profile', encodedUser]);
   }
 }

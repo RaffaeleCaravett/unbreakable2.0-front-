@@ -90,7 +90,7 @@ this.continentsAndNations.getAllContinents().subscribe((data:any)=>{
         })
         .subscribe(
           (data: any) => {
-           localStorage.setItem('img_profilo',this.selectedImage||'')
+          //  localStorage.setItem('img_profilo',this.selectedImage||'')
               this.signUpService.loginRequest(
                 {
                   email: String(this.accountInfo.controls['email'].value),
@@ -98,6 +98,8 @@ this.continentsAndNations.getAllContinents().subscribe((data:any)=>{
                 }
               ).subscribe((data:any)=>{
                 if (data) {
+
+
                   localStorage.setItem('accessToken',data.tokens.accessToken)
                   localStorage.setItem('refreshToken',data.tokens.refreshToken)
                   this.authService.setToken(data.tokens.accessToken);
@@ -105,13 +107,17 @@ this.continentsAndNations.getAllContinents().subscribe((data:any)=>{
                   this.signUpService.isUserAuthenticate(true)
                   this.signUpService.verifyToken(localStorage.getItem('accessToken')!).subscribe((data:any)=>{
                     if(data&&data.id){
-                      this.authService.setToken(localStorage.getItem('accessToken')!)
+                       this.signUpService.uploadProfileImage(this.selectedImage,data.id).subscribe(data=>{})
+                      setTimeout(()=>{
+                         this.authService.setToken(localStorage.getItem('accessToken')!)
                       this.user= data
                       localStorage.setItem('user',JSON.stringify(this.user))
-                    }
                      this.navbarService.sendData('home')
                      this.router.navigate(['/home'])
+                    },2000)
+                    }
                   })
+
                 }
                 })
           },
