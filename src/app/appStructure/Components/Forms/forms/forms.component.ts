@@ -379,7 +379,7 @@ rect:any
       return(obj.position.x===this.highlightMesh.position.x)&&(obj.position.z===this.highlightMesh.position.z)
     })
     if(!objectExists ){
-      if(this.scene.children.length<4){
+      if(this.scene &&this.scene.children.length<4){
     this.intersects.forEach(intersect => {
       if (intersect.object.name === 'ground') {
           this.sphereClone= sphereMesh.clone()
