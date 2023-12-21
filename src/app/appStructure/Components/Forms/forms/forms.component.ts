@@ -368,55 +368,55 @@ rect:any
 
    @HostListener('mousedown', ['$event'])
    onMouseDown(event: MouseEvent): void {
-    const sphereMesh= new THREE.Mesh(
-      new THREE.SphereGeometry(0.4,4,2),
-      new THREE.MeshBasicMaterial({
-        wireframe:true,
-        color:this.getRandomColor()
-      })
-    )
-    const objectExists =this.objects.find(obj=>{
-      return(obj.position.x===this.highlightMesh.position.x)&&(obj.position.z===this.highlightMesh.position.z)
-    })
-    if(!objectExists ){
-      if(this.scene &&this.scene.children.length<4){
-    this.intersects.forEach(intersect => {
-      if (intersect.object.name === 'ground') {
-          this.sphereClone= sphereMesh.clone()
-          this.sphereClone.position.copy(this.highlightMesh.position)
-this.sphereClone.position.y+=0.5
-this.scene.add(this.sphereClone)
-this.objects.push(this.sphereClone)
-this.highlightMesh.material=new THREE.MeshBasicMaterial({
-  side:THREE.DoubleSide,
-  visible:true,
-  transparent:true,
-  color:'red'
- })
-      }
-    });
-  }else{
-    this.objects.forEach(obj=>{
-    this.scene.remove(obj)
-  })
-  this.objects=[]
-  this.intersects.forEach(intersect => {
-    if (intersect.object.name === 'ground') {
-        this.sphereClone= sphereMesh.clone()
-        this.sphereClone.position.copy(this.highlightMesh.position)
-this.sphereClone.position.y+=0.5
-this.scene.add(this.sphereClone)
-this.objects.push(this.sphereClone)
-this.highlightMesh.material=new THREE.MeshBasicMaterial({
-side:THREE.DoubleSide,
-visible:true,
-transparent:true,
-color:'red'
-})
-    }
-  });
-}
-  }
+//     const sphereMesh= new THREE.Mesh(
+//       new THREE.SphereGeometry(0.4,4,2),
+//       new THREE.MeshBasicMaterial({
+//         wireframe:true,
+//         color:this.getRandomColor()
+//       })
+//     )
+//     const objectExists =this.objects.find(obj=>{
+//       return(obj.position.x===this.highlightMesh.position.x)&&(obj.position.z===this.highlightMesh.position.z)
+//     })
+//     if(!objectExists ){
+//       if(this.scene &&this.scene.children.length<4){
+//     this.intersects.forEach(intersect => {
+//       if (intersect.object.name === 'ground') {
+//           this.sphereClone= sphereMesh.clone()
+//           this.sphereClone.position.copy(this.highlightMesh.position)
+// this.sphereClone.position.y+=0.5
+// this.scene.add(this.sphereClone)
+// this.objects.push(this.sphereClone)
+// this.highlightMesh.material=new THREE.MeshBasicMaterial({
+//   side:THREE.DoubleSide,
+//   visible:true,
+//   transparent:true,
+//   color:'red'
+//  })
+//       }
+//     });
+//   }else{
+//     this.objects.forEach(obj=>{
+//     this.scene.remove(obj)
+//   })
+//   this.objects=[]
+//   this.intersects.forEach(intersect => {
+//     if (intersect.object.name === 'ground') {
+//         this.sphereClone= sphereMesh.clone()
+//         this.sphereClone.position.copy(this.highlightMesh.position)
+// this.sphereClone.position.y+=0.5
+// this.scene.add(this.sphereClone)
+// this.objects.push(this.sphereClone)
+// this.highlightMesh.material=new THREE.MeshBasicMaterial({
+// side:THREE.DoubleSide,
+// visible:true,
+// transparent:true,
+// color:'red'
+// })
+//     }
+//   });
+// }
+  // }
    }
 
    @HostListener('mouseup', ['$event'])
@@ -463,10 +463,10 @@ this.sphere.position.y=-mappedValueY*1.1
   onResize(event: Event): void {
     const newWidth = window.innerWidth;
     const newHeight = window.innerHeight;
-    if(this.myCanvas&&this.myCanvas1&&this.myCanvas2){
-      this.camera.aspect = newWidth / newHeight;
-    this.camera.updateProjectionMatrix();
-    this.renderer.setSize(newWidth, newHeight);
+    if(this.myCanvas1&&this.myCanvas2){
+    //   this.camera.aspect = newWidth / newHeight;
+    // this.camera.updateProjectionMatrix();
+    // this.renderer.setSize(newWidth, newHeight);
     this.camera1.aspect = newWidth / newHeight;
     this.camera1.updateProjectionMatrix();
     this.renderer1.setSize(newWidth, newHeight);
