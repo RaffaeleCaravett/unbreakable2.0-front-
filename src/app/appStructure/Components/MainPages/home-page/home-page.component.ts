@@ -277,7 +277,6 @@ checkTokens(){
     this.formsService.verifyToken(localStorage.getItem('accessToken')!).subscribe((data:any)=>{
     if(data&&data.id){
       this.authService.setToken(localStorage.getItem('accessToken')!)
-      console.log("data :", data)
       this.user= data
       localStorage.setItem('user',JSON.stringify(this.user))
        this.formsService.isUserAuthenticate(true)

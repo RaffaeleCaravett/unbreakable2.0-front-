@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
  import * as AOS from 'aos';
 import * as THREE from 'three';
@@ -11,7 +11,7 @@ import { AuthService } from './appStructure/Shared/Services/AuthService/Auth.ser
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit ,AfterViewInit{
+export class AppComponent implements OnInit ,AfterViewInit, OnChanges{
   title = 'unbreakable2.0';
   @ViewChild('canvas1', { static: false }) private canvasRef1!: ElementRef;
   @ViewChild('canvas2', { static: false }) private canvasRef2!: ElementRef;
@@ -34,12 +34,16 @@ export class AppComponent implements OnInit ,AfterViewInit{
   raindrop!: THREE.Mesh<THREE.SphereGeometry, THREE.MeshBasicMaterial, THREE.Object3DEventMap>;
   string:string=''
   user:any
-   constructor(private router:Router,private formsService:FormsService,private authService:AuthService){
+
+   constructor(private router:Router,private formsService:FormsService,private authService:AuthService) {
   this.router.events.subscribe((data:any)=>{
     if(data instanceof NavigationEnd && data.url){
           this.string=data.url
     }
   })
+
+   }
+   ngOnChanges(changes: SimpleChanges): void {
 
    }
    ngAfterViewInit(): void {

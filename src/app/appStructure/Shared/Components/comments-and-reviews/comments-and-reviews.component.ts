@@ -33,30 +33,7 @@ export class CommentsAndReviewsComponent implements OnInit,OnChanges{
             this.rating=0
 
 
-this.user=localStorage.getItem('user')
-this.argument_id=Number(localStorage.getItem('param'))
-          if(this.argument_id!=0){
-   this.argumentService.getArgumentById(Number(this.argument_id)).subscribe((data:any)=>{
-        if(data){
-          this.argument=data
-        }
-       this.takeCommenti(data)
-       this.takeRatings(this.argument.id)
-      this.commentsAndRatingService.getRatingByUser(this.user.id).subscribe((data:any)=>{
-      if(data){
-        data.forEach((d:any)=>{
-  if(d.argument.id==this.argument_id){
 
-    this.rating=data[0].rating
-    this.alreadyCensed=true
-    console.log('true')
-        }
-        })
-   }
-  })
-
-      })
-   }
      }
   ngOnChanges(changes: SimpleChanges): void {
     if(changes){
@@ -66,6 +43,7 @@ this.argumentService.getArgumentById(Number(this.argument_id)).subscribe((data:a
   if(data){
     this.argument=data
   }
+  this.ratingSum=0;
       this.takeCommenti(this.argument)
 this.takeRatings(this.argument.id)
     })
@@ -78,7 +56,18 @@ this.takeRatings(this.argument.id)
 this.commentiForm= new FormGroup({
   textArea: new FormControl('',Validators.required)
 })
-
+this.user=JSON.parse(localStorage.getItem('user')!)
+this.argument_id=Number(localStorage.getItem('param'))
+      this.commentsAndRatingService.getRatingByUser(this.user.id).subscribe((data:any)=>{
+      if(data){
+        data.forEach((d:any)=>{
+  if(d.argument.id==this.argument_id){
+    this.rating=d.rating
+    this.alreadyCensed=true
+        }
+        })
+   }
+  })
 
   }
 
@@ -185,6 +174,7 @@ takeRatings(argumentId:number){
 
    this.media=0
   this.ratingSum=0
+
   this.commentsAndRatingService.getRatingByArgumentName(this.argument.title).subscribe((dat:any)=>{
     if(dat){
      dat.forEach((da:any)=>{

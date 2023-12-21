@@ -6,6 +6,7 @@ import { ArgumentsServiceService } from '../../Services/ArgumentsService/argumen
 import { CommentsAndReviewService } from '../../Services/commentsAndReviewService/commentsAndReview.service';
 import { FormsService } from '../../Services/FormsService/forms.service';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-navbar',
@@ -29,7 +30,7 @@ location:any=''
 bg:boolean=true
 notificationArray:any[]=[]
 constructor(private sharedDataService: NavService,private argumentsService:ArgumentsServiceService,private commentsAndReviewService:CommentsAndReviewService,
-  private formsService:FormsService,private router:Router){
+  private formsService:FormsService,private router:Router,private spinnerService: NgxSpinnerService){
 this.sharedDataService.dataSubject.subscribe((data:any)=>{
   this.navbarToShow=data
 })
@@ -57,7 +58,6 @@ if(notification.receiver.id==this.user.id && notification.statoNotifica=="NOT_SA
     this.navbarToShow?this.navbarToShow=this.navbarToShow:this.navbarToShow='forms'
     this.argumentsService.getAllArguments().subscribe((data:any)=>{
       if(data){
-        console.log(data.content)
         this.argumentsArray=data.content
       }
     },err=>{
@@ -177,6 +177,12 @@ goToRoute(param:string){
      p=0
       break;
   }
+  this.spinnerService.show();
+  console.log("Start")
+  setTimeout(()=>{
+    console.log("Stop")
+    this.spinnerService.hide();
+  },1000)
 localStorage.setItem('param', p.toString())
   this.router.navigate([`${param.toLowerCase()}`])
 

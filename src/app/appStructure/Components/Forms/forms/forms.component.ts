@@ -125,13 +125,17 @@ this.argumentsService.getAllArguments().subscribe((data:any)=>{
 },err=>{
   console.log(err)
 })
-    this.scene = new THREE.Scene();
-    this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-    this.renderer = new THREE.WebGLRenderer({ canvas: this.myCanvas.nativeElement ,antialias:true,alpha:true});
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
-    this.orbit= new OrbitControls(this.camera,this.renderer.domElement)
+
+// ---------------- Raycaster ---------------------
+    // this.scene = new THREE.Scene();
+    // this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+    // this.renderer = new THREE.WebGLRenderer({ canvas: this.myCanvas.nativeElement ,antialias:true,alpha:true});
+    // this.renderer.setSize(window.innerWidth, window.innerHeight);
+    // this.orbit= new OrbitControls(this.camera,this.renderer.domElement)
+
+
     // this.scene1 = new THREE.Scene();
-    // this.camera1 = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+        // this.camera1 = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
     // this.renderer1 = new THREE.WebGLRenderer({ canvas: this.myCanvas1.nativeElement ,antialias:true,alpha:true});
     // this.renderer1.setSize(window.innerWidth, window.innerHeight);
     // this.renderer1.setPixelRatio(window.devicePixelRatio);
@@ -147,26 +151,30 @@ this.renderer2.shadowMap.type = THREE.PCFSoftShadowMap;
   side:THREE.DoubleSide,
   visible:false
 })
-this.plane1=new THREE.Mesh(this.planeGeometry,this.planeMaterial)
-this.scene.add(this.plane1)
-this.plane1.rotateX(-Math.PI / 2);
- this.grid = new THREE.GridHelper( 10, 10 ,'red','red');
- this.scene.add( this.grid );
- const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
- this.scene.add(ambientLight);
- this.plane1.name='ground'
- this.highlightMesh= new THREE.Mesh(
-  new THREE.PlaneGeometry(1,1),
-  new THREE.MeshBasicMaterial({
-    side:THREE.DoubleSide,
-    visible:true,
-    transparent:true
-    })
-)
-this.highlightMesh.rotateX(-Math.PI / 2);
-this.scene.add(this.highlightMesh)
-this.highlightMesh.position.set(0.5, 0, 0.5)
+
+// ---------------- Raycaster ---------------------
+// this.plane1=new THREE.Mesh(this.planeGeometry,this.planeMaterial)
+//  this.scene.add(this.plane1)
+// this.plane1.rotateX(-Math.PI / 2);
+//  this.grid = new THREE.GridHelper( 10, 10 ,'red','red');
+//  this.scene.add( this.grid );
+//  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+//  this.scene.add(ambientLight);
+//  this.plane1.name='ground'
+//  this.highlightMesh= new THREE.Mesh(
+//   new THREE.PlaneGeometry(1,1),
+//   new THREE.MeshBasicMaterial({
+//     side:THREE.DoubleSide,
+//     visible:true,
+//     transparent:true
+//     })
+// )
+// this.highlightMesh.rotateX(-Math.PI / 2);
+// this.scene.add(this.highlightMesh)
+// this.highlightMesh.position.set(0.5, 0, 0.5)
 // this.textureLoader = new THREE.TextureLoader();
+
+
 // this.displacement=this.textureLoader.load('../../../../../assets/textures/displacement.jpeg')
 // this.textureLoader.load('../../../../../assets/textures/jude.jpg', (texture) => {
 //  this.geometry = new THREE.PlaneGeometry(500,500,64,64)
@@ -223,12 +231,15 @@ particlesGeometry.setAttribute('position',new THREE.BufferAttribute(posArray,3))
   this.sphere.position.x=-5.5
   this.sphere.position.y=-3
 
-setInterval(()=>{
-  this.updateOpacity()
-},500);
+  // ---------------- Raycaster ---------------------
+// setInterval(()=>{
+//   this.updateOpacity()
+// },500);
+
+// ---------------- Raycaster ---------------------
+    // this.renderer.setAnimationLoop(()=>this.animate());
 
 
-    this.renderer.setAnimationLoop(()=>this.animate());
     // this.renderer1.setAnimationLoop(()=>this.animate());
     this.renderer2.setAnimationLoop(()=>this.animate());
     this.animate()
@@ -250,9 +261,10 @@ clock=new THREE.Clock().getElapsedTime();
 animate() {
     requestAnimationFrame(()=>this.animate());
     const time = Date.now() * 0.005;
-    this.materials = Array.isArray(this.highlightMesh.material)
-  ? this.highlightMesh.material
-  : [this.highlightMesh.material as THREE.Material];
+    // ---------------- Raycaster ---------------------
+  //   this.materials = Array.isArray(this.highlightMesh.material)
+  // ? this.highlightMesh.material
+  // : [this.highlightMesh.material as THREE.Material];
 
 
     const randomX = (Math.random() - 0.5) * 700;
@@ -269,12 +281,20 @@ if(this.pointLight){
 this.objects.forEach(sphereClone=>{
     sphereClone.rotation.x+=0.001
 })
-this.renderer.render(this.scene, this.camera);
+
+// ---------------- Raycaster ---------------------
+// this.renderer.render(this.scene, this.camera);
+
+
 // this.renderer1.render(this.scene1, this.camera1);
 this.renderer2.render(this.scene2, this.camera2);
-  this.camera.position.set(10, 15, -22);
-  this.camera.lookAt(this.plane1.position)
-// this.camera1.position.set(0,-100,950)
+
+// ---------------- Raycaster ---------------------
+  // this.camera.position.set(10, 15, -22);
+  // this.camera.lookAt(this.plane1.position)
+
+
+  // this.camera1.position.set(0,-100,950)
 this.camera2.position.set(0,0,5)
 
 }
@@ -307,41 +327,43 @@ rect:any
     //   this.material.displacementScale = displacementValue;
     // }
 
-    if(this.canvas= document.querySelector('.canvas') as HTMLElement){
-      this.canvas= document.querySelector('.canvas') as HTMLElement
-      this.rect = this.canvas.getBoundingClientRect();
-    }
-    this.mousePosition.x = (event.clientX / window.innerWidth) * 2 - 1;
-    this.mousePosition.y = -((event.clientY-(this.rect.top))/ window.innerHeight) * 2 + 1 ;
-    this.raycaster.setFromCamera(this.mousePosition, this.camera);
-    this.intersects = this.raycaster.intersectObjects(this.scene.children);
-    this.intersects.forEach(intersect => {
-      if (intersect.object.name === 'ground') {
-        this.highlightMesh.visible=false
-          const highlightPos = new THREE.Vector3().copy(intersect.point).floor().addScalar(0.5);
-          this.highlightMesh.position.set(highlightPos.x, 0, highlightPos.z);
-           this.highlightMesh.visible=true
 
-           const objectExists =this.objects.find(obj=>{
-            return(obj.position.x===this.highlightMesh.position.x)&&(obj.position.z===this.highlightMesh.position.z)
-          })
-          if(!objectExists){
-           this.highlightMesh.material=new THREE.MeshBasicMaterial({
-            side:THREE.DoubleSide,
-            visible:true,
-            transparent:true,
-            color:('green')
-           })
-          }else{
-            this.highlightMesh.material=new THREE.MeshBasicMaterial({
-              side:THREE.DoubleSide,
-              visible:true,
-              transparent:true,
-              color:'red'
-             })
-          }
-      }
-    });
+// ---------------- Raycaster ---------------------
+    // if(this.canvas= document.querySelector('.canvas') as HTMLElement){
+    //   this.canvas= document.querySelector('.canvas') as HTMLElement
+    //   this.rect = this.canvas.getBoundingClientRect();
+    // }
+    // this.mousePosition.x = (event.clientX / window.innerWidth) * 2 - 1;
+    // this.mousePosition.y = -((event.clientY-(this.rect.top))/ window.innerHeight) * 2 + 1 ;
+    // this.raycaster.setFromCamera(this.mousePosition, this.camera);
+    // this.intersects = this.raycaster.intersectObjects(this.scene.children);
+    // this.intersects.forEach(intersect => {
+    //   if (intersect.object.name === 'ground') {
+    //     this.highlightMesh.visible=false
+    //       const highlightPos = new THREE.Vector3().copy(intersect.point).floor().addScalar(0.5);
+    //       this.highlightMesh.position.set(highlightPos.x, 0, highlightPos.z);
+    //        this.highlightMesh.visible=true
+
+    //        const objectExists =this.objects.find(obj=>{
+    //         return(obj.position.x===this.highlightMesh.position.x)&&(obj.position.z===this.highlightMesh.position.z)
+    //       })
+    //       if(!objectExists){
+    //        this.highlightMesh.material=new THREE.MeshBasicMaterial({
+    //         side:THREE.DoubleSide,
+    //         visible:true,
+    //         transparent:true,
+    //         color:('green')
+    //        })
+    //       }else{
+    //         this.highlightMesh.material=new THREE.MeshBasicMaterial({
+    //           side:THREE.DoubleSide,
+    //           visible:true,
+    //           transparent:true,
+    //           color:'red'
+    //          })
+    //       }
+    //   }
+    // });
    }
 
    @HostListener('mousedown', ['$event'])

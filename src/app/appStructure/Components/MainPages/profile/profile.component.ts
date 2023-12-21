@@ -74,11 +74,9 @@ this.commentService.getRatingByUserPaginated(this.user.id,this.page,this.size,th
 })
 
 this.commentService.findLikesByUserId(Number(this.user.id)).subscribe((likes)=>{
-  console.log(likes)
   this.likesArray=likes
 })
 this.friendshipService.getFriendshipByReceiverId(this.user.id).subscribe((friendship)=>{
-  console.log(friendship)
   this.friendshipArray=friendship
 })
 setTimeout(() => {
@@ -184,6 +182,8 @@ this.authService.updateUserDatas(data)
       this.cdr.detectChanges()
       this.submitted= true
     }
+   },err=>{
+
    })
   }
   handleFileInput(event: any): void {
@@ -207,11 +207,11 @@ this.authService.updateUserDatas(data)
   setMapViewForNation(nation: string) {
     var openCageApiKey = '46d2c313a2cf4ff8a6526625fc1a3001';
     var geocodingEndpoint = 'https://api.opencagedata.com/geocode/v1/json';
-
+ let map:any;
     fetch(`${geocodingEndpoint}?key=${openCageApiKey}&q=${encodeURIComponent(nation)}`)
       .then(response => response.json())
       .then(data => {
-        let map;
+
         if (data.results && data.results.length > 0) {
           var coordinates = data.results[0].geometry;
           map = L.map('map').setView([coordinates.lat, coordinates.lng], 13);
@@ -251,8 +251,10 @@ this.authService.updateUserDatas(data)
           .openPopup();
       })
       .catch(error => {
+if(!map){
+   map = L.map('map').setView([51.505, -0.09], 13);
 
-        let map = L.map('map').setView([51.505, -0.09], 13);
+
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
           attribution: '© OpenStreetMap contributors'
@@ -262,7 +264,9 @@ this.authService.updateUserDatas(data)
           .bindPopup('You are here.')
           .openPopup();
         console.error('Error fetching geocoding data:', error);
-      });
+    }
+    });
+
   }
 
 

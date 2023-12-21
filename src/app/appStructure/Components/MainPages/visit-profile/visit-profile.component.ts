@@ -8,6 +8,7 @@ import { CitiesAndNationsService } from 'src/app/appStructure/Shared/Services/Co
 import { FormsService } from 'src/app/appStructure/Shared/Services/FormsService/forms.service';
 import { FriendshipService } from 'src/app/appStructure/Shared/Services/Friendship/friendship.service';
 import { CommentsAndReviewService } from 'src/app/appStructure/Shared/Services/commentsAndReviewService/commentsAndReview.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-visit-profile',
@@ -39,7 +40,7 @@ submitted:boolean=false
 
 constructor(private commentService:CommentsAndReviewService,private route: ActivatedRoute,
   private continentsAndNations: CitiesAndNationsService, private friendshipService:FriendshipService,
-  private commentAndReviewService:CommentsAndReviewService
+  private commentAndReviewService:CommentsAndReviewService, private spinnerService: NgxSpinnerService
 ){
 
 
@@ -47,6 +48,12 @@ constructor(private commentService:CommentsAndReviewService,private route: Activ
 
 
 ngOnInit(){
+  this.spinnerService.show();
+  console.log("Start")
+  setTimeout(()=>{
+    console.log("Stop")
+    this.spinnerService.hide();
+  },1000)
   localStorage.setItem('param', '13')
   this.route.params.subscribe((params) => {
     const encodedUser = params['userData'];
@@ -116,17 +123,8 @@ this.option  = {
   ]
 };
 }, 1000);
-const map = L.map('map').setView([51.505, -0.09], 13);
-
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-attribution: '© OpenStreetMap contributors'
-}).addTo(map);
-
-L.marker([51.5, -0.09]).addTo(map)
-.bindPopup(`${this.user.nome} is here.`)
-.openPopup();
-
-
+var userNation = this.user.nazione.name;
+this.setMapViewForNation(userNation);
 
 this.updateDescription=new FormGroup({
   description: new FormControl(this.user.description||'')
@@ -199,5 +197,66 @@ sentFriendships.forEach((f:any) => {
         }
   },err=>{
   })
+}
+
+setMapViewForNation(nation: string) {
+  var openCageApiKey = '46d2c313a2cf4ff8a6526625fc1a3001';
+  var geocodingEndpoint = 'https://api.opencagedata.com/geocode/v1/json';
+let map;
+  fetch(`${geocodingEndpoint}?key=${openCageApiKey}&q=${encodeURIComponent(nation)}`)
+    .then(response => response.json())
+    .then(data => {
+
+      if (data.results && data.results.length > 0) {
+        var coordinates = data.results[0].geometry;
+        map = L.map('map').setView([coordinates.lat, coordinates.lng], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        L.marker([ coordinates.lat, coordinates.lng]).addTo(map)
+          .bindPopup(`${this.user.nome} is here`)
+          .openPopup();
+      } else {
+        var continentCoordinates:any = {
+          'North America': { lat: 37.0902, lng: -95.7129 },
+          'South America': { lat: -14.235, lng: -51.9253 },
+          'Europe': { lat: 51.1657, lng: 10.4515 },
+          'Africa': { lat: 9.082, lng: 8.6753 },
+          'Asia': { lat: 34.0479, lng: 100.6197 },
+          'Australia (Oceania)': { lat: -25.2744, lng: 133.7751 },
+          'Antartica': { lat: -82, lng: 0 },
+        };
+
+        if (continentCoordinates.hasOwnProperty(this.user.continent.name)) {
+          var continentCoords = continentCoordinates[this.user.continent.name];
+          map = L.map('map').setView([continentCoords.lat, continentCoords.lng], 13);
+        } else {
+          map = L.map('map').setView([51.505, -0.09], 4);
+
+        }
+      }
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+      }).addTo(map);
+
+      L.marker([continentCoords.lat, continentCoords.lng]).addTo(map)
+        .bindPopup(`${this.user.nome} is here`)
+        .openPopup();
+    })
+    .catch(error => {
+
+      map = L.map('map').setView([51.505, -0.09], 4);
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+      }).addTo(map);
+
+      L.marker([51.5, -0.09]).addTo(map)
+        .bindPopup(`${this.user.nome} is here`)
+        .openPopup();
+      console.error('Error fetching geocoding data:', error);
+    });
 }
 }
