@@ -69,6 +69,7 @@ export class AppComponent implements OnInit ,AfterViewInit, OnChanges{
 
     const loader = new GLTFLoader();
     loader.load('assets/models/sun.glb', (gltf:any) => {
+      console.log('sun loaded')
       this.model = gltf.scene;
       this.model.position.x=this.negativePositionValue
       this.model.scale.set(2.7,2.7,2.7 )
