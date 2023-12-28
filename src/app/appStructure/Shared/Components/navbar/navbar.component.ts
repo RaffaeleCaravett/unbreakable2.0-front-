@@ -173,14 +173,15 @@ goToRoute(param:string){
       case '/chemistry':
       p=7
       break;
+      case '/home':
+        p=10
+        break;
     default:
      p=0
       break;
   }
   this.spinnerService.show();
-  console.log("Start")
   setTimeout(()=>{
-    console.log("Stop")
     this.spinnerService.hide();
   },1000)
 localStorage.setItem('param', p.toString())

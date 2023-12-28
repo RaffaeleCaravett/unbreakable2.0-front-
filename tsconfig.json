@@ -24,7 +24,10 @@
       "ES2022",
       "dom"
     ],
-    "types": ["echarts", "@angular/material"]
+    "types": ["echarts", "@angular/material"],
+    "paths": {
+      "@assets/*": ["src/assets/*"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

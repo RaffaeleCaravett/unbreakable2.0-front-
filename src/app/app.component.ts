@@ -69,7 +69,6 @@ export class AppComponent implements OnInit ,AfterViewInit, OnChanges{
 
     const loader = new GLTFLoader();
     loader.load('assets/models/sun.glb', (gltf:any) => {
-      console.log('sun loaded')
       this.model = gltf.scene;
       this.model.position.x=this.negativePositionValue
       this.model.scale.set(2.7,2.7,2.7 )
@@ -171,6 +170,7 @@ this.positivePositionValue=18
 
 
     checkTokens(){
+      let param=localStorage.getItem('param')
       if(localStorage.getItem('accessToken')){
         this.formsService.verifyToken(localStorage.getItem('accessToken')!).subscribe((data:any)=>{
         if(data&&data.id){
@@ -178,7 +178,7 @@ this.positivePositionValue=18
           this.user= data
           localStorage.setItem('user',JSON.stringify(this.user))
            this.formsService.isUserAuthenticate(true)
-        switch(localStorage.getItem('param')){
+        switch(param){
           case '1':
             this.router.navigate(['/path'])
 break;
@@ -225,9 +225,15 @@ case '13':
 
   }
 break;
+case '14':
+  this.router.navigate(['/'])
+break;
+case '15':
+  this.router.navigate(['/fdsf'])
+break;
 default:
   this.formsService.isUserAuthenticate(false)
-  this.router.navigate([''])
+  this.router.navigate(['/ttry'])
     break;
         }
 
@@ -242,7 +248,7 @@ default:
                 this.user= data
                 localStorage.setItem('user',JSON.stringify(this.user))
                 this.formsService.isUserAuthenticate(true)
-                switch(localStorage.getItem('param')){
+                switch(param){
                   case '1':
                     this.router.navigate(['/path'])
         break;
@@ -273,9 +279,31 @@ default:
         case '10':
           this.router.navigate(['/home'])
         break;
+        case '11':
+  this.router.navigate(['/profile'])
+break;
+case '12':
+  this.router.navigate(['/connect'])
+break;
+case '13':
+  if (localStorage.getItem('userToVisit')) {
+    const userToVisit = localStorage.getItem('userToVisit')!;
+  const encodedUser = btoa(JSON.stringify(JSON.parse(userToVisit)));
+  this.router.navigate(['/visit-profile',encodedUser])
+  }else {
+    this.router.navigate(['/home'])
+
+  }
+break;
+case '14':
+  this.router.navigate(['/'])
+break;
+case '15':
+  this.router.navigate(['/fdsf'])
+break;
         default:
           this.formsService.isUserAuthenticate(false)
-          this.router.navigate([''])
+          this.router.navigate(['/fdgsdf'])
             break;
                 }
               }
@@ -283,7 +311,7 @@ default:
           }
         },err=>{
           this.formsService.isUserAuthenticate(false)
-          this.router.navigate([''])
+          this.router.navigate(['/'])
         })
         })
         }

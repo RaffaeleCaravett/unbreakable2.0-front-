@@ -47,6 +47,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { AuthTokenInterceptor } from './appStructure/Core/Interceptors/auth-token.interceptor';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { NotFoundComponent } from './appStructure/Shared/Components/not-found/not-found.component';
 
 
 @NgModule({
@@ -76,7 +77,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     ProfileComponent,
     SleepComponent,
     TipsComponent,
-    VisitProfileComponent
+    VisitProfileComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -114,7 +116,9 @@ NgxSpinnerModule
     NavbarComponent,
     UnbreackableLettersComponent,
     X401SpeechComponent,
-    VisitProfileComponent
+    VisitProfileComponent,
+    NotFoundComponent
+
   ],
   providers: [
     {

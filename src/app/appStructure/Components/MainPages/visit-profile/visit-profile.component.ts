@@ -1,11 +1,9 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { EChartsOption } from 'echarts';
 import * as L from 'leaflet';
-import { AuthService } from 'src/app/appStructure/Shared/Services/AuthService/Auth.service';
 import { CitiesAndNationsService } from 'src/app/appStructure/Shared/Services/ContinentsAndNations/continents-and-nations.service';
-import { FormsService } from 'src/app/appStructure/Shared/Services/FormsService/forms.service';
 import { FriendshipService } from 'src/app/appStructure/Shared/Services/Friendship/friendship.service';
 import { CommentsAndReviewService } from 'src/app/appStructure/Shared/Services/commentsAndReviewService/commentsAndReview.service';
 import { NgxSpinnerService } from 'ngx-spinner';

@@ -15,6 +15,7 @@ import { MakeContactComponent } from './appStructure/Components/MainPages/make-c
 import { ProfileComponent } from './appStructure/Components/MainPages/profile/profile.component';
 import { VisitProfileComponent } from './appStructure/Components/MainPages/visit-profile/visit-profile.component';
 import { AuthGuard } from './appStructure/Core/Guard/auth.guard';
+import { NotFoundComponent } from './appStructure/Shared/Components/not-found/not-found.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/forms', pathMatch: 'full' },
@@ -39,7 +40,7 @@ const routes: Routes = [
     component: VisitProfileComponent,
     canActivate: [AuthGuard],
   },
-  { path: '**', redirectTo: '/forms' },
+  { path: '**', component: NotFoundComponent,},
 ];
 
 @NgModule({
