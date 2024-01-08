@@ -42,6 +42,7 @@ constructor(){
 }
 
   ngAfterViewInit() {
+    localStorage.setItem('param','2')
     this.user=JSON.parse(localStorage.getItem('user')!)
 
     this.dataSource.paginator = this.paginator;

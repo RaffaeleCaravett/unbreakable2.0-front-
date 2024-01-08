@@ -15,6 +15,7 @@ export class NeurogenesisComponent implements AfterViewInit {
 
   constructor(){}
 ngAfterViewInit(): void {
+  localStorage.setItem('param','3')
     this.videoUno = new YT.Player(this.video1.nativeElement, {
       videoId: "B_tjKYvEziI",
       playerVars: {

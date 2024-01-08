@@ -233,7 +233,7 @@ case '15':
 break;
 default:
   this.formsService.isUserAuthenticate(false)
-  this.router.navigate(['/ttry'])
+  this.router.navigate(['/'])
     break;
         }
 
@@ -303,7 +303,7 @@ case '15':
 break;
         default:
           this.formsService.isUserAuthenticate(false)
-          this.router.navigate(['/fdgsdf'])
+          this.router.navigate(['/'])
             break;
                 }
               }

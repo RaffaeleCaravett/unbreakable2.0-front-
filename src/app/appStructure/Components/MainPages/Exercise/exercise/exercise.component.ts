@@ -21,6 +21,7 @@ typesExercises:any
   videoTre:any
 
   ngOnInit(): void {
+    localStorage.setItem('param','4')
     this.user=JSON.parse(localStorage.getItem('user')!)
 
 this.typesExercises=[

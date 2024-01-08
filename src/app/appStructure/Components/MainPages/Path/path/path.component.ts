@@ -1,5 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-path',
@@ -14,6 +13,7 @@ constructor(){
 
 }
   ngOnInit(): void {
+    localStorage.setItem('param','1')
     this.user=JSON.parse(localStorage.getItem('user')!)
      }
 

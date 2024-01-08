@@ -13,6 +13,7 @@ export class TipsComponent implements OnInit{
 
 
   ngOnInit(): void {
+    localStorage.setItem('param','6')
     this.user=JSON.parse(localStorage.getItem('user')!)
 
     this.cards=

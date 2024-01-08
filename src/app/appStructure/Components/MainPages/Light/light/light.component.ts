@@ -14,6 +14,7 @@ export class LightComponent implements AfterViewInit{
   videoUno:any
 
 ngAfterViewInit(): void {
+  localStorage.setItem('param','9')
   this.user=JSON.parse(localStorage.getItem('user')!)
 
   this.videoUno = new YT.Player(this.video1.nativeElement, {

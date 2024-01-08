@@ -15,7 +15,7 @@ export class SleepComponent implements OnInit,AfterViewInit{
     private player: any;
 
   ngOnInit(): void {
-
+    localStorage.setItem('param','8')
    }
    ngAfterViewInit(): void {
     this.player = new YT.Player(this.playerElement.nativeElement, {

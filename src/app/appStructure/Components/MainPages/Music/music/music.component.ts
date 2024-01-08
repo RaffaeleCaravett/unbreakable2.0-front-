@@ -14,6 +14,8 @@ export class MusicComponent implements AfterViewInit{
   videoUno:any
 
 ngAfterViewInit(): void {
+  localStorage.setItem('param','5')
+
   this.videoUno = new YT.Player(this.video1.nativeElement, {
     videoId: "2w0oRSN0AVM",
     playerVars: {

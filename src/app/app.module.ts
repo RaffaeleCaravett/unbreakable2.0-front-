@@ -48,6 +48,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { AuthTokenInterceptor } from './appStructure/Core/Interceptors/auth-token.interceptor';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NotFoundComponent } from './appStructure/Shared/Components/not-found/not-found.component';
+import { EmojiComponents } from './appStructure/Shared/Components/emoji/emoji.component';
 
 
 @NgModule({
@@ -78,7 +79,8 @@ import { NotFoundComponent } from './appStructure/Shared/Components/not-found/no
     SleepComponent,
     TipsComponent,
     VisitProfileComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    EmojiComponents
   ],
   imports: [
     BrowserModule,
@@ -117,7 +119,8 @@ NgxSpinnerModule
     UnbreackableLettersComponent,
     X401SpeechComponent,
     VisitProfileComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    EmojiComponents
 
   ],
   providers: [

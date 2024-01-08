@@ -12,6 +12,7 @@ export class ChemistryComponent implements AfterViewInit {
   @ViewChild('video1') video1:any
   videoUno:any
   ngAfterViewInit(): void {
+    localStorage.setItem('param','7')
     this.user=JSON.parse(localStorage.getItem('user')!)
 
     this.videoUno = new YT.Player(this.video1.nativeElement, {

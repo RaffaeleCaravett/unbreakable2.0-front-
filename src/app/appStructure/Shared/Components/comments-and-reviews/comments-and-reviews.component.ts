@@ -25,6 +25,7 @@ export class CommentsAndReviewsComponent implements OnInit,OnChanges{
   allComments:any[]=[]
   argument:any
   previousArgumentId:number=0
+  emoji:boolean=false
   @Output() location:EventEmitter<string>= new EventEmitter<string>
   @Output() userToSend:EventEmitter<any>= new EventEmitter<any>
 
@@ -187,5 +188,8 @@ takeRatings(argumentId:number){
    }
    })
 
+}
+addToTextArea(event:any){
+  this.commentiForm.controls['textArea'].setValue(this.commentiForm.controls['textArea'].value+event.srcElement.textContent)
 }
 }

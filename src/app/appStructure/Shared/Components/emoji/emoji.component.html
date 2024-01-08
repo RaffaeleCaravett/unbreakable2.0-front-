@@ -1,0 +1,34 @@
+<div>
+  <div class="border rounded p-1 m-1 bg-white overflow-auto" style="width: 300px;height:400px">
+    <input type="text" class="form-control" placeholder="Cerca emojis.." #input (input)="filter($event.target)">
+   <div *ngIf="filteredEmojis.length>=1">
+    <button type="button" *ngFor="let i of filteredEmojis" class="btn bg-none p-1 m-0">{{i.emoji}}</button>
+   </div>
+    <div *ngIf="filteredEmojis.length==0">
+   <button type="button" class="btn bg-none p-1 m-0" *ngFor="let e of Faces" (click)="writeEmoji(e.emoji)">{{e.emoji}}</button>
+   <p class="text-secondary fs-3 p-3"> People</p>
+   <button type="button" class="btn bg-none p-1 m-0" *ngFor="let a of people" (click)="writeEmoji(a.emoji)">{{a.emoji}}</button>
+   <p class="text-secondary fs-3 p-3"> Animals</p>
+   <button type="button" class="btn bg-none p-1 m-0" *ngFor="let a of animals" (click)="writeEmoji(a.emoji)">{{a.emoji}}</button>
+   <p class="text-secondary fs-3 p-3"> Plants</p>
+   <button type="button" class="btn bg-none p-1 m-0" *ngFor="let a of plants" (click)="writeEmoji(a.emoji)">{{a.emoji}}</button>
+   <p class="text-secondary fs-3 p-3"> Food</p>
+   <button type="button" class="btn bg-none p-1 m-0" *ngFor="let a of food" (click)="writeEmoji(a.emoji)">{{a.emoji}}</button>
+   <p class="text-secondary fs-3 p-3"> Activities</p>
+   <button type="button" class="btn bg-none p-1 m-0" *ngFor="let a of activity" (click)="writeEmoji(a.emoji)">{{a.emoji}}</button>
+   <p class="text-secondary fs-3 p-3"> Travel</p>
+   <button type="button" class="btn bg-none p-1 m-0" *ngFor="let a of travel" (click)="writeEmoji(a.emoji)">{{a.emoji}}</button>
+   <p class="text-secondary fs-3 p-3"> Object</p>
+   <button type="button" class="btn bg-none p-1 m-0" *ngFor="let a of objects" (click)="writeEmoji(a.emoji)">{{a.emoji}}</button>
+   <p class="text-secondary fs-3 p-3"> Symbols</p>
+   <button type="button" class="btn bg-none p-1 m-0" *ngFor="let a of symbol" (click)="writeEmoji(a.emoji)">{{a.emoji}}</button>
+   <p class="text-secondary fs-3 p-3"> Arrows</p>
+   <button type="button" class="btn bg-none p-1 m-0" *ngFor="let a of arrows" (click)="writeEmoji(a.emoji)">{{a.emoji}}</button>
+   <p class="text-secondary fs-3 p-3"> Currency</p>
+   <button type="button" class="btn bg-none p-1 m-0" *ngFor="let a of currency" (click)="writeEmoji(a.emoji)">{{a.emoji}}</button>
+   <p class="text-secondary fs-3 p-3"> Flag</p>
+   <button type="button" class="btn bg-none p-1 m-0" *ngFor="let a of Flag" (click)="writeEmoji(a.emoji)">{{a.emoji}}</button>
+    </div>
+  </div>
+
+</div>

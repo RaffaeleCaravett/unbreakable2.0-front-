@@ -24,6 +24,8 @@ Average ratings of this section : <span>{{media}}</span>
           <form [formGroup]="commentiForm" class="d-flex flex-column">
             <h2>Leave a comment</h2>
           <textarea formControlName="textArea" cols="60" rows="5" class="m-auto rounded w-50"></textarea>
+          <button class="btn m-1 fs-3" (click)="emoji=!emoji">😁</button>
+          <app-emoji (click)="addToTextArea($event)" *ngIf="emoji==true" class="m-auto"></app-emoji>
           <div class="w-50 m-auto">
 <button class="btn btn-primary my-1" (click)="submitTextArea();">Comment</button>
           </div>
