@@ -223,20 +223,20 @@ case '13':
   this.router.navigate(['/visit-profile',encodedUser])
   }else {
     this.router.navigate(['/home'])
-
   }
 break;
 case '14':
   this.router.navigate(['/'])
 break;
 case '15':
-  this.router.navigate(['/fdsf'])
+  this.router.navigate(['/notfound'])
 break;
 default:
   this.formsService.isUserAuthenticate(false)
   this.router.navigate(['/'])
     break;
-        }        }
+        }
+      }
         },(err:any)=>{
         this.formsService.verifyRefreshToken(localStorage.getItem('refreshToken')!).subscribe((data:any)=>{
           if(data){
@@ -293,14 +293,13 @@ case '13':
   this.router.navigate(['/visit-profile',encodedUser])
   }else {
     this.router.navigate(['/home'])
-
   }
 break;
 case '14':
   this.router.navigate(['/'])
 break;
 case '15':
-  this.router.navigate(['/fdsf'])
+  this.router.navigate(['/notfound'])
 break;
         default:
           this.formsService.isUserAuthenticate(false)
