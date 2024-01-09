@@ -132,7 +132,7 @@ setTimeout(() => {
   })
 
   this.imageForm=new FormGroup({
-    img_profile: new FormControl('')
+    img_profile: new FormControl(this.user.img_profilo)
   })
 
 this.userForm=new FormGroup({
