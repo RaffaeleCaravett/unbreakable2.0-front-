@@ -1,5 +1,5 @@
 import { animate } from '@angular/animations';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AnonymousSubject } from 'rxjs/internal/Subject';
 import * as THREE from 'three';
@@ -11,7 +11,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
   templateUrl: './not-found.component.html',
   styleUrls: ['./not-found.component.scss']
 })
-export class NotFoundComponent implements OnInit{
+export class NotFoundComponent implements OnInit,OnDestroy{
   @ViewChild('canvas', { static: true }) private canvasRef1!: ElementRef;
   private renderer = new THREE.WebGLRenderer
   private scene = new THREE.Scene();
@@ -34,6 +34,9 @@ plutoo:any
 
 constructor(private router:Router){
 
+}
+  ngOnDestroy(): void {
+localStorage.removeItem('param')
 }
   ngOnInit(): void {
 localStorage.setItem('param','15')
@@ -156,12 +159,9 @@ createPlanete(size:any, texture:any, position:any, ring?:any) {
     });
   }
   goToForms(){
-    if(localStorage.getItem('accessToken')){
-       localStorage.setItem('param','10')
-    this.router.navigate(['/home'])
-    }else{
+
       this.router.navigate(['/'])
-    }
+
 
   }
 

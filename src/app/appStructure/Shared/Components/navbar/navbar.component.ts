@@ -7,6 +7,8 @@ import { CommentsAndReviewService } from '../../Services/commentsAndReviewServic
 import { FormsService } from '../../Services/FormsService/forms.service';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { AuthGuard } from 'src/app/appStructure/Core/Guard/auth.guard';
+import { AuthService } from '../../Services/AuthService/Auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -45,6 +47,9 @@ this.getNotifications()
   ngOnInit(): void {
 
     this.navbarToShow?this.navbarToShow=this.navbarToShow:this.navbarToShow='forms'
+    if(!this.formsService.isUserAuthenticate()){
+this.navbarToShow='forms'
+    }
     this.argumentsService.getAllArguments().subscribe((data:any)=>{
       if(data){
         this.argumentsArray=data.content
