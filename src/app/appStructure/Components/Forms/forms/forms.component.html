@@ -13,6 +13,7 @@
   <div class="cube m-auto rounded" #cube >
       <app-login *ngIf="paramValue=='login'" (location)="onReceiveLocation($event)" ></app-login>
       <app-signup *ngIf="paramValue=='signup'||!paramValue" (location)="onReceiveLocation($event)" ></app-signup>
+      <p>Version : {{version}}</p>
   </div>
 </div>
 <div class="col-12 p-4">

@@ -10,6 +10,7 @@ import { FormsService } from 'src/app/appStructure/Shared/Services/FormsService/
 import { VisitService } from 'src/app/appStructure/Shared/Services/VisitService/vist.seervice';
 import { CommentsAndReviewService } from 'src/app/appStructure/Shared/Services/commentsAndReviewService/commentsAndReview.service';
 import { NavService } from 'src/app/appStructure/Shared/Services/navService/nav.service';
+import { environment } from 'src/environments/environment.development';
 
 
 @Component({
@@ -62,10 +63,12 @@ rotateY:number = 0;
   visitsArray:any[]=[]
   users:any[]=[]
   rating:number=0
+  version:any
   constructor(private sharedDataService: NavService,private commentsAndRatings:CommentsAndReviewService, private argumentsService:ArgumentsServiceService,
     private visitService:VisitService,private formsService:FormsService){
 }
   ngOnInit(): void {
+    this.version=environment.VERSION
     localStorage.setItem('location','forms')
     this.visitService.saveVisit().subscribe((data)=>{
       this.visitService.getVisits().subscribe((visits:any)=>{
