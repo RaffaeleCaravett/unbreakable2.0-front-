@@ -173,6 +173,8 @@ saveFriendship(){
           ).subscribe((notification:any)=>{
           },(err)=>{
           })
+    },err =>{
+
     })
     setTimeout(()=>{
 this.getFriendship()
@@ -180,7 +182,16 @@ this.getFriendship()
 }
 
 removeFriendship(){
-
+  this.friendshipService.getFriendshipBySenderId(this.userThatVisit.id).subscribe((sentFriendships:any)=>{
+    if(sentFriendships){
+sentFriendships.forEach((f:any) => {
+  if(f.sender.id==this.userThatVisit.id&&f.receiver.id==this.user.id&&f.friendshipState=="SENT" ||
+  f.sender.id==this.userThatVisit.id&&f.receiver.id==this.user.id&&f.friendshipState=="ACCEPTED"){
+  this.friendshipService.deleteFriendship(f.id).subscribe((data:any)=>{this.friendshipSent=false})
+  }
+});}
+},err=>{
+})
 }
 
 getFriendship(){
