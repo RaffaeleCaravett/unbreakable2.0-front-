@@ -236,7 +236,7 @@ default:
   this.router.navigate(['/'])
     break;
         }
-
+console.log(param)
         }
         },(err:any)=>{
         this.formsService.verifyRefreshToken(localStorage.getItem('refreshToken')!).subscribe((data:any)=>{
@@ -307,6 +307,9 @@ break;
             break;
                 }
               }
+            },err=>{
+              this.formsService.isUserAuthenticate(false)
+              this.router.navigate(['/'])
             })
           }
         },err=>{
