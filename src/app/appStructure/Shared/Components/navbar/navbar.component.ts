@@ -41,17 +41,7 @@ this.formsService.userSubject.subscribe((data:any)=>{
 }
   ngOnChanges(changes: SimpleChanges): void {
     if(this.user){
-      this.commentsAndReviewService.getNotification(this.user.id).subscribe((notifications:any)=>{
-         this.notificationArray=[]
-         this.badgeValue=0
-         notifications.forEach((notification:any)=>{
-if(notification.receiver.id==this.user.id && notification.statoNotifica=="NOT_SAW"){
-  this.notificationArray.push(notification)
-  this.badgeValue+=1;
-}
-         })
 
-  })
    }
     }
   ngOnInit(): void {
@@ -63,6 +53,17 @@ if(notification.receiver.id==this.user.id && notification.statoNotifica=="NOT_SA
     },err=>{
       console.log(err)
     })
+    this.commentsAndReviewService.getNotification(this.user.id).subscribe((notifications:any)=>{
+      this.notificationArray=[]
+      this.badgeValue=0
+      notifications.forEach((notification:any)=>{
+if(notification.receiver.id==this.user.id && notification.statoNotifica=="NOT_SAW"){
+this.notificationArray.push(notification)
+this.badgeValue+=1;
+}
+      })
+
+})
   }
 
   ngAfterViewInit(): void {
