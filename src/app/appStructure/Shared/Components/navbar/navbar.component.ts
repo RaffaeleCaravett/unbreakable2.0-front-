@@ -36,28 +36,14 @@ this.sharedDataService.dataSubject.subscribe((data:any)=>{
 })
 this.formsService.userSubject.subscribe((data:any)=>{
   this.user=data
-  console.log(this.user,data)
+this.getNotifications()
 })
 }
   ngOnChanges(changes: SimpleChanges): void {
-    if(this.user){
-      console.log('user')
-      this.commentsAndReviewService.getNotification(this.user.id).subscribe((notifications:any)=>{
-        this.notificationArray=[]
-        this.badgeValue=0
-        notifications.forEach((notification:any)=>{
-          console.log('forEach')
-  if(notification.receiver.id==this.user.id && notification.statoNotifica=="NOT_SAW"){
-    console.log('not_saw')
-  this.notificationArray.push(notification)
-  this.badgeValue+=1;
-  }
-        })
-console.log(this.notificationArray)
-  })
-   }
+
     }
   ngOnInit(): void {
+
     this.navbarToShow?this.navbarToShow=this.navbarToShow:this.navbarToShow='forms'
     this.argumentsService.getAllArguments().subscribe((data:any)=>{
       if(data){
@@ -66,17 +52,7 @@ console.log(this.notificationArray)
     },err=>{
       console.log(err)
     })
-    this.commentsAndReviewService.getNotification(this.user.id).subscribe((notifications:any)=>{
-      this.notificationArray=[]
-      this.badgeValue=0
-      notifications.forEach((notification:any)=>{
-if(notification.receiver.id==this.user.id && notification.statoNotifica=="NOT_SAW"){
-this.notificationArray.push(notification)
-this.badgeValue+=1;
-}
-      })
 
-})
   }
 
   ngAfterViewInit(): void {
@@ -128,7 +104,7 @@ this.router.navigate(['/forms'])
 localStorage.setItem('formsLocation',params)
   }
 
-updateNotification(){
+updateNotification(event:any){
   this.badgeValue=0
   this.notificationArray.forEach((notification:any)=>{
     let body
@@ -158,6 +134,9 @@ if(notification.comment){
 
 }
 goToRoute(param:string){
+
+
+
   let p=0;
   switch (param.toLowerCase()) {
     case '/exercise':
@@ -200,8 +179,20 @@ goToRoute(param:string){
   },1000)
 localStorage.setItem('param', p.toString())
   this.router.navigate([`${param.toLowerCase()}`])
+}
 
+getNotifications(){
+  this.commentsAndReviewService.getNotification(this.user.id).subscribe((notifications:any)=>{
+    this.notificationArray=[]
+    this.badgeValue=0
+    notifications.forEach((notification:any)=>{
+if(notification.receiver.id==this.user.id && notification.statoNotifica=="NOT_SAW"){
+this.notificationArray.push(notification)
+this.badgeValue+=1;
+}else{
+}
+    })
 
-
+})
 }
 }

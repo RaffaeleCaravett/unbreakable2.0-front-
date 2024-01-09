@@ -171,7 +171,9 @@ saveFriendship(){
           comment_id:0,
           friendship_id:data}
           ).subscribe((notification:any)=>{
+            console.log(notification)
           },(err)=>{
+            console.log(err)
           })
     },err =>{
 

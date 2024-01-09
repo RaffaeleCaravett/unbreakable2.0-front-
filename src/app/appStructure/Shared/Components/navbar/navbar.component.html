@@ -53,16 +53,16 @@
     </div></a>
 </div>
 <div class="col-xxl-1 d-flex justify-content-end p-2" *ngIf="navbarToShow!='forms'">
-  <button  mat-button [matMenuTriggerFor]="menu" (click)="updateNotification()"> <a class="btn p-2">
+  <button  mat-button [matMenuTriggerFor]="menu" (click)="updateNotification($event)"> <a class="btn p-2">
     <mat-icon [matBadge]="badgeValue" matBadgeColor="warn" matBadgePosition="above after">notifications</mat-icon>
   </a></button>
 <mat-menu #menu="matMenu" >
-  <button mat-menu-item *ngFor="let n of notificationArray">
+  <button class="btn" *ngFor="let n of notificationArray">
   <div class="row">
     <div class="col-md-2">
-      <img src="{{n.sender.img_profilo}}" class="w-100" alt="sender_img_profilo">
+      <img src="{{n.sender.img_profilo}}" style="max-width: 20px;" alt="sender_img_profilo">
     </div>
-    <div class="col-md-8">
+    <div class="col-md-8" style="font-size: 10px;">
       <div class="col-md-12" *ngIf="n.comment &&n.comment.testo">{{n.sender.nome}} {{n.sender.cognome}} ha messo mi piace al tuo commento</div>
       <div class="col-md-12 text-center" *ngIf="n.comment &&n.comment.testo">{{n.comment.testo}}</div>
       <div class="col-md-12" *ngIf="n.friendship">{{n.sender.nome}} {{n.sender.cognome}} ha cominciato a seguirti</div>
@@ -73,7 +73,7 @@
     </div>
   </div>
   </button>
-
+<button  class="btn" *ngIf="notificationArray.length==0">Non ci sono nuove notifiche</button>
 </mat-menu>
   <a href="#" (click)="goToForms('login','clear')" class="p-2">
  <span id="login" class="p-2" >Logout</span>

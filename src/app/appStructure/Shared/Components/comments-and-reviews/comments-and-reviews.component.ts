@@ -148,7 +148,9 @@ this.commentsAndRatingService.interact({
   comment_id:comment.id,
 friendship_id:0}
   ).subscribe((notification:any)=>{
+    console.log(notification)
   },(err)=>{
+    console.log(err)
   })
 },(err)=>{
   this.takeCommenti(c.argument)

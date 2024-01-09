@@ -176,6 +176,7 @@ this.positivePositionValue=18
         if(data&&data.id){
           this.authService.setToken(localStorage.getItem('accessToken')!)
           this.user= data
+          this.formsService.userSubject.next(this.user)
           localStorage.setItem('user',JSON.stringify(this.user))
            this.formsService.isUserAuthenticate(true)
         switch(param){
@@ -235,9 +236,7 @@ default:
   this.formsService.isUserAuthenticate(false)
   this.router.navigate(['/'])
     break;
-        }
-console.log(param)
-        }
+        }        }
         },(err:any)=>{
         this.formsService.verifyRefreshToken(localStorage.getItem('refreshToken')!).subscribe((data:any)=>{
           if(data){
@@ -246,6 +245,8 @@ console.log(param)
             this.formsService.verifyToken(localStorage.getItem('accessToken')!).subscribe((data:any)=>{
               if(data&&data.id){
                 this.user= data
+                this.formsService.userSubject.next(this.user)
+                console.log(this.user)
                 localStorage.setItem('user',JSON.stringify(this.user))
                 this.formsService.isUserAuthenticate(true)
                 switch(param){

@@ -44,7 +44,6 @@ export class HomePageComponent implements AfterViewInit, OnChanges{
   }
 
     ngOnInit(){
-
       localStorage.setItem('param', '10')
         this.checkTokens()
       localStorage.getItem('welcomeAudioHasStarted')&& localStorage.getItem('welcomeAudioHasStarted')=='true'?
@@ -71,7 +70,6 @@ playWelcomeAudio(){
 
 setTimeout(()=>{
  if(this.user ){
-  console.log(this.user.img_profile)
   this.formsService.updateUser(this.user.id,
         {
           età:this.user.età,
@@ -279,6 +277,7 @@ checkTokens(){
     if(data&&data.id){
       this.authService.setToken(localStorage.getItem('accessToken')!)
       this.user= data
+      this.formsService.userSubject.next(this.user)
       localStorage.setItem('user',JSON.stringify(this.user))
        this.formsService.isUserAuthenticate(true)
     switch(localStorage.getItem('param')){
@@ -327,6 +326,7 @@ break;
         this.formsService.verifyToken(localStorage.getItem('accessToken')!).subscribe((data:any)=>{
           if(data&&data.id){
             this.user= data
+            this.formsService.userSubject.next(this.user)
             localStorage.setItem('user',JSON.stringify(this.user))
             this.formsService.isUserAuthenticate(true)
             switch(localStorage.getItem('param')){
