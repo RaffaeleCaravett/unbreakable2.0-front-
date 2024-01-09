@@ -26,7 +26,7 @@ postFriendship(body:{}){
 modifyFriendship(notificationId:any,receiver_id:number,body:{}){
   return this.http.put(environment.API_URL+this.friendship+`/${notificationId}/${receiver_id}`,body)
 }
-deleteFriendship(friendship_id:number){
-  return this.http.delete(environment.API_URL+this.friendship+'/'+friendship_id)
+deleteFriendship(friendship_id:number,user_id:number){
+  return this.http.delete(environment.API_URL+this.friendship+'/'+friendship_id+'/'+user_id)
 }
 }

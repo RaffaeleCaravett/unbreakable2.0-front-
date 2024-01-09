@@ -188,7 +188,7 @@ removeFriendship(){
 sentFriendships.forEach((f:any) => {
   if(f.sender.id==this.userThatVisit.id&&f.receiver.id==this.user.id&&f.friendshipState=="SENT" ||
   f.sender.id==this.userThatVisit.id&&f.receiver.id==this.user.id&&f.friendshipState=="ACCEPTED"){
-  this.friendshipService.deleteFriendship(f.id).subscribe((data:any)=>{this.friendshipSent=false})
+  this.friendshipService.deleteFriendship(f.id,this.userThatVisit.id).subscribe((data:any)=>{this.friendshipSent=false})
   }
 });}
 },err=>{
