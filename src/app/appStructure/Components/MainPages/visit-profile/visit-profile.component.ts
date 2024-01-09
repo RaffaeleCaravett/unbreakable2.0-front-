@@ -182,6 +182,7 @@ this.getFriendship()
 }
 
 removeFriendship(){
+  console.log(this.userThatVisit.id)
   this.friendshipService.getFriendshipBySenderId(this.userThatVisit.id).subscribe((sentFriendships:any)=>{
     if(sentFriendships){
 sentFriendships.forEach((f:any) => {
