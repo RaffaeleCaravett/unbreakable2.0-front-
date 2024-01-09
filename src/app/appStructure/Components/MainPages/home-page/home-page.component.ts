@@ -71,7 +71,8 @@ playWelcomeAudio(){
 
 setTimeout(()=>{
  if(this.user ){
-      this.formsService.updateUser(this.user.id,
+  console.log(this.user.img_profile)
+  this.formsService.updateUser(this.user.id,
         {
           età:this.user.età,
     email:this.user.email,

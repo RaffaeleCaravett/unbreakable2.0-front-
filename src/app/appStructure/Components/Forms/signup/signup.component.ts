@@ -90,7 +90,7 @@ this.continentsAndNations.getAllContinents().subscribe((data:any)=>{
         })
         .subscribe(
           (data: any) => {
-          //  localStorage.setItem('img_profilo',this.selectedImage||'')
+            localStorage.setItem('img_profilo',this.selectedImage||'')
               this.signUpService.loginRequest(
                 {
                   email: String(this.accountInfo.controls['email'].value),
