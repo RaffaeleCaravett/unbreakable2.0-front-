@@ -10,6 +10,7 @@ import { FormsService } from 'src/app/appStructure/Shared/Services/FormsService/
 import { FriendshipService } from 'src/app/appStructure/Shared/Services/Friendship/friendship.service';
 import { AuthService } from 'src/app/appStructure/Shared/Services/AuthService/Auth.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { CommentsAndReviewService } from 'src/app/appStructure/Shared/Services/commentsAndReviewService/commentsAndReview.service';
 
 
 @Component({
@@ -39,7 +40,7 @@ export class HomePageComponent implements AfterViewInit, OnChanges{
   messagesArray:any[]=[]
   currentChat:any
  constructor(private argumentsService:ArgumentsServiceService, private router :Router, private formsService:FormsService,private friendship:FriendshipService,
-  private chatService:ChatService,private authService:AuthService,private spinnerService: NgxSpinnerService){
+  private chatService:ChatService,private authService:AuthService,private spinnerService: NgxSpinnerService,private commentsAndRatingServices:CommentsAndReviewService){
 
   }
 
@@ -227,6 +228,14 @@ this.chatService.sendMessage(
     chat_id:this.currentChat[0].id
   }
 ).subscribe((data:any)=>{
+this.commentsAndRatingServices.sendNotification({
+  sender_id:this.user.id,
+  receiver_id:us.id,
+  statoNotifica:"NOT_SAW",
+  comment_id:0,
+friendship_id:0}).subscribe((notification:any)=>{
+},(err)=>{
+})
   this.chatForm.reset()
 this.checkMessages(us)
 })

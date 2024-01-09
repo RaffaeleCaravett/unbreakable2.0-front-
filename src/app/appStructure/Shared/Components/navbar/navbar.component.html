@@ -66,6 +66,7 @@
       <div class="col-md-12" *ngIf="n.comment &&n.comment.testo">{{n.sender.nome}} {{n.sender.cognome}} ha messo mi piace al tuo commento</div>
       <div class="col-md-12 text-center" *ngIf="n.comment &&n.comment.testo">{{n.comment.testo}}</div>
       <div class="col-md-12" *ngIf="n.friendship">{{n.sender.nome}} {{n.sender.cognome}} ha cominciato a seguirti</div>
+      <div class="col-md-12" *ngIf="!n.friendship&&!n.comment">{{n.sender.nome}} {{n.sender.cognome}} ti ha mandato un messaggio privato</div>
     </div>
     <div class="col-md-1">
       <mat-icon class="text-danger" *ngIf="n.comment &&n.comment.testo">favorite</mat-icon>
